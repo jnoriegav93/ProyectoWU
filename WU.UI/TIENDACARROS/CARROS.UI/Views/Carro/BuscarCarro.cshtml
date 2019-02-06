@@ -1,0 +1,107 @@
+﻿@model CARROS.ENTIDADES.CarroE
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BuscarCarro</title>
+</head>
+<body>
+    <div>
+        <h4>CarroE</h4>
+        <hr />
+        <p>ID del carro:</p>
+        @using (Html.BeginForm("BuscarCarro","Carro", FormMethod.Post))
+        { 
+        <input type="text" name="txtCarroID" />
+        <input type="submit" value="BUSCAR"id="btnBuscar"
+               name="btnBuscar" />
+        }
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                CARRO ID
+            </dt>    
+            <dd>
+                @Html.DisplayFor(model => model.CarroID)
+            </dd>    
+            <dt>
+                MARCA
+            </dt>    
+            <dd>
+                @Html.DisplayFor(model => model.Marca)
+            </dd>    
+            <dt>
+                MODELO
+            </dt>    
+            <dd>
+                @Html.DisplayFor(model => model.Modelo)
+            </dd>    
+            <dt>
+                PLACA
+            </dt>    
+            <dd>
+                @Html.DisplayFor(model => model.Placa)
+            </dd>    
+            <dt>
+                AÑO
+            </dt>    
+            <dd>
+                @Html.DisplayFor(model => model.Anio)
+            </dd>    
+            <dt>
+                PRECIO ($)
+            </dt>    
+            <dd>
+                @Html.DisplayFor(model => model.Precio)
+            </dd>    
+            <dt>
+                COLOR
+            </dt>    
+            <dd>
+                @Html.DisplayFor(model => model.Color)
+            </dd>    
+            <dt>
+                CANTIDAD DE PUERTAS
+            </dt>    
+            <dd>
+                @Html.DisplayFor(model => model.NPuertas)
+            </dd>
+            <dt>
+                COMBUSTIBLE
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.combustibleE.Nombre)
+            </dd>
+            <dt>
+                TRANSMISIÓN
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.transmisionE.Nombre)
+            </dd>
+            <dt>
+                PAÍS
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.paisE.Nombre)
+            </dd>
+            <dt>
+                FOTO
+            </dt>
+            <dd>
+                <img src="@Model.fotoE.URL" />
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

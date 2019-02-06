@@ -1,0 +1,121 @@
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\CARROS.UI.dll.config
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\CARROS.UI.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\CARROS.UI.pdb
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\CARROS.ENTIDADES.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\CARROS.NEGOCIO.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Helpers.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Mvc.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Razor.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Deployment.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Razor.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\CARROS.DAO.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\CARROS.ENTIDADES.pdb
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\CARROS.NEGOCIO.pdb
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Razor.xml
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.xml
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Deployment.xml
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Razor.xml
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Helpers.xml
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\System.Web.Mvc.xml
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\CARROS.DAO.pdb
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\es\System.Web.Razor.resources.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.resources.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.Deployment.resources.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.Razor.resources.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\es\System.Web.Helpers.resources.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\bin\es\System.Web.Mvc.resources.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.csprojResolveAssemblyReference.cache
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.pdb
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\CARROS.UI.dll.config
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\CARROS.UI.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\CARROS.UI.pdb
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\CARROS.ENTIDADES.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\CARROS.NEGOCIO.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Helpers.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Mvc.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Razor.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Deployment.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Razor.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\CARROS.DAO.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\CARROS.ENTIDADES.pdb
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\CARROS.NEGOCIO.pdb
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Razor.xml
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.xml
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Deployment.xml
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Razor.xml
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Helpers.xml
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Mvc.xml
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\CARROS.DAO.pdb
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Razor.resources.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.resources.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.Deployment.resources.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.Razor.resources.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Helpers.resources.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Mvc.resources.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.csprojResolveAssemblyReference.cache
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.pdb
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\CARROS.UI.dll.config
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\CARROS.UI.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\CARROS.UI.pdb
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\CARROS.ENTIDADES.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\CARROS.NEGOCIO.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Helpers.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Mvc.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Razor.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Deployment.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Razor.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\CARROS.DAO.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\CARROS.ENTIDADES.pdb
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\CARROS.NEGOCIO.pdb
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Razor.xml
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.xml
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Deployment.xml
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Razor.xml
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Helpers.xml
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\System.Web.Mvc.xml
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\CARROS.DAO.pdb
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Razor.resources.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.resources.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.Deployment.resources.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.Razor.resources.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Helpers.resources.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\bin\es\System.Web.Mvc.resources.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.csprojResolveAssemblyReference.cache
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.pdb
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\CARROS.UI.dll.config
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\CARROS.UI.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\CARROS.UI.pdb
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\CARROS.ENTIDADES.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\CARROS.NEGOCIO.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Helpers.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Mvc.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Razor.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Deployment.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Razor.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\CARROS.DAO.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\CARROS.ENTIDADES.pdb
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\CARROS.NEGOCIO.pdb
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Razor.xml
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.xml
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Deployment.xml
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Webpages.Razor.xml
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Helpers.xml
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\System.Web.Mvc.xml
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\CARROS.DAO.pdb
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\es\System.Web.Razor.resources.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.resources.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.Deployment.resources.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\es\System.Web.Webpages.Razor.resources.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\es\System.Web.Helpers.resources.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\bin\es\System.Web.Mvc.resources.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.csprojResolveAssemblyReference.cache
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.UI\obj\Debug\CARROS.UI.pdb

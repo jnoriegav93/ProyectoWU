@@ -1,0 +1,195 @@
+﻿@model CARROS.UI.Controllers.CarroController.GrupoPTC
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="witrh=device-witrh" />
+    <title>Detalle Carro</title>
+</head>
+<body>
+    <table align="center" border="1">
+        @*<dl class="dl-horizontal" style="align-content:center">*@
+        @{
+          string url = HttpContext.Current.Request.Url.AbsoluteUri;
+          int longi = url.Length;
+          string ccc="";
+          ccc = url.Substring(longi - 1, 1);
+          int code = Convert.ToInt32(ccc);
+          //url.CopyTo(longi - 1, ccc, longi, 1);
+        <tr>
+            <td>
+                Detalle de Carro: ID = @Model.carN.ObtenerCarro(code).CarroID
+            </td>
+        </tr>
+        <tr>
+            <td>CARRO ID</td>
+        </tr>
+        <tr>
+            <td>
+                @*@Html.DisplayFor(model => model.CarroID)*@
+                <input type="text" name="txtCarroID"
+                       value="@Model.carN.ObtenerCarro(code).CarroID" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                MARCA
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @*@Html.DisplayFor(model => model.Marca)*@
+                <input type="text" name="txtMarca"
+                       value="@Model.carN.ObtenerCarro(code).Marca" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                MODELO
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @*@Html.DisplayFor(model => model.Modelo)*@
+                <input type="text" name="txtModelo"
+                       value="@Model.carN.ObtenerCarro(code).Modelo" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                PLACA
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @*@Html.DisplayFor(model => model.Placa)*@
+                <input type="text" name="txtPlaca"
+                       value="@Model.carN.ObtenerCarro(code).Placa" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                AÑO
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @*@Html.DisplayFor(model => model.Anio)*@
+                <input type="text" name="txtAnio"
+                       value="@Model.carN.ObtenerCarro(code).Anio" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                PRECIO
+            </td>
+        </tr>
+        <td>
+            @*@Html.DisplayFor(model => model.Precio)*@
+            <input type="text" name="txtPrecio"
+                   value="@Model.carN.ObtenerCarro(code).Precio" />
+        </td>
+        <tr>
+            <td>
+                COLOR
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @*@Html.DisplayFor(model => model.Color)*@
+                <input type="text" name="txtColor"
+                       value="@Model.carN.ObtenerCarro(code).Color" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Nro. PUERTAS
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @*@Html.DisplayFor(model => model.NPuertas)*@
+                <input type="text" name="txtNPuertas"
+                       value="@Model.carN.ObtenerCarro(code).NPuertas" />
+            </td>
+        </tr>
+    <tr>
+        <td><p>Combustible: </p></td>
+        <td>
+            @{int cant = Model.cN.ListarCombustibles().Count();
+            <select name="CombustibleID" ons>
+                <option>Seleccione un combustible</option>
+                @for (int i = 0; i < cant; i++)
+                {
+                    int Cid = i + 1;
+                    string nom;
+                    string on_focus = "";
+                    string combNombre = Model.carN.ObtenerCarro(code).combustibleE.Nombre;
+                    nom = Model.cN.ListarCombustibles().ElementAt(i).Nombre;
+                    if (combNombre == nom)
+                    {
+                        on_focus = "this.onSelect";
+                    }
+                    <option id="@Cid" value="@Cid" onfocus="@on_focus">@nom</option>
+                }
+            </select>
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>País: </td>
+        <td>
+            @{int cant2 = Model.pN.ListarPaises().Count();
+            <select name="PaisID">
+                <option>Seleccione un país</option>
+                @for (int i = 0; i < cant2; i++)
+                {
+                    int Pid = i + 1;
+                    string nom;
+                    nom = Model.pN.ListarPaises().ElementAt(i).Nombre;
+                    <option id="@Pid" value="@Pid">@nom</option>
+                }
+            </select>
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>Transmisión: </td>
+        <td>
+            @{int cant3 = Model.tN.ListarTransmisiones().Count();
+            <select name="TransmisionID">
+                <option>Selecione una transmisión</option>
+                @for (int i = 0; i < cant3; i++)
+                {
+                    int Tid = i + 1;
+                    string nom;
+                    nom = Model.tN.ListarTransmisiones().ElementAt(i).Nombre;
+                    <option id="@Tid" value="@Tid">@nom</option>
+                }
+            </select>
+            }
+        </td>
+    </tr>
+    <tr>
+        <td>
+            FOTO
+        </td>
+    </tr>
+        <tr>
+            <td>
+                <img src="@Model.carN.ObtenerCarro(code).fotoE.URL" />
+            </td>
+        </tr>
+        }
+    </table>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

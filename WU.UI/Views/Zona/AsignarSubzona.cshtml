@@ -10,20 +10,6 @@
     });
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js">
-</script>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.css" type="text/css">
-
-<style type="text/css">
-    #map {
-        width: 100%;
-        height: 400px;
-    }
-</style>
-
-
-
 <h1>WU_CUS001 Asignar Sub Zona a ET</h1>
 <div class="row">
     <div class="col-md-8">
@@ -155,6 +141,9 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <input type="text" class="form-control" id="txtCoord" />
+        </div>
     </div>
 </div>
 
@@ -207,10 +196,13 @@
         var feature = evt.feature;
         var coords = feature.getGeometry().getCoordinates();
         var res = "";
+        var coo = "";
         coords[0].forEach(function (element) {
             res += " < " + element + "> \n";
+            coo += element + ";";
         });
         alert(res);
+        document.getElementById("txtCoord").value = coo;
         /*
             var GEOJSON_PARSER = new OpenLayers.Format.GeoJSON();
             var vectorLayerAsJson = GEOJSON_PARSER.write(evt.feature);
@@ -219,3 +211,14 @@
         */
     });
 </script>
+
+@using (Html.BeginForm("RegistrarSubZona", "Zona",
+                                                             FormMethod.Post,
+                                                             new { enctype = "multipart/form-data" }))
+{
+    <input type="submit"
+           value="Registrar"
+           id="btnRegistrar"
+           name="btnRegistrar" />
+
+}

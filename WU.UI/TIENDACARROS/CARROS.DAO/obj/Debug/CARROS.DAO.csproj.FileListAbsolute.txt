@@ -1,0 +1,28 @@
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.DAO.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.DAO.pdb
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.ENTIDADES.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.ENTIDADES.pdb
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.csprojResolveAssemblyReference.cache
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.dll
+C:\Users\Administrador\Desktop\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.pdb
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.DAO.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.DAO.pdb
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.ENTIDADES.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.ENTIDADES.pdb
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.csprojResolveAssemblyReference.cache
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.dll
+C:\Users\Administrador\Desktop\CLASE VIERNES 24-11-2017\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.pdb
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.DAO.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.DAO.pdb
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.ENTIDADES.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.ENTIDADES.pdb
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.csprojResolveAssemblyReference.cache
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.dll
+C:\Users\Administrador\Desktop\SEMANA 8 MIÉRCOLES 27-12-2017\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.pdb
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.DAO.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.DAO.pdb
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.ENTIDADES.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.DAO\bin\Debug\CARROS.ENTIDADES.pdb
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.csprojResolveAssemblyReference.cache
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.dll
+C:\Users\JAIME\Desktop\SistemaCarrosDemo\TIENDACARROS\CARROS.DAO\obj\Debug\CARROS.DAO.pdb

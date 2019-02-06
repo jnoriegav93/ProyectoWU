@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <div> 
+        @using(Html.BeginForm("ValidarLogin","Seguridad",FormMethod.Post))
+        { 
+        <input type="text" name="User"/>
+        <input type="text" name="Password" />
+        <input type="submit" value="Entrar" name="btnEntrar" />
+        }
+    </div>
+</body>
+</html>

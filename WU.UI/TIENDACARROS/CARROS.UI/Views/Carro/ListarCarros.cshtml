@@ -1,0 +1,107 @@
+﻿@model IEnumerable<CARROS.ENTIDADES.CarroE>
+
+    @{
+        Layout = null;
+    }
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>ListarCarros</title>
+    </head>
+    <body>
+        <p>
+            @Html.ActionLink("REGISTRAR CARRO", "RegistrarCarro")
+        </p>
+        <table class="table" border="1">
+            <tr>
+                <th>
+                    CARRO ID
+                </th>
+                <th>
+                    MARCA
+                </th>
+                <th>
+                    MODELO
+                </th>
+                <th>
+                    PLACA
+                </th>
+                <th>
+                    AÑO
+                </th>
+                <th>
+                    PRECIO
+                </th>
+                <th>
+                    COLOR
+                </th>
+                <th>
+                    PUERTAS
+                </th>
+                <th>
+                    COMBUSTIBLE
+                </th>
+                <th>
+                    PAÍS
+                </th>
+                <th>
+                    TRANSMISÓN
+                </th>
+                <th>
+                    FOTO
+                </th>
+                <th> CONTROL </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarroID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Marca)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Modelo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Placa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Anio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NPuertas)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.combustibleE.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.paisE.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.transmisionE.Nombre)
+                    </td>
+                    <td>                        
+                        <img src="@item.fotoE.URL"/> 
+                    <td>
+                        @*@Html.ActionLink("ACTUALIZAR", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                        @*<a href="/Carro/EditarCaro">Actualizar carro</a>*@
+                        @Html.ActionLink("DETALLES", "DetalleCarro", new { PCarroID = item.CarroID }) |
+                        @Html.ActionLink("BORRAR", "EliminarCarro", new { CarroID=item.CarroID })
+                    </td>
+                </tr>
+            }
+        </table>
+    </body>
+</html>

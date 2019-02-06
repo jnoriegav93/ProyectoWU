@@ -1,0 +1,116 @@
+﻿@model CARROS.UI.Controllers.CarroController.GrupoPTC
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RegistrarCarro</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("InsertarCarro", "Carro",
+                                     FormMethod.Post,
+                                     new { enctype = "multipart/form-data" }))
+        {
+            <table border="1" align="center">
+                <tr>
+                    <td><p>Marca: </p></td>
+                    <td><input type="text" name="txtMarca" /></td>
+                </tr>
+                <tr>
+                    <td><p>Modelo: </p></td>
+                    <td><input type="text" name="txtModelo" /></td>
+                </tr>
+                <tr>
+                    <td><p>Año: </p></td>
+                    <td><input type="text" name="txtAnio" /></td>
+                </tr>
+                <tr>
+                    <td><p>Color: </p></td>
+                    <td><input type="text" name="txtColor" /></td>
+                </tr>
+                <tr>
+                    <td><p>Placa: </p></td>
+                    <td><input type="text" name="txtPlaca" /></td>
+                </tr>
+                <tr>
+                    <td><p>Nro. Puertas: </p></td>
+                    <td><input type="text" name="txtNPuertas" /></td>
+                </tr>
+                <tr>
+                    <td><p>Precio ($): </p></td>
+                    <td><input type="text" name="txtPrecio" /></td>
+                </tr>
+                <tr>
+                    <td><p>Combustible: </p></td>
+                    <td>
+                        @{int cant = Model.cN.ListarCombustibles().Count();
+                            <select name="CombustibleID">
+                                <option>Seleccione un combustible</option>
+                                @for (int i = 0; i < cant; i++)
+                                {
+                                    int Cid = i + 1;
+                                    string nom;
+                                    nom = Model.cN.ListarCombustibles().ElementAt(i).Nombre;
+                                    <option id="@Cid" value="@Cid">@nom</option>
+                                }
+                            </select>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>País: </td>
+                    <td>
+                        @{int cant2 = Model.pN.ListarPaises().Count();
+                            <select name="PaisID">
+                                <option>Seleccione un país</option>
+                                @for (int i = 0; i < cant2; i++)
+                                {
+                                    int Pid = i + 1;
+                                    string nom;
+                                    nom = Model.pN.ListarPaises().ElementAt(i).Nombre;
+                                    <option id="@Pid" value="@Pid">@nom</option>
+                                }
+                            </select>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>Transmisión: </td>
+                    <td>
+                        @{int cant3 = Model.tN.ListarTransmisiones().Count();
+                            <select name="TransmisionID">
+                                <option>Selecione una transmisión</option>
+                                @for (int i = 0; i < cant3; i++)
+                                {
+                                    int Tid = i + 1;
+                                    string nom;
+                                    nom = Model.tN.ListarTransmisiones().ElementAt(i).Nombre;
+                                    <option id="@Tid" value="@Tid">@nom</option>
+                                }
+                            </select>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="file" name="fileFoto" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit"
+                               value="Registrar"
+                               id="btnRegistrar"
+                               name="btnRegistrar" />
+                    </td>
+                </tr>
+            </table>
+                            }
+    </div>
+</body>
+</html>

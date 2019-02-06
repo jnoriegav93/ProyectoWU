@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @* ANTES DEL RENDERBODY PUEDO PONER UN MENU
+        O ENCABEZADO *@        
+        <ul>
+            <li><a href="/Carro/Inicio">INICIO</a></li>
+            <li><a href="/Carro/ListarCarros">LISTADO</a></li>
+            <li><a href="/Carro/Registrar">REGISTRO</a></li>
+            <li><a href="/Carro/Editar">EDICIÓN</a></li>
+            <li><a href="/Carro/Obtener">OBTENER</a></li>
+        </ul>
+        @RenderBody()
+        @* DESPUÉS DEL RENDER BODY PUEDO PONER UN PIE
+            DE PÁGINA*@
+    </div>
+</body>
+</html>
