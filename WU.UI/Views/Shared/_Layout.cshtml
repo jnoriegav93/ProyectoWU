@@ -1,0 +1,104 @@
+﻿@{ 
+    var imgPath = "https://www.westernunion.com/etc/designs/westernunion/stylesheet/images/logo-wu.png";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand" style="padding:5px">
+                    <img src="@imgPath" style="max-height: 40px;"/>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="http://localhost:6445/wfPrincipal.aspx">Inicio<span class="sr-only">(current)</span></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Agente<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Consulta</a></li>
+                            <li><a href="#">Mantenimiento</a></li>
+                            <li><a href="#">Proceso</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Reporte 1</a></li>
+                            <li><a href="#">Reporte 2</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zonas<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Buscar", "BuscarZona", "Zona")</li>
+                            <li>@Html.ActionLink("Asignar Subzona", "AsignarSubzona", "Zona")</li>
+                            <li>@Html.ActionLink("Mantenimiento", "MantenimientoZona", "Zona")</li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Reporte</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Prospecto<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Registrar</a></li>
+                            <li><a href="#">Consultar</a></li>
+                            <li><a href="#">Aprobar</a></li>
+                            <li><a href="#">Mantenimiento</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transacciones<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Cargar</a></li>
+                            <li><a href="#">Procesar</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zonas<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://localhost:6445/WZonas/wfBuscarZona.aspx">Buscar</a></li>
+                            <li><a href="http://localhost:6445/WZonas/wfMantenimientoZona.aspx">Mantenimiento</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Reporte</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido, USUARIO01 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Perfil</a></li>
+                            <li><a href="#">Cambiar Clave</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
