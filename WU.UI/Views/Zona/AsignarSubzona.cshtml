@@ -76,75 +76,86 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="panel panel-default row">
-            <div class="panel-heading">
-                <h3 class="panel-title">Subzona</h3>
-            </div>
-            <div class="panel-body esp-m">
-                <div class="form-group">
-                    <div class="row" style="margin-bottom: 15px;">
-                        <label for="ddlZonas" class="col-sm-3 col-form-label">Zonas:</label>
-                        <div class="col-sm-9">
-                            @{
-                                int cant = Model.zonaBL.ListarZonas().Count();
-                                <select name="ddlZona" class="form-control">
-                                    <option>-SELECCIONE-</option>
-                                    @for (int i = 0; i < cant; i++)
-                                    {
-                                        int Cid = Model.zonaBL.ListarZonas().ElementAt(i).codzona;
-                                        string nom = Model.zonaBL.ListarZonas().ElementAt(i).dsczona;
-                                        <option id="@Cid" value="@Cid">@nom</option>
-                                    }
-                                </select>
-                            }
+    <!-- form  -->
 
+    @using (Html.BeginForm("RegistrarSubZona", "Zona", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-4">
+            <div class="panel panel-default row">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Subzona</h3>
+                </div>
+                <div class="panel-body esp-m">
+                    <div class="form-group">
+                        <div class="row" style="margin-bottom: 15px;">
+                            <label for="ddlZonas" class="col-sm-3 col-form-label">Zonas:</label>
+                            <div class="col-sm-9">
+                                @{
+                                    int cant = Model.zonaBL.ListarZonas().Count();
+                                    <select name="ddlZona" class="form-control">
+                                        <option>-SELECCIONE-</option>
+                                        @for (int i = 0; i < cant; i++)
+                                        {
+                                            int Cid = Model.zonaBL.ListarZonas().ElementAt(i).codzona;
+                                            string nom = Model.zonaBL.ListarZonas().ElementAt(i).dsczona;
+                                            <option id="@Cid" value="@Cid">@nom</option>
+                                        }
+                                    </select>
+                                }
+
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <label for="ddlZonas" class="col-sm-12 col-form-label">% de captación: 80%</label>
+                        <div class="row">
+                            <label for="ddlZonas" class="col-sm-12 col-form-label">% de captación: 80%</label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="panel panel-default row">
-            <div class="panel-heading">
-                <h3 class="panel-title">ET</h3>
+            <div class="panel panel-default row">
+                <div class="panel-heading">
+                    <h3 class="panel-title">ET</h3>
+                </div>
+                <div class="panel-body esp-m">
+                    <div class="form-group">
+                        <div class="row ">
+                            <div class="col-sm-12" style="margin-bottom: 15px; width:100%">
+                                @{
+                                    int cantET = Model.etBL.ListarET().Count();
+                                    <select name="ddlET" class="form-control">
+                                        <option>-SELECCIONE-</option>
+                                        @for (int i = 0; i < cantET; i++)
+                                        {
+                                            int Cid = Model.etBL.ListarET().ElementAt(i).codet;
+                                            string nom = Model.etBL.ListarET().ElementAt(i).nomet + " " +
+                                                        Model.etBL.ListarET().ElementAt(i).apeet;
+                                            <option id="@Cid" value="@Cid">@nom</option>
+                                        }
+                                    </select>
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="#" class="btn btn-block btn-primary btn-block">Buscar</a>
+                            </div>
+                            <div class="col-xs-6">
+                                <a href="#" class="btn btn-block btn-primary btn-danger">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="panel-body esp-m">
-                <div class="form-group">
-                    <div class="row ">
-                        <div class="col-sm-12" style="margin-bottom: 15px;">
-                            @{
-                                int cantET = Model.etBL.ListarET().Count();
-                                <select name="ddlET" class="form-control">
-                                    <option>-SELECCIONE-</option>
-                                    @for (int i = 0; i < cantET; i++)
-                                    {
-                                        int Cid = Model.etBL.ListarET().ElementAt(i).codet;
-                                        string nom = Model.etBL.ListarET().ElementAt(i).nomet + " " +
-                                                    Model.etBL.ListarET().ElementAt(i).apeet;
-                                        <option id="@Cid" value="@Cid">@nom</option>
+            <div class="row">
+                <textarea id="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
+            </div>
+        </div>
+        <input type="submit"
+               value="Registrar"
+               id="btnRegistrar"
+               name="btnRegistrar" />
                                     }
-                                </select>
-                            }
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <a href="#" class="btn btn-block btn-primary btn-block">Buscar</a>
-                        </div>
-                        <div class="col-xs-6">
-                            <a href="#" class="btn btn-block btn-primary btn-danger">Eliminar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <input type="text" class="form-control" id="txtCoord" />
-        </div>
-    </div>
+
+    <!-- fin form  -->
 </div>
 
 <script type="text/javascript">
@@ -174,7 +185,7 @@
             //Start of the star style
             new ol.style.RegularShape({
                 fill: new ol.style.Fill({
-                    color: 'red'                    
+                    color: 'red'
                 }),
                 points: 4,
                 radius1: 15,
@@ -212,13 +223,3 @@
     });
 </script>
 
-@using (Html.BeginForm("RegistrarSubZona", "Zona",
-                                                             FormMethod.Post,
-                                                             new { enctype = "multipart/form-data" }))
-{
-    <input type="submit"
-           value="Registrar"
-           id="btnRegistrar"
-           name="btnRegistrar" />
-
-}

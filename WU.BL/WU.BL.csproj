@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ETBL.cs" />
+    <Compile Include="Parametros.cs" />
+    <Compile Include="SubzonaBL.cs" />
     <Compile Include="ZonaBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

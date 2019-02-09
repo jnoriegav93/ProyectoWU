@@ -17,12 +17,11 @@
     @Scripts.Render("~/Scripts/moment.min.js")
     @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
     @Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.Render("~/Scripts/ol.js")
+
+    @Styles.Render("~/Content/ol.css")
     @RenderSection("scripts", required: false)
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js">
-    </script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.css" type="text/css">
 
     <style type="text/css">
         #map {
