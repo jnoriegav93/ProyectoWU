@@ -1,0 +1,124 @@
+﻿@model IEnumerable<WU.BE.ZonaBE>
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#finicio').datetimepicker();
+        $('#ffin').datetimepicker();
+    });
+</script>
+
+<h1>Mantenimiento de Zonas</h1>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Datos</h3>
+        </div>
+        <div class="panel-body" style="padding: 0">
+            <br>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-sm-4 coc-form-label">Fecha Inicio:</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date" id="finicio">
+                                    <input type="text" class="form-control ocl-8">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-sm-4 col-form-label">Fecha Fin:</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date" id="ffin">
+                                    <input type="text" class="form-control ocl-8">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-sm-3 col-form-label">RUC:</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control ocl-8">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-sm-3 col-form-label">Razón Social:</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control ocl-8">
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="#" class="btn btn-primary btn-block esp-s">Buscar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fin panel -->
+</div>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Lista</h3>
+        </div>
+        <div class="panel-body" style="padding: 0">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped" style="overflow-y:scroll; max-height:400px">
+                    <thead>
+                        <tr>
+                            <th scope="col">N°</th>
+                            <th scope="col">Ubigeo</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.codzona)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.codubigeo)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.dsczona)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.estzona)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("DetalleZona", "Zona", new { modelItem = item.codzona })" 
+                                       class="btn btn-primary btn-sm" style="width: 32px">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

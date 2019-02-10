@@ -1,0 +1,13 @@
+﻿@model WU.UI.Controllers.ZonaController
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+@{ 
+
+    string url = HttpContext.Current.Request.Url.AbsoluteUri;
+    int longi = url.Length;
+    int cod = Convert.ToInt32(url.Substring(longi - 1, 1));
+    <p>@Model.zonaBL.DetalleZona(cod).codzona</p>
+}

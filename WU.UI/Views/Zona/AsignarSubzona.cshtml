@@ -91,13 +91,13 @@
                             <label for="ddlZonas" class="col-sm-3 col-form-label">Zonas:</label>
                             <div class="col-sm-9">
                                 @{
-                                    int cant = Model.zonaBL.ListarZonas().Count();
+                                    int cant = Model.zonaBL.CargarZonas().Count();
                                     <select name="ddlZona" class="form-control">
                                         <option>-SELECCIONE-</option>
                                         @for (int i = 0; i < cant; i++)
                                         {
-                                            int Cid = Model.zonaBL.ListarZonas().ElementAt(i).codzona;
-                                            string nom = Model.zonaBL.ListarZonas().ElementAt(i).dsczona;
+                                            int Cid = Model.zonaBL.CargarZonas().ElementAt(i).codzona;
+                                            string nom = Model.zonaBL.CargarZonas().ElementAt(i).dsczona;
                                             <option id="@Cid" value="@Cid">@nom</option>
                                         }
                                     </select>

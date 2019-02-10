@@ -12,20 +12,20 @@ namespace WU.DAO
 {
     public class ZonaDAO
     {
-        public List<ZonaBE> ListarZonas()
+        public List<ZonaBE> CargarZonas()
         {
             List<ZonaBE> lstZona = new List<ZonaBE>();
             try
             {
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CONEXION"].ConnectionString);
                 con.Open();
-                SqlCommand cmd = new SqlCommand("sp_tb_zona_lst", con);
+                SqlCommand cmd = new SqlCommand("sp_tb_zona_ddl", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
                     ZonaBE z = new ZonaBE();
-                    z.codzona = Convert.ToInt32(dr[0]);
+                    z.codzona = dr[0].ToString();
                     z.dsczona = dr[1].ToString();
                     lstZona.Add(z);
                 }
@@ -37,6 +37,68 @@ namespace WU.DAO
 
             }
             return lstZona;
-        }        
+        }
+
+        public List<ZonaBE> ListarZonas( ZonaBE be)
+        {
+            List<ZonaBE> lstZona = new List<ZonaBE>();
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CONEXION"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("sp_tb_zona_lst", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@codzona", be.codzona);
+                cmd.Parameters.AddWithValue("@codubigeo", be.codubigeo);
+                cmd.Parameters.AddWithValue("@dsczona", be.dsczona);
+                cmd.Parameters.AddWithValue("@estzona", be.estzona);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    ZonaBE z = new ZonaBE();
+                    z.codzona = dr[0].ToString();
+                    z.dsczona = dr[1].ToString();
+                    z.estzona = dr[2].ToString();
+                    z.codubigeo = dr[3].ToString();
+                    lstZona.Add(z);
+                }
+                con.Close();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return lstZona;
+        }
+
+        public ZonaBE DetalleZona(int codzona)
+        {
+            ZonaBE z = new ZonaBE();
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CONEXION"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("sp_tb_zona_det", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@codzona", codzona);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    z = new ZonaBE();
+                    z.codzona = dr[0].ToString();
+                    z.dsczona = dr[1].ToString();
+                    z.estzona = dr[2].ToString();
+                    z.codubigeo = dr[3].ToString();
+                }
+                con.Close();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return z;
+        }
     }
 }

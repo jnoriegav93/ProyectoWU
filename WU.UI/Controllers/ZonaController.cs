@@ -22,10 +22,9 @@ namespace WU.UI.Controllers
             return View(model);
 
         }
-        public ActionResult ListarZonas()
+        public ActionResult CargarZonas()
         {
-            return View(zonaBL.ListarZonas());
-
+            return View(zonaBL.CargarZonas());
         }
         public ActionResult ListarET()
         {
@@ -61,5 +60,25 @@ namespace WU.UI.Controllers
             }
             return Content(mensaje);
         }
+
+        //Mantenimiento de Zonas
+
+        public ActionResult MantenimientoZonas(ZonaBE param)
+        {
+            param = new ZonaBE()
+            {
+                codzona = "%",
+                codubigeo = "1501%",
+                dsczona = "%",
+                estzona = "%"
+            };
+            return View(zonaBL.ListarZonas(param));
+        }
+
+        public ActionResult DetalleZona(int codzona)
+        {
+            return View(zonaBL.DetalleZona(codzona));
+        }
+
     }
 }

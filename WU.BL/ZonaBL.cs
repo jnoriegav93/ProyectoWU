@@ -10,9 +10,17 @@ namespace WU.BL
     public class ZonaBL
     {
         ZonaDAO zona = new ZonaDAO();
-        public List<ZonaBE> ListarZonas()
+        public List<ZonaBE> CargarZonas()
         {
-            return zona.ListarZonas();
+            return zona.CargarZonas();
+        }
+        public List<ZonaBE> ListarZonas(ZonaBE param)
+        {
+            return zona.ListarZonas(param);
+        }
+        public ZonaBE DetalleZona(int codzona)
+        {
+            return zona.DetalleZona(codzona);
         }
 
     }
