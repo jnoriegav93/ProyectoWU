@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<WU.BE.ZonaBE>
 @{
     Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Mantenimiento de Zonas";
 }
 
 <script type="text/javascript">
@@ -10,7 +11,7 @@
     });
 </script>
 
-<h1>Mantenimiento de Zonas</h1>
+<h3>Mantenimiento de Zonas</h3>
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -78,16 +79,22 @@
         <div class="panel-heading">
             <h3 class="panel-title">Lista</h3>
         </div>
-        <div class="panel-body" style="padding: 0">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover table-striped" style="overflow-y:scroll; max-height:400px">
+        <div class="panel-body">
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#tbZonas').DataTable({
+                    });
+                });
+            </script>
+            <div class="col-sm-12">
+                <table id="tbZonas" class="table table-bordered table-hover table-striped" style="overflow-y:scroll; max-height:400px">
                     <thead>
                         <tr>
-                            <th scope="col">N°</th>
-                            <th scope="col">Ubigeo</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col"></th>
+                            <th>N°</th>
+                            <th>Ubigeo</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,16 +107,14 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.codubigeo)
                                 </td>
-
                                 <td>
                                     @Html.DisplayFor(modelItem => item.dsczona)
                                 </td>
-
                                 <td>
                                     @Html.DisplayFor(modelItem => item.estzona)
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("DetalleZona", "Zona", new { modelItem = item.codzona })" 
+                                    <a href="@Url.Action("DetalleZona", "Zona", new { modelItem = item.codzona })"
                                        class="btn btn-primary btn-sm" style="width: 32px">
                                         <span class="glyphicon glyphicon-search"></span>
                                     </a>
@@ -117,6 +122,15 @@
                             </tr>
                         }
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>N°</th>
+                            <th>Ubigeo</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

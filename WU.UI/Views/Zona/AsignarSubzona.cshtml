@@ -1,6 +1,7 @@
 ﻿@model WU.UI.Controllers.ZonaController
 @{
     Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Asignar Subzona";
 }
 
 <script type="text/javascript">
@@ -10,7 +11,7 @@
     });
 </script>
 
-<h1>WU_CUS001 Asignar Sub Zona a ET</h1>
+<h3>WU_CUS001 Asignar Sub Zona a ET</h3>
 <div class="row">
     <div class="col-md-8">
         <div class="panel panel-default">
@@ -96,7 +97,7 @@
                                         <option>-SELECCIONE-</option>
                                         @for (int i = 0; i < cant; i++)
                                         {
-                                            int Cid = Model.zonaBL.CargarZonas().ElementAt(i).codzona;
+                                            string Cid = Model.zonaBL.CargarZonas().ElementAt(i).codzona;
                                             string nom = Model.zonaBL.CargarZonas().ElementAt(i).dsczona;
                                             <option id="@Cid" value="@Cid">@nom</option>
                                         }
@@ -222,4 +223,3 @@
         */
     });
 </script>
-

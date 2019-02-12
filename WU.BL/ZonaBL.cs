@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WU.DAO;
 using WU.BE;
 namespace WU.BL
@@ -18,9 +15,9 @@ namespace WU.BL
         {
             return zona.ListarZonas(param);
         }
-        public ZonaBE DetalleZona(int codzona)
+        public ZonaBE CargarDetalleZona(String codzona)
         {
-            return zona.DetalleZona(codzona);
+            return zona.CargarDetalleZona(codzona);
         }
 
     }

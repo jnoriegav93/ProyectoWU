@@ -39,7 +39,7 @@ namespace WU.DAO
             return lstZona;
         }
 
-        public List<ZonaBE> ListarZonas( ZonaBE be)
+        public List<ZonaBE> ListarZonas(ZonaBE be)
         {
             List<ZonaBE> lstZona = new List<ZonaBE>();
             try
@@ -57,9 +57,9 @@ namespace WU.DAO
                 {
                     ZonaBE z = new ZonaBE();
                     z.codzona = dr[0].ToString();
-                    z.dsczona = dr[1].ToString();
-                    z.estzona = dr[2].ToString();
-                    z.codubigeo = dr[3].ToString();
+                    z.codubigeo = dr[1].ToString();
+                    z.dsczona = dr[2].ToString();
+                    z.estzona = dr[3].ToString();
                     lstZona.Add(z);
                 }
                 con.Close();
@@ -72,7 +72,7 @@ namespace WU.DAO
             return lstZona;
         }
 
-        public ZonaBE DetalleZona(int codzona)
+        public ZonaBE CargarDetalleZona(String codzona)
         {
             ZonaBE z = new ZonaBE();
             try

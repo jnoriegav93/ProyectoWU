@@ -4,10 +4,12 @@
 }
 <!DOCTYPE html>
 
-@{ 
+@{
 
     string url = HttpContext.Current.Request.Url.AbsoluteUri;
     int longi = url.Length;
-    int cod = Convert.ToInt32(url.Substring(longi - 1, 1));
-    <p>@Model.zonaBL.DetalleZona(cod).codzona</p>
+    string cod = url.Substring(longi - 1, 1);
+    <p>@Model.zonaBL.CargarDetalleZona(cod).codzona</p>
+    <p>@Model.zonaBL.CargarDetalleZona(cod).dsczona</p>
+    <p>@Model.zonaBL.CargarDetalleZona(cod).codubigeo</p>    
 }

@@ -30,7 +30,7 @@ namespace WU.UI.Controllers
         {
             return View(etBL.ListarET());
         }
-        
+
         public ActionResult RegistrarSubZona()
         {
             SubzonaBE sz = new SubzonaBE()
@@ -68,16 +68,21 @@ namespace WU.UI.Controllers
             param = new ZonaBE()
             {
                 codzona = "%",
-                codubigeo = "1501%",
+                codubigeo = "%",
                 dsczona = "%",
                 estzona = "%"
             };
             return View(zonaBL.ListarZonas(param));
         }
 
-        public ActionResult DetalleZona(int codzona)
+        public ActionResult DetalleZona()
         {
-            return View(zonaBL.DetalleZona(codzona));
+            var model = new ZonaController();
+            return View(model);
+        }
+        public ActionResult CargarDetalleZona(String codzona)
+        {
+            return View(zonaBL.CargarDetalleZona(codzona));
         }
 
     }
