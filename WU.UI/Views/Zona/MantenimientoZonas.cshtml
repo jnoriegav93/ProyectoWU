@@ -111,11 +111,18 @@
                                     @Html.DisplayFor(modelItem => item.dsczona)
                                 </td>
                                 <td>
-                                    @{string tp = (item.estzona == "ACT" ? "success" : "danger");
+                                    @{string tp = "";
+                                        switch (item.estzona)
+                                        {
+                                            case "ACT": tp = "success"; break;
+                                            case "INA": tp = "danger"; break;
+                                            default: tp = "primary"; break;
+                                        }
+
+                                        <span class="label label-@tp">
+                                            @Html.DisplayFor(modelItem => item.estzona)
+                                        </span>
                                     }
-                                    <span class="label label-@tp">
-                                        @Html.DisplayFor(modelItem => item.estzona)
-                                    </span>
                                 </td>
                                 <td>
                                     <a href="@Url.Action("DetalleZona", "Zona", new { modelItem = item.codzona })"
