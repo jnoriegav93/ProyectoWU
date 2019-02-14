@@ -7,6 +7,12 @@ namespace WU.BL
     public class ZonaBL
     {
         ZonaDAO zona = new ZonaDAO();
+
+        public String ProbarConexion()
+        {
+            return (new Conexion()).ProbarConexion();
+        }
+
         public List<ZonaBE> CargarZonas()
         {
             return zona.CargarZonas();

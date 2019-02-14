@@ -49,7 +49,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://localhost:6445/wfPrincipal.aspx">Inicio<span class="sr-only">(current)</span></a></li>
+                    <li class="active"><a href="@Url.Action("Index", "Home")">Inicio<span class="sr-only">(current)</span></a></li>
                     <li class="dropdown" style="display:none">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Agente<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -64,7 +64,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zonas<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("1.Buscar", "BuscarZona", "Zona")</li>
+                            <li style="display:none">@Html.ActionLink("1.Buscar", "BuscarZona", "Zona")</li>
                             <li>@Html.ActionLink("4.Asignar Subzona", "AsignarSubzona", "Zona")</li>
                             <li>@Html.ActionLink("2.Mantenimiento", "MantenimientoZonas", "Zona")</li>
                             <li role="separator" class="divider"></li>

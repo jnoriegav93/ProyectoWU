@@ -12,12 +12,14 @@ namespace WU.DAO
 {
     public class ZonaDAO
     {
+        Conexion c = new Conexion();
+        SqlConnection con = new SqlConnection();        
         public List<ZonaBE> CargarZonas()
         {
             List<ZonaBE> lstZona = new List<ZonaBE>();
             try
             {
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CONEXION"].ConnectionString);
+                SqlConnection con = c.AbrirConexion();
                 con.Open();
                 SqlCommand cmd = new SqlCommand("sp_tb_zona_ddl", con);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -31,10 +33,14 @@ namespace WU.DAO
                 }
                 con.Close();
                 con.Dispose();
+                lstZona.Insert(0, new ZonaBE() { codzona = "0", dsczona = "-SELECCIONE-" });
             }
             catch (Exception ex)
             {
-
+                ZonaBE z = new ZonaBE();
+                z.codzona = "0";
+                z.dsczona = "-ERROR-";
+                lstZona.Add(z);
             }
             return lstZona;
         }
@@ -44,7 +50,7 @@ namespace WU.DAO
             List<ZonaBE> lstZona = new List<ZonaBE>();
             try
             {
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CONEXION"].ConnectionString);
+                SqlConnection con = c.AbrirConexion();
                 con.Open();
                 SqlCommand cmd = new SqlCommand("sp_tb_zona_lst", con);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -77,7 +83,7 @@ namespace WU.DAO
             ZonaBE z = new ZonaBE();
             try
             {
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CONEXION"].ConnectionString);
+                SqlConnection con = c.AbrirConexion();
                 con.Open();
                 SqlCommand cmd = new SqlCommand("sp_tb_zona_det", con);
                 cmd.CommandType = CommandType.StoredProcedure;

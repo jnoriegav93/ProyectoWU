@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WU.BL;
 
 namespace WU.UI.Controllers
 {
@@ -10,6 +11,8 @@ namespace WU.UI.Controllers
     {
         public ActionResult Index()
         {
+
+            ViewBag.Message = "Probando conexion: "+ (new ZonaBL()).ProbarConexion();
             return View();
         }
 

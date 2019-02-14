@@ -12,11 +12,11 @@ namespace WU.DAO
 {
     public class SubzonaDAO
     {
-
+        Conexion c = new Conexion();
         public bool RegistrarSubzona(SubzonaBE be)
         {
             List<SubzonaBE> lstSubzona = new List<SubzonaBE>();
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["CONEXION"].ConnectionString);
+            SqlConnection con = c.AbrirConexion();
             try
             {
                 con.Open();

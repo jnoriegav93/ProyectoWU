@@ -92,13 +92,13 @@
                             <label for="ddlZonas" class="col-sm-3 col-form-label">Zonas:</label>
                             <div class="col-sm-9">
                                 @{
-                                    int cant = Model.zonaBL.CargarZonas().Count();
+                                    var modelo = Model.zonaBL.CargarZonas();
+                                    int cant = modelo.Count();
                                     <select name="ddlZona" class="form-control">
-                                        <option>-SELECCIONE-</option>
                                         @for (int i = 0; i < cant; i++)
                                         {
-                                            string Cid = Model.zonaBL.CargarZonas().ElementAt(i).codzona;
-                                            string nom = Model.zonaBL.CargarZonas().ElementAt(i).dsczona;
+                                            string Cid = modelo.ElementAt(i).codzona;
+                                            string nom = modelo.ElementAt(i).dsczona;
                                             <option id="@Cid" value="@Cid">@nom</option>
                                         }
                                     </select>
@@ -121,14 +121,14 @@
                         <div class="row ">
                             <div class="col-sm-12" style="margin-bottom: 15px; width:100%">
                                 @{
-                                    int cantET = Model.etBL.ListarET().Count();
+                                    var modeloET = Model.etBL.ListarET();
+                                    int cantET = modeloET.Count();
                                     <select name="ddlET" class="form-control">
-                                        <option>-SELECCIONE-</option>
                                         @for (int i = 0; i < cantET; i++)
                                         {
-                                            int Cid = Model.etBL.ListarET().ElementAt(i).codet;
-                                            string nom = Model.etBL.ListarET().ElementAt(i).nomet + " " +
-                                                        Model.etBL.ListarET().ElementAt(i).apeet;
+                                            int Cid = modeloET.ElementAt(i).codet;
+                                            string nom = modeloET.ElementAt(i).nomet + " " +
+                                                        modeloET.ElementAt(i).apeet;
                                             <option id="@Cid" value="@Cid">@nom</option>
                                         }
                                     </select>
