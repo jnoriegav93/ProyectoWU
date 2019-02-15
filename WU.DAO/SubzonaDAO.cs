@@ -27,9 +27,7 @@ namespace WU.DAO
                 cmd.Parameters.AddWithValue("@coordenadas", be.coordenadas);
                 cmd.Parameters.AddWithValue("@fch_registro", be.fch_registro);
                 cmd.Parameters.AddWithValue("@estsubzona", be.estsubzona);
-
                 cmd.ExecuteNonQuery();
-                return true;
 
             }
             catch (Exception ex)
@@ -40,6 +38,7 @@ namespace WU.DAO
             {
                 con.Close();
             }
+            return true;
         }
     }
 }

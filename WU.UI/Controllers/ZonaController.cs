@@ -30,35 +30,42 @@ namespace WU.UI.Controllers
         {
             return View(etBL.ListarET());
         }
-
-        public ActionResult RegistrarSubZona()
+        [HttpPost]
+        public ActionResult RegistrarSubZona(string txtCoord, string ddlZona, string ddlET)
         {
             SubzonaBE sz = new SubzonaBE()
             {
-                codsubzona = 99,
-                codzona = 1,
-                nomsubzona = "NOMBRE",
-                coordenadas = "123.00,40.052;123.00,40.052;123.00,40.052;",
+                codsubzona = 99,//nuevo correlativo, insertar con una secuencia
+                codzona = Convert.ToInt32(ddlZona),
+                nomsubzona = "SZ - " + ddlZona,
+                coordenadas = txtCoord,// "123.00,40.052;123.00,40.052;123.00,40.052;",                
                 fch_registro = DateTime.Now,
                 estsubzona = "ACT"
             };
             String mensaje = "";
-
-            if (subzonaBL.RegistrarSubzona(sz))
+            if (ddlZona != "0" && txtCoord.Length > 0)
             {
-                mensaje = "<script language='javascript'" +
-                            "type='text/javascript'>alert('INSERTADO');" +
-                            "window.location.href='/Zona/AsignarSubzona';" +
-                            "</script>";
+
+                if (subzonaBL.RegistrarSubzona(sz))
+                {
+
+                    mensaje = GenerarScript("alert('INSERTADO');");
+                }
+                else
+                {
+                    mensaje = GenerarScript("alert('NO INSERTADO');");
+                }
             }
             else
             {
-                mensaje = "<script language='javascript'" +
-                       "type='text/javascript'>alert('NO INSERTADO');" +
-                       "window.location.href='/Zona/AsignarSubzona';" +
-                       "</script>";
+                mensaje = GenerarScript("alert('Debe completar todos los campos');");
             }
             return Content(mensaje);
+        }
+
+        public String GenerarScript(String script)
+        {
+            return "<script language='javascript' type='text/javascript'>" + script + " window.location.href='/Zona/AsignarSubzona';</script>";
         }
 
         //Mantenimiento de Zonas
