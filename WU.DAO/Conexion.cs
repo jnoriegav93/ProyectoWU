@@ -42,7 +42,7 @@ namespace WU.DAO
             con.Close();      
             return resultado;
             */
-            return new SqlConnection(ConfigurationManager.ConnectionStrings["CONEXION2"].ConnectionString);
+            return new SqlConnection(ConfigurationManager.ConnectionStrings["CONEXION3"].ConnectionString);
         }
 
         public String ProbarConexion()
