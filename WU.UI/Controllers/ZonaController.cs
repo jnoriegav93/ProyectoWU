@@ -13,6 +13,7 @@ namespace WU.UI.Controllers
         public ZonaBL zonaBL = new ZonaBL();
         public SubzonaBL subzonaBL = new SubzonaBL();
         public ETBL etBL = new ETBL();
+        public UbigeoBL ubigeoBL = new UbigeoBL();
         public List<ZonaBE> lstZonas = new List<ZonaBE>();
 
 
@@ -85,7 +86,7 @@ namespace WU.UI.Controllers
         public ActionResult MantenimientoZonas(string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
         {
             txtNombre = txtNombre == null ? "" : txtNombre;
-            txtFchIni = txtFchIni == null ? DateTime.Now.ToString("yyyy-MM-dd") : txtFchIni;
+            txtFchIni = txtFchIni == null ? DateTime.Now.AddDays(1-DateTime.Now.Day).ToString("yyyy-MM-dd") : txtFchIni;
             txtFchFin = txtFchFin == null ? DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") : txtFchFin;
             ddlEstado = ddlEstado == null ? "0" : ddlEstado;
             ZonaBE param = new ZonaBE()
@@ -109,9 +110,17 @@ namespace WU.UI.Controllers
 
         public ActionResult DibujarZona(String codzona)
         {
-            lstZonas = zonaBL.DibujarZona(codzona);
             return View(zonaBL.DibujarZona(codzona));
+        }
 
+        public ActionResult NuevaZona()
+        {
+            return View(new ZonaController());
+        }
+
+        public ActionResult listarDepartamentos()
+        {
+            return View(ubigeoBL.listarDepartamentos());
         }
 
     }

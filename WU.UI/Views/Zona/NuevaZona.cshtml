@@ -1,0 +1,208 @@
+﻿@model WU.UI.Controllers.ZonaController
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Nueva Zona";
+
+}
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#finicio_001').datetimepicker({ format: 'DD/MM/YYYY' });
+        $('#ffin_001').datetimepicker({ format: 'DD/MM/YYYY' });
+    });
+</script>
+
+<style type="text/css">
+    #map {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+<h3>Nueva Zona</h3>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Datos</h3>
+        </div>
+        <div class="panel-body esp-s" style="">
+            <div class="row">
+                <div class="col-md-3 col-sm-2">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-md-6 coc-form-label esp-s">Código:</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control ocl-8" id="txtCodigo" name="txtCodigo" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-sm-7">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-md-2 coc-form-label esp-s">Nombre:</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control ocl-8" id="txtNombre" name="txtNombre" value="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-2">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-md-6 coc-form-label esp-s">Cod. Ubigeo:</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control ocl-8" id="txtCodubigeo" name="txtCodubigeo" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-7">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-md-2 coc-form-label esp-s">Ubigeo:</label>
+                        <div class="col-md-10 esp-s">
+                            <div class="input-group col-md-12 col-xs-12" style="padding:0;">
+                                @{
+                                    var modelo = Model.ubigeoBL.listarDepartamentos();
+                                    int cant = modelo.Count();
+                                    <select class="form-control" id="ddlDepartamento" style="width: 33%">
+                                        @for (int i = 0; i < cant; i++)
+                                        {
+                                            string Cid = modelo.ElementAt(i).codubigeo;
+                                            string nom = modelo.ElementAt(i).departamento;
+                                            <option id="@Cid" value="@Cid">@nom</option>
+                                        }
+                                    </select>
+                                }
+
+                                <select class="form-control" id="ddlRubro" style="width: 33%">
+                                    <option>-CIUDAD-</option>
+                                </select>
+                                <select class="form-control" id="ddlRubro" style="width: 34%">
+                                    <option>-DISTRITO-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-2">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-md-6 coc-form-label esp-s">Estado:</label>
+                        <div class="col-md-6">
+                            <span class="label label-success" style="font-size:100% ; padding:.2em 1em .3em">ACTIVO</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-3">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-md-4 coc-form-label esp-s">Fecha:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control ocl-8" value="@DateTime.Now.ToString("dd/MM/yyyy hh:mm tt")" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
+            </div>
+        </div>
+    </div>
+    <!-- fin panel -->
+</div>
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Mapa</h3>
+        </div>
+        <div class="panel-body" style="padding: 0">
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-3" style="margin-bottom: 15px;">
+        <a href="@Url.Action("NuevaZona", "Zona")" class="btn btn-sm btn-primary btn-block">
+            <span class="glyphicon glyphicon-plus"></span>
+            Nueva zona
+        </a>
+    </div>
+    <div class="col-xs-3" style="margin-bottom: 15px;">
+        <a href="#" class="btn btn-sm btn-primary btn-block">
+            <span class="glyphicon glyphicon-pencil"></span>
+            Editar Zona
+        </a>
+    </div>
+    <div class="col-xs-3" style="margin-bottom: 15px;">
+        <a href="@Url.Action("MantenimientoZonas", "Zona")" class="btn btn-sm btn-primary btn-block">
+            <span class="glyphicon glyphicon-log-out"></span>
+            Salir
+        </a>
+
+    </div>
+    <div class="col-xs-3" style="margin-bottom: 15px;">
+        <a href="#" class="btn btn-sm btn-primary btn-block">
+            <span class="glyphicon glyphicon-save"></span>
+            Grabar
+        </a>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var source = new ol.source.Vector();
+    var puntoLima = ol.proj.fromLonLat([-77.044, -12.062]);
+
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+        }),
+        new ol.layer.Vector({
+            source: source
+        })],
+        view: new ol.View({
+            center: puntoLima,
+            zoom: 15,
+            projection: 'EPSG:3857'
+        })
+    });
+    var draw = new ol.interaction.Draw({
+        type: 'Polygon',
+        source: source,
+        style: new ol.style.Style({
+            image:
+            //Start of the star style
+            new ol.style.RegularShape({
+                fill: new ol.style.Fill({
+                    color: 'red'
+                }),
+                points: 4,
+                radius1: 15,
+                radius2: 1,
+            }),
+            stroke: new ol.style.Stroke({
+                color: 'blue',
+                width: 2
+            })/*,
+            fill: new ol.style.Fill({
+                color: 'white'
+            })*/
+        })
+    });
+    map.addInteraction(draw);
+
+
+    source.on('addfeature', function (evt) {
+        var feature = evt.feature;
+        var coords = feature.getGeometry().getCoordinates();
+        var coo = "";
+        coords[0].forEach(function (element) {
+            element = ol.proj.transform(element, 'EPSG:3857', 'EPSG:4326');  //14 decimales , 18 caracteres
+            coo += element + ";";
+        });
+        document.getElementById("txtCoord").value = coo;
+    });
+
+</script>

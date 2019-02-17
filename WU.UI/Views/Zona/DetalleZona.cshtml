@@ -1,6 +1,7 @@
 ﻿@model WU.UI.Controllers.ZonaController
 @{
     Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Detalle de zona";
 }
 <!DOCTYPE html>
 
@@ -20,13 +21,6 @@
     string cod = url.Contains("=") ? url.Split('=')[1] : "0";
     var modelo = Model.zonaBL.CargarDetalleZona(cod);
 }
-@modelo.codzona <br />
-@modelo.fchregistro.ToString("dd/MM/yyyy hh:mm tt")<br />
-@modelo.estzona <br />
-@modelo.dsczona <br />
-@modelo.codubigeo <br />
-@modelo.dscubigeo <br />
-
 
 <h1>WU_CUS016 Mantenimiento de Zonas</h1>
 <div class="row">
@@ -118,7 +112,7 @@
 </div>
 <div class="row">
     <div class="col-xs-3" style="margin-bottom: 15px;">
-        <a href="#" class="btn btn-sm btn-primary btn-block">
+        <a href="@Url.Action("NuevaZona", "Zona")" class="btn btn-sm btn-primary btn-block">
             <span class="glyphicon glyphicon-plus"></span>
             Nueva zona
         </a>

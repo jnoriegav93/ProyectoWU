@@ -44,6 +44,7 @@
     <Compile Include="Conexion.cs" />
     <Compile Include="ETDAO.cs" />
     <Compile Include="SubzonaDAO.cs" />
+    <Compile Include="UbigeoDAO.cs" />
     <Compile Include="ZonaDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

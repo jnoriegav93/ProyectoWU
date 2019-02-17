@@ -281,6 +281,7 @@
     <Content Include="Views\Zona\AsignarSubzona.cshtml" />
     <Content Include="Views\Zona\MantenimientoZonas.cshtml" />
     <Content Include="Views\Zona\DetalleZona.cshtml" />
+    <Content Include="Views\Zona\NuevaZona.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
