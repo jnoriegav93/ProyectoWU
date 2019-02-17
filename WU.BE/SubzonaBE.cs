@@ -12,7 +12,7 @@ namespace WU.BE
         public int codzona { get; set; }
         public String coordenadas { get; set; }
         public String nomsubzona { get; set; }
-        public DateTime fch_registro { get; set; }
+        public DateTime fchregistro { get; set; }
         public String estsubzona { get; set; }
     }
 }

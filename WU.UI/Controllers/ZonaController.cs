@@ -39,7 +39,7 @@ namespace WU.UI.Controllers
                 codzona = Convert.ToInt32(ddlZona),
                 nomsubzona = "SZ - " + ddlZona,
                 coordenadas = txtCoord,// "123.00,40.052;123.00,40.052;123.00,40.052;",                
-                fch_registro = DateTime.Now,
+                fchregistro = DateTime.Now,
                 estsubzona = "ACT"
             };
             String mensaje = "";
@@ -70,14 +70,29 @@ namespace WU.UI.Controllers
 
         //Mantenimiento de Zonas
 
-        public ActionResult MantenimientoZonas(ZonaBE param)
+        /*public ActionResult MantenimientoZonas(ZonaBE param)
         {
             param = new ZonaBE()
             {
-                codzona = "%",
-                codubigeo = "%",
-                dsczona = "%",
-                estzona = "%"
+                fchinicio = "2019-01-01",
+                fchfin = "2019-03-01",
+                estzona = "0"
+            };
+            return View(zonaBL.ListarZonas(param));
+        }*/
+
+        public ActionResult MantenimientoZonas( string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
+        {
+            txtNombre = txtNombre == null ? "" : txtNombre;
+            txtFchIni = txtFchIni == null ? DateTime.Now.ToString("yyyy-MM-dd") : txtFchIni;
+            txtFchFin = txtFchFin == null ? DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") : txtFchFin;
+            ddlEstado = ddlEstado == null ? "0" : ddlEstado;
+            ZonaBE param = new ZonaBE()
+            {
+                dsczona = txtNombre.Trim(),
+                fchinicio = Convert.ToDateTime(txtFchIni).ToString("yyyy-MM-dd"),
+                fchfin = Convert.ToDateTime(txtFchFin).ToString("yyyy-MM-dd"),
+                estzona = ddlEstado
             };
             return View(zonaBL.ListarZonas(param));
         }

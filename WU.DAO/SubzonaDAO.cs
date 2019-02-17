@@ -24,8 +24,9 @@ namespace WU.DAO
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@codsubzona", be.codsubzona);
                 cmd.Parameters.AddWithValue("@codzona", be.codzona);
+                cmd.Parameters.AddWithValue("@nomsubzona", be.nomsubzona);
                 cmd.Parameters.AddWithValue("@coordenadas", be.coordenadas);
-                cmd.Parameters.AddWithValue("@fch_registro", be.fch_registro);
+                cmd.Parameters.AddWithValue("@fchregistro", be.fchregistro);
                 cmd.Parameters.AddWithValue("@estsubzona", be.estsubzona);
                 cmd.ExecuteNonQuery();
 

@@ -54,9 +54,11 @@ namespace WU.DAO
                 con.Open();
                 SqlCommand cmd = new SqlCommand("sp_tb_zona_lst", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@codzona", be.codzona);
-                cmd.Parameters.AddWithValue("@codubigeo", be.codubigeo);
-                cmd.Parameters.AddWithValue("@dsczona", be.dsczona);
+                cmd.Parameters.AddWithValue("@codzona", ((object)be.codzona) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@codubigeo", ((object)be.codubigeo) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@dsczona", ((object)be.dsczona) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@fchinicio", be.fchinicio);
+                cmd.Parameters.AddWithValue("@fchfin", be.fchfin);
                 cmd.Parameters.AddWithValue("@estzona", be.estzona);
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -64,8 +66,10 @@ namespace WU.DAO
                     ZonaBE z = new ZonaBE();
                     z.codzona = dr[0].ToString();
                     z.codubigeo = dr[1].ToString();
-                    z.dsczona = dr[2].ToString();
-                    z.estzona = dr[3].ToString();
+                    z.dscubigeo = dr[2].ToString();
+                    z.dsczona = dr[3].ToString();
+                    z.fchregistro = Convert.ToDateTime(dr[4]);
+                    z.estzona = dr[5].ToString();
                     lstZona.Add(z);
                 }
                 con.Close();
@@ -93,9 +97,11 @@ namespace WU.DAO
                 {
                     z = new ZonaBE();
                     z.codzona = dr[0].ToString();
-                    z.dsczona = dr[1].ToString();
+                    z.fchregistro = Convert.ToDateTime(dr[1]);
                     z.estzona = dr[2].ToString();
-                    z.codubigeo = dr[3].ToString();
+                    z.dsczona = dr[3].ToString();
+                    z.codubigeo = dr[4].ToString();
+                    z.dscubigeo = dr[5].ToString();
                 }
                 con.Close();
                 con.Dispose();

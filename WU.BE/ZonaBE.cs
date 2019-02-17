@@ -12,5 +12,11 @@ namespace WU.BE
         public string codubigeo { get; set; }
         public string dsczona { get; set; }
         public string estzona { get; set; }
+
+        public DateTime fchregistro { get; set; }
+
+        public string fchinicio { get; set; } //Filtro de búsqueda
+        public string fchfin { get; set; } // Filtro de búsqueda
+        public string dscubigeo { get; set; } // Descripción del ubigeo
     }
 }
