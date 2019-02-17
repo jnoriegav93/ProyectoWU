@@ -16,12 +16,3 @@ D:\Jaime\Fuentes VS\WU\WU.BL\bin\Debug\WU.DAO.pdb
 D:\Jaime\Fuentes VS\WU\WU.BL\obj\Debug\WU.BL.csprojResolveAssemblyReference.cache
 D:\Jaime\Fuentes VS\WU\WU.BL\obj\Debug\WU.BL.dll
 D:\Jaime\Fuentes VS\WU\WU.BL\obj\Debug\WU.BL.pdb
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BL\bin\Debug\WU.BL.dll
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BL\bin\Debug\WU.BL.pdb
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BL\bin\Debug\WU.BE.dll
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BL\bin\Debug\WU.DAO.dll
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BL\bin\Debug\WU.BE.pdb
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BL\bin\Debug\WU.DAO.pdb
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BL\obj\Debug\WU.BL.csprojResolveAssemblyReference.cache
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BL\obj\Debug\WU.BL.dll
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BL\obj\Debug\WU.BL.pdb

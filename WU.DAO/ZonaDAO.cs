@@ -112,5 +112,34 @@ namespace WU.DAO
             }
             return z;
         }
+
+        public List<ZonaBE> DibujarZona(String codzona)
+        {
+            List<ZonaBE> lst = new List<ZonaBE>();
+            try
+            {
+                SqlConnection con = c.AbrirConexion();
+                con.Open();
+                SqlCommand cmd = new SqlCommand("sp_tb_zona_dib", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@codzona", codzona);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    ZonaBE z = new ZonaBE();
+                    z.orden = Convert.ToInt32(dr[0]);
+                    z.lat = dr[1].ToString();
+                    z.lon = dr[2].ToString();
+                    lst.Add(z);
+                }
+                con.Close();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return lst;
+        }
     }
 }

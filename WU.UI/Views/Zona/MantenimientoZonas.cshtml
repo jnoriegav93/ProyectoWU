@@ -36,7 +36,7 @@
                                 <label for="finicio" class="col-sm-4 coc-form-label">Fecha Inicio:</label>
                                 <div class="col-sm-8">
                                     <div class="input-group date" id="finicio">
-                                        <input type="text" id="txtFchIni" name="txtFchIni" class="form-control ocl-8" value="@DateTime.Now.ToString("dd/MM/yyyy")">
+                                        <input type="text" id="txtFchIni" name="txtFchIni" class="form-control ocl-8" value="@DateTime.Now.AddDays(1-DateTime.Now.Day).ToString("dd/MM/yyyy")">
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>

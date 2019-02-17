@@ -18,5 +18,10 @@ namespace WU.BE
         public string fchinicio { get; set; } //Filtro de búsqueda
         public string fchfin { get; set; } // Filtro de búsqueda
         public string dscubigeo { get; set; } // Descripción del ubigeo
+
+        //detalle
+        public int orden { get; set; }
+        public String lat { get; set; }
+        public String lon { get; set; }
     }
 }

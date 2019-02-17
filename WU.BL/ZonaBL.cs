@@ -25,6 +25,10 @@ namespace WU.BL
         {
             return zona.CargarDetalleZona(codzona);
         }
+        public List<ZonaBE> DibujarZona(String codzona)
+        {
+            return zona.DibujarZona(codzona);
+        }
 
     }
 }

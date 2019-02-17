@@ -13,6 +13,7 @@ namespace WU.UI.Controllers
         public ZonaBL zonaBL = new ZonaBL();
         public SubzonaBL subzonaBL = new SubzonaBL();
         public ETBL etBL = new ETBL();
+        public List<ZonaBE> lstZonas = new List<ZonaBE>();
 
 
         // GET: Zonas
@@ -81,7 +82,7 @@ namespace WU.UI.Controllers
             return View(zonaBL.ListarZonas(param));
         }*/
 
-        public ActionResult MantenimientoZonas( string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
+        public ActionResult MantenimientoZonas(string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
         {
             txtNombre = txtNombre == null ? "" : txtNombre;
             txtFchIni = txtFchIni == null ? DateTime.Now.ToString("yyyy-MM-dd") : txtFchIni;
@@ -99,12 +100,18 @@ namespace WU.UI.Controllers
 
         public ActionResult DetalleZona()
         {
-            var model = new ZonaController();
-            return View(model);
+            return View(new ZonaController());
         }
         public ActionResult CargarDetalleZona(String codzona)
         {
             return View(zonaBL.CargarDetalleZona(codzona));
+        }
+
+        public ActionResult DibujarZona(String codzona)
+        {
+            lstZonas = zonaBL.DibujarZona(codzona);
+            return View(zonaBL.DibujarZona(codzona));
+
         }
 
     }

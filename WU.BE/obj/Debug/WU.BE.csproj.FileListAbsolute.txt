@@ -8,8 +8,3 @@ D:\Jaime\Fuentes VS\WU\WU.BE\bin\Debug\WU.BE.pdb
 D:\Jaime\Fuentes VS\WU\WU.BE\obj\Debug\WU.BE.dll
 D:\Jaime\Fuentes VS\WU\WU.BE\obj\Debug\WU.BE.pdb
 D:\Jaime\Fuentes VS\WU\WU.BE\obj\Debug\WU.BE.csprojResolveAssemblyReference.cache
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BE\bin\Debug\WU.BE.dll
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BE\bin\Debug\WU.BE.pdb
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BE\obj\Debug\WU.BE.csprojResolveAssemblyReference.cache
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BE\obj\Debug\WU.BE.dll
-D:\Fuentes\Visual Studio\ProyectoWU\WU.BE\obj\Debug\WU.BE.pdb
