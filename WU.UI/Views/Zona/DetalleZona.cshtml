@@ -21,12 +21,10 @@
     string cod = url.Contains("=") ? url.Split('=')[1] : "0";
     var modelo = Model.zonaBL.CargarDetalleZona(cod);
 }
-
-<h1>WU_CUS016 Mantenimiento de Zonas</h1>
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Datos</h3>
+            <h3 class="panel-title">Detalle</h3>
         </div>
         <div class="panel-body esp-s" style="">
             <div class="row">
@@ -93,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="display:none">
                 <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
             </div>
         </div>
@@ -154,7 +152,7 @@
         })],
         view: new ol.View({
             center: puntoLima,
-            zoom: 16,
+            zoom: 14,
             projection: 'EPSG:3857'
         })
     });
@@ -203,50 +201,43 @@
     @foreach (var d in Model.zonaBL.DibujarZona(cod))
     {
         @:myArray.push([@d.lat,@d.lon]);
-                        }
+            }
     //alert(myArray);
+    if (myArray.length > 0) {
+        var polygony = new ol.geom.Polygon([myArray]);
+        var featurey = new ol.Feature(polygony.transform('EPSG:4326', 'EPSG:3857'));
+        var vectorSourcey = new ol.source.Vector();
+        vectorSourcey.addFeature(featurey);
+        var vectorLayery = new ol.layer.Vector({
+            source: vectorSourcey
+        });
+        map.addLayer(vectorLayery);
 
-    var polygony = new ol.geom.Polygon([myArray]);
-    var featurey = new ol.Feature(polygony.transform('EPSG:4326', 'EPSG:3857'));
-    var vectorSourcey = new ol.source.Vector();
-    vectorSourcey.addFeature(featurey);
-    var vectorLayery = new ol.layer.Vector({
-        source: vectorSourcey
-    });
-    map.addLayer(vectorLayery);
+        //
 
+        var promlat = 0;
+        var minlat = 0;
+        var maxlat = 0;
+        var promlon = 0;
+        var minlon = 0;
+        var maxlon = 0;
 
+        myArray.forEach(function (coord) {
+            promlat += coord[0];
+            minlat = minlat > coord[1] ? coord[1] : minlat + 0;
+            maxlat = maxlat < coord[1] ? coord[1] : maxlat + 0;
 
-
-    //
-
-    var promlat = 0;
-    var minlat = 0;
-    var maxlat = 0;
-
-
-    var promlon = 0;
-    var minlon = 0;
-    var maxlon = 0;
-
-
-    myArray.forEach(function (coord) {
-        promlat += coord[0];
-        minlat = minlat > coord[1] ? coord[1] : minlat + 0;
-        maxlat = maxlat < coord[1] ? coord[1] : maxlat + 0;
-
-        promlon += coord[1];
-        minlon = minlon > coord[0] ? coord[0] : minlon + 0;
-        maxlon = maxlon < coord[0] ? coord[0] : maxlon + 0;
-    });
-    promlat = promlat / myArray.length;
-    promlon = promlon / myArray.length;
+            promlon += coord[1];
+            minlon = minlon > coord[0] ? coord[0] : minlon + 0;
+            maxlon = maxlon < coord[0] ? coord[0] : maxlon + 0;
+        });
+        promlat = promlat / myArray.length;
+        promlon = promlon / myArray.length;
 
 
-    var puntocentro = ol.proj.fromLonLat([promlat, promlon]);
-    map.getView().setCenter(puntocentro, 'EPSG:3857', 'EPSG:4326');
-
-
+        var puntocentro = ol.proj.fromLonLat([promlat, promlon]);
+        map.getView().setCenter(puntocentro, 'EPSG:3857', 'EPSG:4326');
+    }
 
 
 

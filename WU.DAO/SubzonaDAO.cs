@@ -22,7 +22,6 @@ namespace WU.DAO
                 con.Open();
                 SqlCommand cmd = new SqlCommand("sp_tb_subzona_ins", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@codsubzona", be.codsubzona);
                 cmd.Parameters.AddWithValue("@codzona", be.codzona);
                 cmd.Parameters.AddWithValue("@nomsubzona", be.nomsubzona);
                 cmd.Parameters.AddWithValue("@coordenadas", be.coordenadas);

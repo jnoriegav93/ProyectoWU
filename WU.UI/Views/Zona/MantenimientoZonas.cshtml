@@ -11,14 +11,6 @@
     });
 </script>
 
-<!--
---Ubigeo
---Nombre
---Fecha inicio
---Fecha Fin
---Estado
-    -->
-
 <h3>Mantenimiento de Zonas</h3>
 <div class="row">
     <div class="panel panel-default">
@@ -65,6 +57,12 @@
                                 <div class="col-md-6">
                                     <input type="text" class="form-control ocl-8" id="txtNombre" name="txtNombre">
                                 </div>
+                                <div class="col-sm-3">
+                                    <a href="@Url.Action("NuevaZona", "Zona")" class="btn btn-success btn-block">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        Nuevo
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -78,7 +76,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="submit" value="Buscar" id="btnBuscar" 
+                                    <input type="submit" value="Buscar" id="btnBuscar"
                                            class="btn btn-primary btn-block esp-s" name="btnBuscar" />
                                 </div>
                             </div>
@@ -119,19 +117,19 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.codzona)
+                                    @Html.DisplayFor(zona => item.codzona)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.codubigeo)
+                                    @Html.DisplayFor(zona => item.codubigeo)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.dscubigeo)
+                                    @Html.DisplayFor(zona => item.dscubigeo)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.dsczona)
+                                    @Html.DisplayFor(zona => item.dsczona)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.fchregistro)
+                                    @Html.DisplayFor(zona => item.fchregistro)
                                 </td>
                                 <td>
                                     @{
@@ -147,7 +145,7 @@
                                     }
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("DetalleZona", "Zona", new { modelItem = item.codzona })"
+                                    <a href="@Url.Action("DetalleZona", "Zona", new { zona = item.codzona })"
                                        class="btn btn-primary btn-sm" style="width: 32px">
                                         <span class="glyphicon glyphicon-search"></span>
                                     </a>

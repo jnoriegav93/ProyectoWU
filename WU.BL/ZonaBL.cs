@@ -29,6 +29,10 @@ namespace WU.BL
         {
             return zona.DibujarZona(codzona);
         }
+        public bool RegistrarZona(ZonaBE be)
+        {
+            return zona.RegistrarZona(be);
+        }
 
     }
 }

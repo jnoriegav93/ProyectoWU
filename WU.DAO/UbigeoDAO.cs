@@ -32,12 +32,12 @@ namespace WU.DAO
                 }
                 con.Close();
                 con.Dispose();
-                lst.Insert(0, new UbigeoBE() { codubigeo = "0", departamento = "-DEPARTAMENTO-" });
+                lst.Insert(0, new UbigeoBE() { codubigeo = "00", departamento = "-DEPARTAMENTO-" });
             }
             catch (Exception ex)
             {
                 UbigeoBE be = new UbigeoBE();
-                be.codubigeo = "0";
+                be.codubigeo = "00";
                 be.departamento = "-ERROR-";
                 lst.Add(be);
             }
@@ -64,12 +64,12 @@ namespace WU.DAO
                 }
                 con.Close();
                 con.Dispose();
-                lst.Insert(0, new UbigeoBE() { codubigeo = "0", provincia = "-PROVINCIA-" });
+                lst.Insert(0, new UbigeoBE() { codubigeo = "00", provincia = "-PROVINCIA-" });
             }
             catch (Exception ex)
             {
                 UbigeoBE be = new UbigeoBE();
-                be.codubigeo = "0";
+                be.codubigeo = "00";
                 be.provincia = "-ERROR-";
                 lst.Add(be);
             }
@@ -98,12 +98,12 @@ namespace WU.DAO
                 }
                 con.Close();
                 con.Dispose();
-                lst.Insert(0, new UbigeoBE() { codubigeo = "0", distrito = "-DISTRITO-" });
+                lst.Insert(0, new UbigeoBE() { codubigeo = "00", distrito = "-DISTRITO-" });
             }
             catch (Exception ex)
             {
                 UbigeoBE be = new UbigeoBE();
-                be.codubigeo = "0";
+                be.codubigeo = "00";
                 be.distrito = "-ERROR-";
                 lst.Add(be);
             }

@@ -141,5 +141,34 @@ namespace WU.DAO
             }
             return lst;
         }
+
+
+        public bool RegistrarZona(ZonaBE be)
+        {
+            List<ZonaBE> lstSubzona = new List<ZonaBE>();
+            SqlConnection con = c.AbrirConexion();
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("sp_tb_zona_ins", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@codubigeo", be.codubigeo);
+                cmd.Parameters.AddWithValue("@dsczona", be.dsczona);
+                cmd.Parameters.AddWithValue("@estzona", be.estzona);
+                cmd.Parameters.AddWithValue("@fchregistro", be.fchregistro);
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return true;
+        }
+
     }
 }

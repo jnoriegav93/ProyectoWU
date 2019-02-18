@@ -5,10 +5,3 @@ E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\bin\Debug\WU.BE.pdb
 E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\obj\Debug\WU.DAO.csprojResolveAssemblyReference.cache
 E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\obj\Debug\WU.DAO.dll
 E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\obj\Debug\WU.DAO.pdb
-D:\Jaime\Fuentes VS\WU\WU.DAO\bin\Debug\WU.DAO.dll
-D:\Jaime\Fuentes VS\WU\WU.DAO\bin\Debug\WU.DAO.pdb
-D:\Jaime\Fuentes VS\WU\WU.DAO\bin\Debug\WU.BE.dll
-D:\Jaime\Fuentes VS\WU\WU.DAO\bin\Debug\WU.BE.pdb
-D:\Jaime\Fuentes VS\WU\WU.DAO\obj\Debug\WU.DAO.csprojResolveAssemblyReference.cache
-D:\Jaime\Fuentes VS\WU\WU.DAO\obj\Debug\WU.DAO.dll
-D:\Jaime\Fuentes VS\WU\WU.DAO\obj\Debug\WU.DAO.pdb

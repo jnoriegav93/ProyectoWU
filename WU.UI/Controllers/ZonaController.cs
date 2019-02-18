@@ -40,7 +40,7 @@ namespace WU.UI.Controllers
                 codsubzona = 99,//nuevo correlativo, insertar con una secuencia
                 codzona = Convert.ToInt32(ddlZona),
                 nomsubzona = "SZ - " + ddlZona,
-                coordenadas = txtCoord,// "123.00,40.052;123.00,40.052;123.00,40.052;",                
+                coordenadas = txtCoord,
                 fchregistro = DateTime.Now,
                 estsubzona = "ACT"
             };
@@ -86,14 +86,14 @@ namespace WU.UI.Controllers
         public ActionResult MantenimientoZonas(string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
         {
             txtNombre = txtNombre == null ? "" : txtNombre;
-            txtFchIni = txtFchIni == null ? DateTime.Now.AddDays(1-DateTime.Now.Day).ToString("yyyy-MM-dd") : txtFchIni;
-            txtFchFin = txtFchFin == null ? DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") : txtFchFin;
+            txtFchIni = txtFchIni == null ? DateTime.Now.AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy") : txtFchIni;
+            txtFchFin = txtFchFin == null ? DateTime.Now.AddDays(1).ToString("dd/MM/yyyy") : txtFchFin;
             ddlEstado = ddlEstado == null ? "0" : ddlEstado;
             ZonaBE param = new ZonaBE()
             {
                 dsczona = txtNombre.Trim(),
-                fchinicio = Convert.ToDateTime(txtFchIni).ToString("yyyy-MM-dd"),
-                fchfin = Convert.ToDateTime(txtFchFin).ToString("yyyy-MM-dd"),
+                fchinicio = txtFchIni,// Convert.ToDateTime(txtFchIni).ToString("yyyy-MM-dd"),
+                fchfin = txtFchFin, //Convert.ToDateTime(txtFchFin).ToString("yyyy-MM-dd"),
                 estzona = ddlEstado
             };
             return View(zonaBL.ListarZonas(param));
@@ -118,9 +118,50 @@ namespace WU.UI.Controllers
             return View(new ZonaController());
         }
 
+        public ActionResult RegistrarZona(string ddlDepartamento, string ddlProvincia, string ddlDistrito,
+                                          string txtDsczona, string txtFchregistro, string ddlEstzona)
+        {
+            ZonaBE be = new ZonaBE()
+            {
+                codubigeo = ddlDepartamento + ddlProvincia + ddlDistrito ,
+                dsczona = txtDsczona,
+                fchregistro = Convert.ToDateTime(txtFchregistro),
+                estzona = ddlEstzona
+            };
+            String mensaje = "";
+            if (ddlDepartamento != "00" && ddlProvincia != "00" && ddlDistrito != "00" && txtDsczona.Length > 0)
+            {
+
+                if (zonaBL.RegistrarZona(be))
+                {
+
+                    mensaje = GenerarScript("alert('INSERTADO');");
+                }
+                else
+                {
+                    mensaje = GenerarScript("alert('NO INSERTADO');");
+                }
+            }
+            else
+            {
+                mensaje = GenerarScript("alert('Debe completar todos los campos');");
+            }
+            return Content(mensaje);
+        }
+
+
+
         public ActionResult listarDepartamentos()
         {
             return View(ubigeoBL.listarDepartamentos());
+        }
+        public ActionResult listarProvincias(string ddlDepartamento)
+        {
+            return View(ubigeoBL.listarProvincias(ddlDepartamento));
+        }
+        public ActionResult listarDistritos(string ddlDepartamento,string ddlProvincia)
+        {
+            return View(ubigeoBL.listarDistritos(ddlDepartamento,ddlProvincia));
         }
 
     }

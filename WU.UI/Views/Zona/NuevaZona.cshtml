@@ -21,132 +21,158 @@
 </style>
 
 <h3>Nueva Zona</h3>
-<div class="row">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Datos</h3>
-        </div>
-        <div class="panel-body esp-s" style="">
-            <div class="row">
-                <div class="col-md-3 col-sm-2">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-6 coc-form-label esp-s">Código:</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control ocl-8" id="txtCodigo" name="txtCodigo" value="" disabled>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-8 col-sm-7">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-2 coc-form-label esp-s">Nombre:</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control ocl-8" id="txtNombre" name="txtNombre" value="">
-                        </div>
-                    </div>
-                </div>
+@using (Html.BeginForm("RegistrarZona", "Zona", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Datos</h3>
             </div>
-            <div class="row">
-                <div class="col-md-3 col-sm-2">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-6 coc-form-label esp-s">Cod. Ubigeo:</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control ocl-8" id="txtCodubigeo" name="txtCodubigeo" disabled>
+            <div class="panel-body esp-s" style="">
+                <div class="row">
+                    <div class="col-md-3 col-sm-2">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-md-6 coc-form-label esp-s">Código:</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control ocl-8" id="txtCodigo" name="txtCodigo" value="" disabled>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-8 col-sm-7">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-2 coc-form-label esp-s">Ubigeo:</label>
-                        <div class="col-md-10 esp-s">
-                            <div class="input-group col-md-12 col-xs-12" style="padding:0;">
-                                @{
-                                    var modelo = Model.ubigeoBL.listarDepartamentos();
-                                    int cant = modelo.Count();
-                                    <select class="form-control" id="ddlDepartamento" style="width: 33%">
-                                        @for (int i = 0; i < cant; i++)
-                                        {
-                                            string Cid = modelo.ElementAt(i).codubigeo;
-                                            string nom = modelo.ElementAt(i).departamento;
-                                            <option id="@Cid" value="@Cid">@nom</option>
-                                        }
-                                    </select>
-                                }
 
-                                <select class="form-control" id="ddlRubro" style="width: 33%">
-                                    <option>-CIUDAD-</option>
-                                </select>
-                                <select class="form-control" id="ddlRubro" style="width: 34%">
-                                    <option>-DISTRITO-</option>
-                                </select>
+                    <div class="col-md-8 col-sm-7">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-md-2 coc-form-label esp-s">Nombre:</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control ocl-8" id="txtNombre" name="txtNombre" value="">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 col-sm-2">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-6 coc-form-label esp-s">Estado:</label>
-                        <div class="col-md-6">
-                            <span class="label label-success" style="font-size:100% ; padding:.2em 1em .3em">ACTIVO</span>
+                <div class="row">
+                    <div class="col-md-3 col-sm-2">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-md-6 coc-form-label esp-s">Cod. Ubigeo:</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control ocl-8" id="txtCodubigeo" name="txtCodubigeo" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-7">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-md-2 coc-form-label esp-s">Ubigeo:</label>
+                            <div class="col-md-10 esp-s">
+                                <div class="input-group col-md-12 col-xs-12" style="padding:0;">
+                                    @{
+                                        var modeloDep = Model.ubigeoBL.listarDepartamentos();
+                                        int cantDep = modeloDep.Count();
+                                        <select class="form-control" id="ddlDepartamento" name="ddlDepartamento" style="width: 33%">
+                                            @for (int i = 0; i < cantDep; i++)
+                                            {
+                                                string Cid = modeloDep.ElementAt(i).codubigeo;
+                                                string nom = modeloDep.ElementAt(i).departamento;
+                                                <option id="@Cid" value="@Cid">@nom</option>
+                                            }
+                                        </select>
+                                    }
+
+                                    @{
+                                        var modeloProv = Model.ubigeoBL.listarProvincias("01");
+                                        int cantProv = modeloProv.Count();
+                                        <select class="form-control" id="ddlProvincia" name="ddlProvincia" style="width: 33%">
+                                            @for (int i = 0; i < cantProv; i++)
+                                            {
+                                                string Cid = modeloProv.ElementAt(i).codubigeo;
+                                                string nom = modeloProv.ElementAt(i).departamento;
+                                                <option id="@Cid" value="@Cid">@nom</option>
+                                            }
+                                        </select>
+                                    }
+                                    
+
+                                    @{
+                                        var modeloDis = Model.ubigeoBL.listarDistritos("01","01");
+                                        int cant = modeloDis.Count();
+                                        <select class="form-control" id="ddlDistrito" name="ddlDistrito" style="width: 34%">
+                                            @for (int i = 0; i < cant; i++)
+                                            {
+                                                string Cid = modeloDis.ElementAt(i).codubigeo;
+                                                string nom = modeloDis.ElementAt(i).departamento;
+                                                <option id="@Cid" value="@Cid">@nom</option>
+                                            }
+                                        </select>
+                                    }
+
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-3">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-4 coc-form-label esp-s">Fecha:</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control ocl-8" value="@DateTime.Now.ToString("dd/MM/yyyy hh:mm tt")" disabled>
+                <div class="row">
+                    <div class="col-md-3 col-sm-2">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-md-6 coc-form-label esp-s">Estado:</label>
+                            <div class="col-md-6">
+                                <span class="label label-success" style="font-size:100%; padding:.2em 1em .3em" id="txtEstzona" name="txtEstzona">ACTIVO</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-3">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-md-4 coc-form-label esp-s">Fecha:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control ocl-8" id="txtFchregistro" name="txtFchregistro" 
+                                       value="@DateTime.Now.ToString("dd/MM/yyyy hh:mm tt")" disabled>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
+                </div>
             </div>
-            <div class="row">
-                <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
+        </div>
+        <!-- fin panel -->
+    </div>
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Mapa</h3>
+            </div>
+            <div class="panel-body" style="padding: 0">
+                <div id="map"></div>
             </div>
         </div>
     </div>
-    <!-- fin panel -->
-</div>
-
-<div class="row">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Mapa</h3>
+    <div class="row">
+        <div class="col-xs-3" style="margin-bottom: 15px;">
+            <a href="@Url.Action("NuevaZona", "Zona")" class="btn btn-sm btn-primary btn-block">
+                <span class="glyphicon glyphicon-plus"></span>
+                Nueva zona
+            </a>
         </div>
-        <div class="panel-body" style="padding: 0">
-            <div id="map"></div>
+        <div class="col-xs-3" style="margin-bottom: 15px;">
+            <a href="#" class="btn btn-sm btn-primary btn-block">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Editar Zona
+            </a>
+        </div>
+        <div class="col-xs-3" style="margin-bottom: 15px;">
+            <a href="@Url.Action("MantenimientoZonas", "Zona")" class="btn btn-sm btn-primary btn-block">
+                <span class="glyphicon glyphicon-log-out"></span>
+                Salir
+            </a>
+
+        </div>
+        <div class="col-xs-3" style="margin-bottom: 15px;">
+            <button type="submit" value="Registrar" id="btnRegistrar" name="btnRegistrar" class="btn btn-sm btn-primary btn-block">
+                <span class="glyphicon glyphicon-save"></span>Grabar
+            </button>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-xs-3" style="margin-bottom: 15px;">
-        <a href="@Url.Action("NuevaZona", "Zona")" class="btn btn-sm btn-primary btn-block">
-            <span class="glyphicon glyphicon-plus"></span>
-            Nueva zona
-        </a>
-    </div>
-    <div class="col-xs-3" style="margin-bottom: 15px;">
-        <a href="#" class="btn btn-sm btn-primary btn-block">
-            <span class="glyphicon glyphicon-pencil"></span>
-            Editar Zona
-        </a>
-    </div>
-    <div class="col-xs-3" style="margin-bottom: 15px;">
-        <a href="@Url.Action("MantenimientoZonas", "Zona")" class="btn btn-sm btn-primary btn-block">
-            <span class="glyphicon glyphicon-log-out"></span>
-            Salir
-        </a>
-
-    </div>
-    <div class="col-xs-3" style="margin-bottom: 15px;">
-        <a href="#" class="btn btn-sm btn-primary btn-block">
-            <span class="glyphicon glyphicon-save"></span>
-            Grabar
-        </a>
-    </div>
-</div>
+    }
 
 
 <script type="text/javascript">
