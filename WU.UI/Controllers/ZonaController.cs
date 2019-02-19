@@ -51,37 +51,24 @@ namespace WU.UI.Controllers
                 if (subzonaBL.RegistrarSubzona(sz))
                 {
 
-                    mensaje = GenerarScript("alert('INSERTADO');");
+                    mensaje = GenerarScript("INSERTADO", 1, "Zona/AsignarSubzona");
                 }
                 else
                 {
-                    mensaje = GenerarScript("alert('NO INSERTADO');");
+                    mensaje = GenerarScript("NO INSERTADO", 0, "Zona/AsignarSubzona");
                 }
             }
             else
             {
-                mensaje = GenerarScript("alert('Debe completar todos los campos');");
+                mensaje = GenerarScript("Debe completar todos los campos", 0, "Zona/AsignarSubzona");
             }
             return Content(mensaje);
         }
 
-        public String GenerarScript(String script)
+        public String GenerarScript(String script, int redir, String ubicacion)
         {
-            return "<script language='javascript' type='text/javascript'>" + script + " window.location.href='/Zona/AsignarSubzona';</script>";
+            return "<script language='javascript' type='text/javascript'>alert('" + script + "');" + (redir == 1 ? " window.location.href='/" + ubicacion + "';</script>" : "");
         }
-
-        //Mantenimiento de Zonas
-
-        /*public ActionResult MantenimientoZonas(ZonaBE param)
-        {
-            param = new ZonaBE()
-            {
-                fchinicio = "2019-01-01",
-                fchfin = "2019-03-01",
-                estzona = "0"
-            };
-            return View(zonaBL.ListarZonas(param));
-        }*/
 
         public ActionResult MantenimientoZonas(string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
         {
@@ -118,33 +105,70 @@ namespace WU.UI.Controllers
             return View(new ZonaController());
         }
 
-        public ActionResult RegistrarZona(string ddlDepartamento, string ddlProvincia, string ddlDistrito,
-                                          string txtDsczona, string txtFchregistro, string ddlEstzona)
+        public ActionResult ObtenerCodzona()
         {
-            ZonaBE be = new ZonaBE()
-            {
-                codubigeo = ddlDepartamento + ddlProvincia + ddlDistrito ,
-                dsczona = txtDsczona,
-                fchregistro = Convert.ToDateTime(txtFchregistro),
-                estzona = ddlEstzona
-            };
+
+            return View(zonaBL.ObtenerCodzona());
+        }
+
+        public ActionResult RegistrarZona(string txtCodzona, string ddlDepartamento, string ddlProvincia, string ddlDistrito,
+                                          string txtDsczona, string txtFchregistro, string ddlEstzona, string txtCoord)
+        {
             String mensaje = "";
-            if (ddlDepartamento != "00" && ddlProvincia != "00" && ddlDistrito != "00" && txtDsczona.Length > 0)
+            if (ddlDepartamento != null && ddlProvincia != null && ddlDistrito != null && txtDsczona != null && txtFchregistro != null)
             {
-
-                if (zonaBL.RegistrarZona(be))
+                ZonaBE be = new ZonaBE()
                 {
+                    codubigeo = ddlDepartamento + ddlProvincia + ddlDistrito,
+                    dsczona = txtDsczona,
+                    fchregistro = Convert.ToDateTime(txtFchregistro),
+                    estzona = "0"
+                };
+                if (ddlDepartamento != "00" && ddlProvincia != "00" && ddlDistrito != "00" && txtDsczona.Length > 0)
+                {
+                    String resultado = zonaBL.RegistrarZona(be);
+                    if (resultado == "OK")
+                    {
+                        //Grabar el detalle
+                        List<ZonaBE> lst = new List<ZonaBE>();
+                        string[] coord = txtCoord.Split(';');
+                        int id = 1;
+                        foreach (string fila in coord)
+                        {
+                            if (fila != "")
+                            {
+                                lst.Add(new ZonaBE()
+                                {
+                                    codzona = txtCodzona,
+                                    orden = id++,
+                                    lat = fila.Split(',')[0],
+                                    lon = fila.Split(',')[1]
+                                });
+                            }
+                        }
+                        if (lst.Count > 0)
+                        {
+                            String res = zonaBL.RegistrarDetZona(lst);
+                            if (res == "OK")
+                            {
+                                mensaje = GenerarScript("Se ha registrado correctamente.", 1, "Zona/MantenimientoZonas");
+                            }
+                            else
+                            {
+                                mensaje = GenerarScript(res, 0, "Zona/NuevaZona");
+                            }
+                        }
 
-                    mensaje = GenerarScript("alert('INSERTADO');");
+                    }
+                    else
+                    {
+                        mensaje = GenerarScript(resultado, 0, "Zona/NuevaZona");
+                    }
                 }
                 else
                 {
-                    mensaje = GenerarScript("alert('NO INSERTADO');");
+                    mensaje = GenerarScript("Debe completar todos los campos", 0, "Zona/NuevaZona");
                 }
-            }
-            else
-            {
-                mensaje = GenerarScript("alert('Debe completar todos los campos');");
             }
             return Content(mensaje);
         }
@@ -155,13 +179,14 @@ namespace WU.UI.Controllers
         {
             return View(ubigeoBL.listarDepartamentos());
         }
-        public ActionResult listarProvincias(string ddlDepartamento)
+        public JsonResult listarProvincias(string ddlDepartamento)
         {
-            return View(ubigeoBL.listarProvincias(ddlDepartamento));
+            //return View(ubigeoBL.listarProvincias(ddlDepartamento));
+            return Json(ubigeoBL.listarProvincias(ddlDepartamento), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult listarDistritos(string ddlDepartamento,string ddlProvincia)
+        public JsonResult listarDistritos(string ddlDepartamento, string ddlProvincia)
         {
-            return View(ubigeoBL.listarDistritos(ddlDepartamento,ddlProvincia));
+            return Json(ubigeoBL.listarDistritos(ddlDepartamento, ddlProvincia), JsonRequestBehavior.AllowGet);
         }
 
     }

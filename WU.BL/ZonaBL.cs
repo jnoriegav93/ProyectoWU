@@ -29,9 +29,18 @@ namespace WU.BL
         {
             return zona.DibujarZona(codzona);
         }
-        public bool RegistrarZona(ZonaBE be)
+        public String RegistrarZona(ZonaBE be)
         {
             return zona.RegistrarZona(be);
+        }
+        public String RegistrarDetZona(List<ZonaBE> lst)
+        {
+            return zona.RegistrarDetZona(lst);
+        }
+
+        public String ObtenerCodzona()
+        {
+            return zona.ObtenerCodzona();
         }
 
     }

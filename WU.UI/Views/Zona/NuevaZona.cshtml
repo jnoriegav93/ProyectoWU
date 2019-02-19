@@ -11,6 +11,52 @@
         $('#finicio_001').datetimepicker({ format: 'DD/MM/YYYY' });
         $('#ffin_001').datetimepicker({ format: 'DD/MM/YYYY' });
     });
+
+    $(document).ready(function () {
+        $('#ddlDepartamento').change(function () {
+            $("#txtCodubigeo").val("");
+            var selectedValue = $(this).val();
+            if (selectedValue != null && selectedValue != '') {
+                $.getJSON('@Url.Action("/listarProvincias")', { ddlDepartamento: selectedValue },
+                    function (jsondata) {
+                    var dllSecond = $('#ddlProvincia');
+                    dllSecond.empty();
+                    $.each(jsondata, function (index, data) {
+                        dllSecond.append($('<option/>', {
+                            value: data.codubigeo,
+                            text: data.provincia
+                        }));
+                    });
+                });
+            }
+        });
+
+        $('#ddlProvincia').change(function () {
+            $("#txtCodubigeo").val("");
+            var selectedDep = $("#ddlDepartamento").val();
+            var selectedPro = $("#ddlProvincia").val();
+            if (selectedPro != null && selectedPro != '') {
+                $.getJSON('@Url.Action("/listarDistritos")', { ddlDepartamento: selectedDep, ddlProvincia: selectedPro },
+                    function (jsondata) {
+                        var dllSecond = $('#ddlDistrito');
+                        dllSecond.empty();
+                        $.each(jsondata, function (index, data) {
+                            dllSecond.append($('<option/>', {
+                                value: data.codubigeo,
+                                text: data.distrito
+                            }));
+                        });
+                    });
+            }
+        });
+
+        
+
+        $('#ddlDistrito').change(function () {
+            $("#txtCodubigeo").val($("#ddlDepartamento").val() + $("#ddlProvincia").val() + $("#ddlDistrito").val());
+        });
+    });
+
 </script>
 
 <style type="text/css">
@@ -23,7 +69,7 @@
 <h3>Nueva Zona</h3>
 
 @using (Html.BeginForm("RegistrarZona", "Zona", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
+{
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -35,7 +81,7 @@
                         <div class="form-group row">
                             <label for="finicio" class="col-md-6 coc-form-label esp-s">Código:</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control ocl-8" id="txtCodigo" name="txtCodigo" value="" disabled>
+                                <input type="text" class="form-control ocl-8" id="txtCodzona" name="txtCodzona" value="@Model.zonaBL.ObtenerCodzona()">
                             </div>
                         </div>
                     </div>
@@ -44,7 +90,7 @@
                         <div class="form-group row">
                             <label for="finicio" class="col-md-2 coc-form-label esp-s">Nombre:</label>
                             <div class="col-md-10">
-                                <input type="text" class="form-control ocl-8" id="txtNombre" name="txtNombre" value="">
+                                <input type="text" class="form-control ocl-8" id="txtDsczona" name="txtDsczona">
                             </div>
                         </div>
                     </div>
@@ -66,44 +112,21 @@
                                     @{
                                         var modeloDep = Model.ubigeoBL.listarDepartamentos();
                                         int cantDep = modeloDep.Count();
-                                        <select class="form-control" id="ddlDepartamento" name="ddlDepartamento" style="width: 33%">
-                                            @for (int i = 0; i < cantDep; i++)
-                                            {
-                                                string Cid = modeloDep.ElementAt(i).codubigeo;
-                                                string nom = modeloDep.ElementAt(i).departamento;
-                                                <option id="@Cid" value="@Cid">@nom</option>
-                                            }
-                                        </select>
                                     }
-
-                                    @{
-                                        var modeloProv = Model.ubigeoBL.listarProvincias("01");
-                                        int cantProv = modeloProv.Count();
-                                        <select class="form-control" id="ddlProvincia" name="ddlProvincia" style="width: 33%">
-                                            @for (int i = 0; i < cantProv; i++)
-                                            {
-                                                string Cid = modeloProv.ElementAt(i).codubigeo;
-                                                string nom = modeloProv.ElementAt(i).departamento;
-                                                <option id="@Cid" value="@Cid">@nom</option>
-                                            }
-                                        </select>
-                                    }
-                                    
-
-                                    @{
-                                        var modeloDis = Model.ubigeoBL.listarDistritos("01","01");
-                                        int cant = modeloDis.Count();
-                                        <select class="form-control" id="ddlDistrito" name="ddlDistrito" style="width: 34%">
-                                            @for (int i = 0; i < cant; i++)
-                                            {
-                                                string Cid = modeloDis.ElementAt(i).codubigeo;
-                                                string nom = modeloDis.ElementAt(i).departamento;
-                                                <option id="@Cid" value="@Cid">@nom</option>
-                                            }
-                                        </select>
-                                    }
-
-
+                                    <select class="form-control" id="ddlDepartamento" name="ddlDepartamento" style="width: 34%">
+                                        @for (int i = 0; i < cantDep; i++)
+                                        {
+                                            string Cid = modeloDep.ElementAt(i).codubigeo;
+                                            string nom = modeloDep.ElementAt(i).departamento;
+                                            <option id="@Cid" value="@Cid">@nom</option>
+                                        }
+                                    </select>
+                                    <select class="form-control" id="ddlProvincia" name="ddlProvincia" style="width: 33%">
+                                        <option id="00" value="00">-PROVINCIA-</option>
+                                    </select>
+                                    <select class="form-control" id="ddlDistrito" name="ddlDistrito" style="width: 33%">
+                                        <option id="00" value="00">-DISTRITO-</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -122,14 +145,14 @@
                         <div class="form-group row">
                             <label for="finicio" class="col-md-4 coc-form-label esp-s">Fecha:</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control ocl-8" id="txtFchregistro" name="txtFchregistro" 
-                                       value="@DateTime.Now.ToString("dd/MM/yyyy hh:mm tt")" disabled>
+                                <input type="text" class="form-control ocl-8" id="txtFchregistro" name="txtFchregistro"
+                                       value="@DateTime.Now.ToString("dd/MM/yyyy hh:mm tt")" >
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
+                    <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5" style="display:none"></textarea>
                 </div>
             </div>
         </div>
@@ -172,7 +195,7 @@
             </button>
         </div>
     </div>
-    }
+                                        }
 
 
 <script type="text/javascript">

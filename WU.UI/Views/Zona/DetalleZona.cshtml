@@ -30,18 +30,18 @@
             <div class="row">
                 <div class="col-md-3 col-sm-2">
                     <div class="form-group row">
-                        <label for="finicio" class="col-md-6 coc-form-label esp-s">Código:</label>
+                        <label for="finicio" class="col-md-6 esp-s">Código:</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control ocl-8" value="@modelo.codzona">
+                            <input type="text" class="form-control" value="@modelo.codzona">
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-8 col-sm-7">
+                <div class="col-md-8 col-sm-10">
                     <div class="form-group row">
-                        <label for="finicio" class="col-md-2 coc-form-label esp-s">Nombre:</label>
+                        <label for="finicio" class="col-md-2 col-sm-6esp-s">Nombre:</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control ocl-8" value="@modelo.dsczona">
+                            <input type="text" class="form-control col-sm-6" value="@modelo.dsczona">
                         </div>
                     </div>
                 </div>
@@ -55,11 +55,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 col-sm-7">
+                <div class="col-md-8 col-sm-10">
                     <div class="form-group row">
-                        <label for="finicio" class="col-md-2 coc-form-label esp-s">Ubigeo:</label>
+                        <label for="finicio" class="col-md-2 esp-s">Ubigeo:</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control ocl-8" value="@modelo.dscubigeo">
+                            <input type="text" class="form-control" value="@modelo.dscubigeo">
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-2">
                     <div class="form-group row">
-                        <label for="finicio" class="col-md-6 coc-form-label esp-s">Estado:</label>
+                        <label for="finicio" class="col-md-6 col-sm-6 esp-s">Estado:</label>
                         <div class="col-md-6">
                             @{
                                 string tp = ""; string estado = "";
@@ -84,9 +84,9 @@
                 </div>
                 <div class="col-md-4 col-sm-3">
                     <div class="form-group row">
-                        <label for="finicio" class="col-md-4 coc-form-label esp-s">Fecha:</label>
+                        <label for="finicio" class="col-md-4 esp-s">Fecha:</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control ocl-8" value="@modelo.fchregistro.ToString("dd/MM/yyyy hh:mm tt")">
+                            <input type="text" class="form-control" value="@modelo.fchregistro.ToString("dd/MM/yyyy hh:mm tt")">
                         </div>
                     </div>
                 </div>

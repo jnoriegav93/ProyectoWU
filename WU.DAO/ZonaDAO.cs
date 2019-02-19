@@ -141,9 +141,8 @@ namespace WU.DAO
             }
             return lst;
         }
-
-
-        public bool RegistrarZona(ZonaBE be)
+        
+        public String RegistrarZona(ZonaBE be)
         {
             List<ZonaBE> lstSubzona = new List<ZonaBE>();
             SqlConnection con = c.AbrirConexion();
@@ -161,13 +160,67 @@ namespace WU.DAO
             }
             catch (Exception ex)
             {
-                return false;
+                return "Error al intentar registrar: "+ex.Message;
             }
             finally
             {
                 con.Close();
             }
-            return true;
+            return "OK";
+        }
+
+
+        public String ObtenerCodzona()
+        {
+            String codigo = "";
+            try
+            {
+                SqlConnection con = c.AbrirConexion();
+                con.Open();
+                SqlCommand cmd = new SqlCommand("select max(codzona)+1 from tb_zona ", con);
+                cmd.CommandType = CommandType.Text;
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    codigo = dr[0].ToString();
+                }
+                con.Close();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+                codigo = "ERROR " + ex.Message;
+            }
+            return codigo;
+        }
+
+        public String RegistrarDetZona(List<ZonaBE> lst)
+        {
+            SqlConnection con = c.AbrirConexion();
+            try
+            {
+                con.Open();
+                foreach (ZonaBE be in lst)
+                {
+                    SqlCommand cmd = new SqlCommand("sp_tb_zona_det_ins", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@codzona", be.codzona);
+                    cmd.Parameters.AddWithValue("@orden", be.orden);
+                    cmd.Parameters.AddWithValue("@lat", be.lat);
+                    cmd.Parameters.AddWithValue("@lon", be.lon);
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return "Error al intentar registrar: " + ex.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return "OK";
         }
 
     }
