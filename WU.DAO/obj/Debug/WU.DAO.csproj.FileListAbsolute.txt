@@ -1,7 +1,0 @@
-E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\bin\Debug\WU.DAO.dll
-E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\bin\Debug\WU.DAO.pdb
-E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\bin\Debug\WU.BE.dll
-E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\bin\Debug\WU.BE.pdb
-E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\obj\Debug\WU.DAO.csprojResolveAssemblyReference.cache
-E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\obj\Debug\WU.DAO.dll
-E:\Desarrollo\VisualStudio\ProyectoWU\WU.DAO\obj\Debug\WU.DAO.pdb

@@ -77,7 +77,7 @@ namespace WU.DAO
             }
             catch (Exception ex)
             {
-
+                lstZona.Add(new ZonaBE() { dsczona = ex.Message });
             }
             return lstZona;
         }
