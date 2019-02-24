@@ -8,6 +8,45 @@
         $('#finicio_001').datetimepicker({ format: 'DD/MM/YYYY' });
         $('#ffin_001').datetimepicker({ format: 'DD/MM/YYYY' });
     });
+
+
+    $(document).ready(function () {
+        $('#ddlZona').change(function () {
+            var selectedValue = $(this).val();
+
+            var myArray = [];
+
+            if (selectedValue != null && selectedValue != '') {
+                $.getJSON('@Url.Action("/DibujarZonaJSON")', { codzona: selectedValue },
+                    function (jsondata) {
+                        var res = "";
+                        $.each(jsondata, function (index, data) {
+                            /*dllSecond.append($('<option/>', {
+                                value: data.codubigeo,
+                                text: data.provincia
+                            }));*/
+                            res += data.lat + "," + data.lon + ";";
+                            myArray.push(data.lat, data.lon);
+                        });
+                        alert(res);
+
+
+                        if (myArray.length > 0) {
+                            var polygony = new ol.geom.Polygon([myArray]);
+                            var featurey = new ol.Feature(polygony.transform('EPSG:4326', 'EPSG:3857'));
+                            var vectorSourcey = new ol.source.Vector();
+                            vectorSourcey.addFeature(featurey);
+                            var vectorLayery = new ol.layer.Vector({
+                                source: vectorSourcey
+                            });
+                            map.addLayer(vectorLayery);
+                        }
+
+                    });
+            }
+
+        });
+    });
 </script>
 
 <style type="text/css">
@@ -98,7 +137,7 @@
                                 @{
                                     var modelo = Model.zonaBL.CargarZonas();
                                     int cant = modelo.Count();
-                                    <select name="ddlZona" class="form-control">
+                                    <select id="ddlZona" name="ddlZona" class="form-control">
                                         @for (int i = 0; i < cant; i++)
                                         {
                                             string Cid = modelo.ElementAt(i).codzona;
@@ -212,7 +251,7 @@
         });
         document.getElementById("txtCoord").value = coo;
     });
-    var arrZona = [ 
+    var arrZona = [
             [
                 [-77.044, -12.067], [-77.039, -12.062], [-77.034, -12.062], [-77.029, -12.067], [-77.029, -12.072], [-77.029, -12.077],
                 [-77.034, -12.082], [-77.039, -12.082], [-77.044, -12.077], [-77.044, -12.072], [-77.044, -12.067]
@@ -274,23 +313,23 @@
                 [-77.02558026919849, -12.113058939090479]
             ],
             [
-                [-77.02338310269869,-12.091813752069328],
-                [-77.03389736203708,-12.093072644778417],
-                [-77.05192180661714,-12.094960972730036],
-                [-77.05213638333835,-12.102304343526200],
-                [-77.05406757382906,-12.107549484834152],
-                [-77.04891773252048,-12.112794523139172],
-                [-77.04462619809665,-12.112794523139172],
-                [-77.04269500760593,-12.115731699582696],
-                [-77.03926178006687,-12.113633719706513],
-                [-77.02617260007419,-12.113214121752591],
-                [-77.02853294400728,-12.103982799948895],
-                [-77.02445598630466,-12.094541345448790],
-                [-77.02338310269869,-12.091813752069328]
+                [-77.02338310269869, -12.091813752069328],
+                [-77.03389736203708, -12.093072644778417],
+                [-77.05192180661714, -12.094960972730036],
+                [-77.05213638333835, -12.102304343526200],
+                [-77.05406757382906, -12.107549484834152],
+                [-77.04891773252048, -12.112794523139172],
+                [-77.04462619809665, -12.112794523139172],
+                [-77.04269500760593, -12.115731699582696],
+                [-77.03926178006687, -12.113633719706513],
+                [-77.02617260007419, -12.113214121752591],
+                [-77.02853294400728, -12.103982799948895],
+                [-77.02445598630466, -12.094541345448790],
+                [-77.02338310269869, -12.091813752069328]
             ]
-           ]
+    ]
 
-    
+
     //
 
     arrZona.forEach(function (zona) {

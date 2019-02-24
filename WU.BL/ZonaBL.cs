@@ -43,5 +43,10 @@ namespace WU.BL
             return zona.ObtenerCodzona();
         }
 
+        public String ActualizarZona(ZonaBE be)
+        {
+            return zona.ActualizarZona(be);
+        }
+
     }
 }

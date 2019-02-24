@@ -144,7 +144,6 @@ namespace WU.DAO
         
         public String RegistrarZona(ZonaBE be)
         {
-            List<ZonaBE> lstSubzona = new List<ZonaBE>();
             SqlConnection con = c.AbrirConexion();
             try
             {
@@ -222,6 +221,33 @@ namespace WU.DAO
             }
             return "OK";
         }
+        
+        public String ActualizarZona(ZonaBE be)
+        {
+            SqlConnection con = c.AbrirConexion();
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("sp_tb_zona_upd", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@codzona", be.codzona);
+                cmd.Parameters.AddWithValue("@codubigeo", be.codubigeo);
+                cmd.Parameters.AddWithValue("@dsczona", be.dsczona);
+                cmd.Parameters.AddWithValue("@estzona", be.estzona);
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                return "Error al intentar actualizar: " + ex.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
+            return "OK";
+        }
 
     }
+
 }

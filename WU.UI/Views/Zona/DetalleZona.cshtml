@@ -4,14 +4,12 @@
     ViewBag.Title = "Detalle de zona";
 }
 <!DOCTYPE html>
-
 <style type="text/css">
     #map {
         width: 100%;
         height: 500px;
     }
 </style>
-
 
 @{
 
@@ -21,121 +19,123 @@
     string cod = url.Contains("=") ? url.Split('=')[1] : "0";
     var modelo = Model.zonaBL.CargarDetalleZona(cod);
 }
-<div class="row">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Detalle</h3>
-        </div>
-        <div class="panel-body esp-s" style="">
-            <div class="row">
-                <div class="col-md-3 col-sm-2">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-6 esp-s">Código:</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" value="@modelo.codzona">
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-8 col-sm-10">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-2 col-sm-6esp-s">Nombre:</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control col-sm-6" value="@modelo.dsczona">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 col-sm-2">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-6 coc-form-label esp-s">Cod. Ubigeo:</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control ocl-8" value="@modelo.codubigeo">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8 col-sm-10">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-2 esp-s">Ubigeo:</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" value="@modelo.dscubigeo">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 col-sm-2">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-6 col-sm-6 esp-s">Estado:</label>
-                        <div class="col-md-6">
-                            @{
-                                string tp = ""; string estado = "";
-                                switch (modelo.estzona)
-                                {
-                                    case "0": tp = "success"; estado = "ACTIVO"; break;
-                                    case "X": tp = "danger"; estado = "INACTIVO"; break;
-                                    default: tp = "primary"; estado = "ACTIVO"; break;
-                                }
-                                <span class="label label-@tp" style="font-size:100% ; padding:.2em 1em .3em">@estado</span>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-3">
-                    <div class="form-group row">
-                        <label for="finicio" class="col-md-4 esp-s">Fecha:</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" value="@modelo.fchregistro.ToString("dd/MM/yyyy hh:mm tt")">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="display:none">
-                <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
-            </div>
-        </div>
-    </div>
-    <!-- fin panel -->
-</div>
-<div class="row">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Mapa</h3>
-        </div>
-        <div class="panel-body" style="padding: 0">
-            <div id="map"></div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-3" style="margin-bottom: 15px;">
-        <a href="@Url.Action("NuevaZona", "Zona")" class="btn btn-sm btn-primary btn-block">
-            <span class="glyphicon glyphicon-plus"></span>
-            Nueva zona
-        </a>
-    </div>
-    <div class="col-xs-3" style="margin-bottom: 15px;">
-        <a href="#" class="btn btn-sm btn-primary btn-block">
-            <span class="glyphicon glyphicon-pencil"></span>
-            Editar Zona
-        </a>
-    </div>
-    <div class="col-xs-3" style="margin-bottom: 15px;">
-        <a href="@Url.Action("MantenimientoZonas", "Zona")" class="btn btn-sm btn-primary btn-block">
-            <span class="glyphicon glyphicon-log-out"></span>
-            Salir
-        </a>
 
-    </div>
-    <div class="col-xs-3" style="margin-bottom: 15px;">
-        <a href="#" class="btn btn-sm btn-primary btn-block">
-            <span class="glyphicon glyphicon-save"></span>
-            Grabar
-        </a>
-    </div>
-</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlEstzona option[value='@modelo.estzona']").prop('selected', true);
+    });
+</script>
 
+@using (Html.BeginForm("ActualizarZona", "Zona", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Detalle</h3>
+            </div>
+            <div class="panel-body esp-s" style="">
+                <div class="row">
+                    <div class="col-md-3 col-sm-2">
+                        <div class="form-group row">
+                            <label for="" class="col-md-6 esp-s">Código:</label>
+                            <div class="col-md-6">
+                                <input type="text" id="txtCodzona" name="txtCodzona" class="form-control" value="@modelo.codzona">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-10">
+                        <div class="form-group row">
+                            <label for="" class="col-md-2 col-sm-6esp-s">Nombre:</label>
+                            <div class="col-md-10">
+                                <input type="text" id="txtDsczona" name="txtDsczona" class="form-control col-sm-6" value="@modelo.dsczona">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-2">
+                        <div class="form-group row">
+                            <label for="" class="col-md-6 coc-form-label esp-s">Cod. Ubigeo:</label>
+                            <div class="col-md-6">
+                                <input type="text" id="txtCodubigeo" name="txtCodubigeo" class="form-control ocl-8" value="@modelo.codubigeo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-sm-10">
+                        <div class="form-group row">
+                            <label for="" class="col-md-2 esp-s">Ubigeo:</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" value="@modelo.dscubigeo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-2">
+                        <div class="form-group row">
+                            <label for="" class="col-md-6 col-sm-6 esp-s">Estado:</label>
+                            <div class="col-md-6">
+                                <select id="ddlEstzona" name="ddlEstzona" class="form-control">
+                                    <option id="1" value="0">ACTIVO</option>
+                                    <option id="X" value="X">INACTIVO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-3">
+                        <div class="form-group row">
+                            <label for="finicio" class="col-md-4 esp-s">Fecha:</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" value="@modelo.fchregistro.ToString("dd/MM/yyyy hh:mm tt")">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="display:none">
+                    <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
+                </div>
+            </div>
+        </div>
+        <!-- fin panel -->
+    </div>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Mapa</h3>
+            </div>
+            <div class="panel-body" style="padding: 0">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3" style="margin-bottom: 15px;">
+            <a href="@Url.Action("NuevaZona", "Zona")" class="btn btn-sm btn-primary btn-block">
+                <span class="glyphicon glyphicon-plus"></span>
+                Nueva zona
+            </a>
+        </div>
+        <div class="col-xs-3" style="margin-bottom: 15px;">
+            <a href="#" class="btn btn-sm btn-primary btn-block">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Editar Zona
+            </a>
+        </div>
+        <div class="col-xs-3" style="margin-bottom: 15px;">
+            <a href="@Url.Action("MantenimientoZonas", "Zona")" class="btn btn-sm btn-primary btn-block">
+                <span class="glyphicon glyphicon-log-out"></span>
+                Salir
+            </a>
+        </div>
+        <div class="col-xs-3" style="margin-bottom: 15px;">
+            <button type="submit" value="Actualizar" id="btnActualizar" name="btnActualizar" class="btn btn-sm btn-primary btn-block">
+                <span class="glyphicon glyphicon-save"></span>Actualizar
+            </button>
+        </div>
+    </div>
+}
 
 <script type="text/javascript">
     var source = new ol.source.Vector();
@@ -201,7 +201,7 @@
     @foreach (var d in Model.zonaBL.DibujarZona(cod))
     {
         @:myArray.push([@d.lat,@d.lon]);
-            }
+                        }
     //alert(myArray);
     if (myArray.length > 0) {
         var polygony = new ol.geom.Polygon([myArray]);
@@ -214,7 +214,6 @@
         map.addLayer(vectorLayery);
 
         //
-
         var promlat = 0;
         var minlat = 0;
         var maxlat = 0;
@@ -237,39 +236,56 @@
 
         var puntocentro = ol.proj.fromLonLat([promlat, promlon]);
         map.getView().setCenter(puntocentro, 'EPSG:3857', 'EPSG:4326');
+
+
+        //
+
+
+
+        var lonlatarray = myArray;
+
+        var markers = [];
+        var i;
+        for (i = 0; i < lonlatarray.length; i++) {
+
+            markers.push(new ol.Feature({
+                geometry: new ol.geom.Point(
+                  ol.proj.fromLonLat(lonlatarray[i])
+              //  ol.proj.fromLonLat([16.332253, 48.503684])
+                  )
+            }));
+
+        }
+
+
+
+
+        var vectorSource = new ol.source.Vector({
+            features: markers
+        });
+        var markerVectorLayer = new ol.layer.Vector({
+            source: vectorSource
+        });
+        map.addLayer(markerVectorLayer);
+
+
+        map.on('singleclick', function (e) {
+            var iconFeature = new ol.Feature({
+                geometry: new ol.geom.Point(e.coordinate),
+            });
+            iconFeature.setStyle(_self.iconStyle);
+            _self.rasterVectorSource.addFeatures([iconFeature]);
+
+            var modify = new ol.interaction.Modify({
+                features: new ol.Collection([iconFeature])
+            });
+            iconFeature.on('change', function () {
+                console.log('Feature Moved To:' + this.getGeometry().getCoordinates());
+            }, iconFeature);
+            this.mapRaster.addInteraction(modify);
+
+        });
+
     }
 
-
-
-    //Probando Array de Arrays
-
-    /*
-    var arrZona = [
-           [
-               [-77.044, -12.067], [-77.039, -12.062], [-77.034, -12.062], [-77.029, -12.067], [-77.029, -12.072], [-77.029, -12.077],               [-77.034, -12.082], [-77.039, -12.082], [-77.044, -12.077], [-77.044, -12.072], [-77.044, -12.067]
-           ],
-           [
-               [-77.06694260857539, -12.057537968485335],               [-77.05793038628536, -12.056016603888480],               [-77.05862776062922, -12.058692101389013],               [-77.05927149079280, -12.061052812313676],               [-77.05996886513667, -12.063203664173514],               [-77.06308022759394, -12.062574148341952],               [-77.06431404374080, -12.062311849642555],               [-77.06619159005122, -12.061944631032333],               [-77.06651345513299, -12.061105272320418],               [-77.06726447365718, -12.059426547014667],               [-77.06715718529658, -12.058482259412287],               [-77.06694260857539, -12.057537968485335]
-           ],
-           [
-               [-77.08126041378857, -12.079092632739659],               [-77.08067032780531, -12.078515610837740],               [-77.06763479199293, -12.083184206913103],               [-77.06522080387953, -12.084128407455850],               [-77.06468436207655, -12.084967694030581],               [-77.06457707371595, -12.085806977973093],               [-77.06361147847059, -12.086488894238059],               [-77.07204970803134, -12.097042638165902],               [-77.07660946335666, -12.095416591442756],               [-77.07639488663547, -12.094839604744450],               [-77.07733365979068, -12.094524884202372],               [-77.08468291249149, -12.090669527501746],               [-77.08438786949985, -12.090013849063865],               [-77.08393189396732, -12.089410623481513],               [-77.08342227425449, -12.088204168235976],               [-77.08258474111368, -12.086467243457676],               [-77.08263838529398, -12.086204968155599],               [-77.08312118291666, -12.086073830408140],               [-77.08263838529398, -12.084500172425962],               [-77.08199620898941, -12.080729433302565],               [-77.08167434390764, -12.079418026108002],               [-77.08126041378857, -12.079092632739659]
-           ],
-           [
-               [-77.02558026919849, -12.113058939090479],               [-77.01093540797717, -12.112272190692010],               [-77.00056675427099, -12.111642790303975],               [-77.00142506115576, -12.104142321510892],               [-77.00340989582683, -12.090714383009754],               [-77.00378540508892, -12.088458842816593],               [-77.01408508770610, -12.089822660090320],               [-77.02127340786602, -12.090924199735213],               [-77.02288273327495, -12.093127265414950],               [-77.02486756794598, -12.097533342323189],               [-77.02631596081407, -12.100418234291467],               [-77.02706697933824, -12.103880063546470],               [-77.02685240261705, -12.106030571254763],               [-77.02620867245346, -12.107709004266212],               [-77.02583316319140, -12.110226634006153],               [-77.02558026919849, -12.113058939090479]
-           ],
-           [
-               [-77.02338310269869, -12.091813752069328],               [-77.03389736203708, -12.093072644778417],               [-77.05192180661714, -12.094960972730036],               [-77.05213638333835, -12.102304343526200],               [-77.05406757382906, -12.107549484834152],               [-77.04891773252048, -12.112794523139172],               [-77.04462619809665, -12.112794523139172],               [-77.04269500760593, -12.115731699582696],               [-77.03926178006687, -12.113633719706513],               [-77.02617260007419, -12.113214121752591],               [-77.02853294400728, -12.103982799948895],               [-77.02445598630466, -12.094541345448790],               [-77.02338310269869, -12.091813752069328]
-           ]
-    ]
-    myArray.forEach(function (zona) {
-        var polygonx = new ol.geom.Polygon([zona]);
-        var featurex = new ol.Feature(polygonx.transform('EPSG:4326', 'EPSG:3857'));
-        var vectorSourcex = new ol.source.Vector();
-        vectorSourcex.addFeature(featurex);
-        var vectorLayerx = new ol.layer.Vector({
-            source: vectorSourcex
-        });
-        map.addLayer(vectorLayerx);
-    });
-    */
 </script>

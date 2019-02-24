@@ -175,6 +175,73 @@ namespace WU.UI.Controllers
 
 
 
+
+        public ActionResult ActualizarZona(string txtCodzona, string txtDsczona, string txtCodubigeo, string ddlEstzona, string txtCoord)
+        {
+            String mensaje = "";
+            if (txtCodubigeo != null && txtDsczona != null && txtCoord != null)
+            {
+                ZonaBE be = new ZonaBE()
+                {
+                    codzona = txtCodzona,
+                    dsczona = txtDsczona,
+                    codubigeo = txtCodubigeo,
+                    estzona = ddlEstzona
+                };
+                if (txtCodubigeo != "000000" && txtDsczona.Length > 0)
+                {
+                    String resultado = zonaBL.ActualizarZona(be);
+                    if (resultado == "OK")
+                    {
+                        //Grabar el detalle
+                        List<ZonaBE> lst = new List<ZonaBE>();
+                        string[] coord = txtCoord.Split(';');
+                        int id = 1;
+                        foreach (string fila in coord)
+                        {
+                            if (fila != "")
+                            {
+                                lst.Add(new ZonaBE()
+                                {
+                                    codzona = txtCodzona,
+                                    orden = id++,
+                                    lat = fila.Split(',')[0],
+                                    lon = fila.Split(',')[1]
+                                });
+                            }
+                        }
+                        if (lst.Count > 0)
+                        {
+                            String res = "OK";// zonaBL.RegistrarDetZona(lst);
+                            if (res == "OK")
+                            {
+                                mensaje = GenerarScript("Se ha actualizado correctamente.", 1, "Zona/MantenimientoZonas");
+                            }
+                            else
+                            {
+                                mensaje = GenerarScript(res, 0, "Zona/DetalleZona");
+                            }
+                        }
+
+                        mensaje = GenerarScript("Se ha actualizado correctamente.", 1, "Zona/MantenimientoZonas");
+                    }
+                    else
+                    {
+                        mensaje = GenerarScript(resultado, 0, "Zona/DetalleZona");
+                    }
+                }
+                else
+                {
+                    mensaje = GenerarScript("Debe completar todos los campos", 0, "Zona/DetalleZona");
+                }
+            }
+            return Content(mensaje);
+        }
+
+
+
+
+
         public ActionResult listarDepartamentos()
         {
             return View(ubigeoBL.listarDepartamentos());
@@ -187,6 +254,12 @@ namespace WU.UI.Controllers
         public JsonResult listarDistritos(string ddlDepartamento, string ddlProvincia)
         {
             return Json(ubigeoBL.listarDistritos(ddlDepartamento, ddlProvincia), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult DibujarZonaJSON(String codzona)
+        {
+            return Json(zonaBL.DibujarZona(codzona), JsonRequestBehavior.AllowGet);
         }
 
     }
