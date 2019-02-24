@@ -20,7 +20,7 @@
                 $.getJSON('@Url.Action("/DibujarZonaJSON")', { codzona: selectedValue },
                     function (jsondata) {
                         var res = "";
-                        $.each(jsondata, function (index, data) {
+                        $.each(jsondata, function (index, data) { 
                             /*dllSecond.append($('<option/>', {
                                 value: data.codubigeo,
                                 text: data.provincia
