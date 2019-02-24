@@ -16,7 +16,7 @@
 
             var myArray = [];
 
-            if (selectedValue != null && selectedValue != '') {
+            if (selectedValue != null && selectedValue != '') { 
                 $.getJSON('@Url.Action("/DibujarZonaJSON")', { codzona: selectedValue },
                     function (jsondata) {
                         var res = "";
