@@ -16,5 +16,15 @@ namespace WU.BL
         {
             return subzona.RegistrarSubzona(sz);
         }
+
+        public bool AsignarETaSubzona(SubzonaETBE sz)
+        {
+            return subzona.AsignarETaSubzona(sz);
+        }
+
+        public List<SubzonaETBE> SubzonasAsignadas(SubzonaETBE be)
+        {
+            return subzona.SubzonasAsignadas(be);
+        }
     }
 }

@@ -5,57 +5,17 @@
 }
 <script type="text/javascript">
     $(function () {
-        $('#finicio_001').datetimepicker({ format: 'DD/MM/YYYY' });
-        $('#ffin_001').datetimepicker({ format: 'DD/MM/YYYY' });
+        $('#finicio').datetimepicker({ format: 'DD/MM/YYYY' });
+        $('#ffin').datetimepicker({ format: 'DD/MM/YYYY' });
     });
 
-
-    $(document).ready(function () {
-        $('#ddlZona').change(function () {
-            var selectedValue = $(this).val();
-
-            var myArray = [];
-
-            if (selectedValue != null && selectedValue != '') { 
-                $.getJSON('@Url.Action("/DibujarZonaJSON")', { codzona: selectedValue },
-                    function (jsondata) {
-                        var res = "";
-                        $.each(jsondata, function (index, data) { 
-                            /*dllSecond.append($('<option/>', {
-                                value: data.codubigeo,
-                                text: data.provincia
-                            }));*/
-                            res += data.lat + "," + data.lon + ";";
-                            myArray.push(data.lat, data.lon);
-                        });
-                        alert(res);
-
-
-                        if (myArray.length > 0) {
-                            var polygony = new ol.geom.Polygon([myArray]);
-                            var featurey = new ol.Feature(polygony.transform('EPSG:4326', 'EPSG:3857'));
-                            var vectorSourcey = new ol.source.Vector();
-                            vectorSourcey.addFeature(featurey);
-                            var vectorLayery = new ol.layer.Vector({
-                                source: vectorSourcey
-                            });
-                            map.addLayer(vectorLayery);
-                        }
-
-                    });
-            }
-
-        });
-    });
 </script>
-
 <style type="text/css">
     #map {
         width: 100%;
         height: 500px;
     }
 </style>
-
 <h3>WU_CUS001 Asignar Sub Zona a ET</h3>
 <div class="row">
     <div class="col-md-8">
@@ -67,8 +27,8 @@
                 <div class="form-group row">
                     <label for="finicio" class="col-sm-3 col-form-label">Fecha de inicio:</label>
                     <div class="col-sm-5">
-                        <div class="input-group date" id="finicio_001">
-                            <input type="text" class="form-control ocl-8">
+                        <div class="input-group date" id="finicio">
+                            <input type="text" id="txtFchIni" name="txtFchIni" class="form-control ocl-8" value="@DateTime.Now.AddDays(1-DateTime.Now.Day).ToString("dd/MM/yyyy")">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -78,8 +38,8 @@
                 <div class="form-group row">
                     <label for="ffin" class="col-sm-3 col-form-label">Fecha de fin:</label>
                     <div class="col-sm-5">
-                        <div class="input-group date" id="ffin_001">
-                            <input type="text" class="form-control ocl-8">
+                        <div class="input-group date" id="ffin">
+                            <input type="text" id="txtFchFin" name="txtFchFin" class="form-control ocl-8" value="@DateTime.Now.AddMonths(1).AddDays(1-DateTime.Now.Day).ToString("dd/MM/yyyy")">
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -122,7 +82,7 @@
         </div>
     </div>
     <!-- form  -->
-    @using (Html.BeginForm("RegistrarSubZona", "Zona", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("AsignarETaSubzona", "Zona", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="col-md-4">
             <div class="panel panel-default row">
@@ -179,20 +139,20 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <a href="#" class="btn btn-block btn-primary btn-block">Buscar</a>
+                                <a href="#" class="btn btn-block btn-primary">Buscar</a>
                             </div>
                             <div class="col-xs-6">
-                                <a href="#" class="btn btn-block btn-primary btn-danger">Eliminar</a>
+                                <a href="#" class="btn btn-block btn-danger">Eliminar</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
+                <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5" style="display:none"></textarea>
+                <input type="submit" value="Asignar" id="btnAsignar" name="btnAsignar" class="btn btn-block btn-primary" />
             </div>
         </div>
-        <input type="submit" value="Registrar" id="btnRegistrar" name="btnRegistrar" />
                                     }
     <!-- fin form  -->
 </div>
@@ -215,6 +175,52 @@
             projection: 'EPSG:3857'
         })
     });
+
+
+    $(document).ready(function () {
+        $('#ddlZona').change(function () {
+            var selectedValue = $(this).val();
+            var myArray = [];
+            if (selectedValue != null && selectedValue != '') {
+                $.getJSON('@Url.Action("/DibujarZonaJSON")', { codzona: selectedValue },
+                    function (jsondata) {
+                        var res = "";
+                        $.each(jsondata, function (index, data) {
+                            res += data.lat + "," + data.lon + ";";
+                            myArray.push([parseFloat(data.lat), parseFloat(data.lon)]);
+                        });
+                        $('#txtCoord').val(res);
+                        res = "";
+                    });
+            }
+
+
+            var array = [];
+            var coord = document.getElementById("txtCoord").value.split(";");
+            coord.forEach(function (fila) {
+                if (fila != null || fila != "") {
+                    array.push([parseFloat(fila.split(",")[0]), parseFloat(fila.split(",")[1])]);
+                }
+            });
+
+
+            if (array.length > 0) {
+                var polygony = new ol.geom.Polygon([array]);
+                var featurey = new ol.Feature(polygony.transform('EPSG:4326', 'EPSG:3857'));
+                var vectorSourcey = new ol.source.Vector();
+                vectorSourcey.addFeature(featurey);
+                var vectorLayery = new ol.layer.Vector({
+                    source: vectorSourcey
+                });
+                map.addLayer(vectorLayery);
+            }
+
+        });
+
+    });
+
+
+    /*
     var draw = new ol.interaction.Draw({
         type: 'Polygon',
         source: source,
@@ -232,15 +238,12 @@
             stroke: new ol.style.Stroke({
                 color: 'blue',
                 width: 2
-            })/*,
-            fill: new ol.style.Fill({
-                color: 'white'
-            })*/
+            })
         })
     });
-    map.addInteraction(draw);
+    map.addInteraction(draw);*/
 
-
+    /*
     source.on('addfeature', function (evt) {
         var feature = evt.feature;
         var coords = feature.getGeometry().getCoordinates();
@@ -340,7 +343,8 @@
         var vectorLayerx = new ol.layer.Vector({
             source: vectorSourcex
         });
-        //map.addLayer(vectorLayerx);
+        map.addLayer(vectorLayerx);
     });
+    */
 
 </script>

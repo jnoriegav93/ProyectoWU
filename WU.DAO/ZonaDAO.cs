@@ -13,7 +13,7 @@ namespace WU.DAO
     public class ZonaDAO
     {
         Conexion c = new Conexion();
-        SqlConnection con = new SqlConnection();        
+        SqlConnection con = new SqlConnection();
         public List<ZonaBE> CargarZonas()
         {
             List<ZonaBE> lstZona = new List<ZonaBE>();
@@ -128,8 +128,8 @@ namespace WU.DAO
                 {
                     ZonaBE z = new ZonaBE();
                     z.orden = Convert.ToInt32(dr[0]);
-                    z.lat = dr[1].ToString();
-                    z.lon = dr[2].ToString();
+                    z.lat = Convert.ToDouble(dr[1].ToString().Replace(",", "."));
+                    z.lon = Convert.ToDouble(dr[2].ToString().Replace(",", "."));
                     lst.Add(z);
                 }
                 con.Close();
@@ -141,7 +141,7 @@ namespace WU.DAO
             }
             return lst;
         }
-        
+
         public String RegistrarZona(ZonaBE be)
         {
             SqlConnection con = c.AbrirConexion();
@@ -159,7 +159,7 @@ namespace WU.DAO
             }
             catch (Exception ex)
             {
-                return "Error al intentar registrar: "+ex.Message;
+                return "Error al intentar registrar: " + ex.Message;
             }
             finally
             {
@@ -221,7 +221,7 @@ namespace WU.DAO
             }
             return "OK";
         }
-        
+
         public String ActualizarZona(ZonaBE be)
         {
             SqlConnection con = c.AbrirConexion();

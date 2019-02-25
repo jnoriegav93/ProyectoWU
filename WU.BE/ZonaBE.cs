@@ -21,7 +21,7 @@ namespace WU.BE
 
         //detalle
         public int orden { get; set; }
-        public String lat { get; set; }
-        public String lon { get; set; }
+        public double lat { get; set; }
+        public double lon { get; set; }
     }
 }

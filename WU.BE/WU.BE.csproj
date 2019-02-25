@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ETBE.cs" />
     <Compile Include="SubzonaBE.cs" />
+    <Compile Include="SubzonaETBE.cs" />
     <Compile Include="UbigeoBE.cs" />
     <Compile Include="ZonaBE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -33,29 +33,27 @@ namespace WU.UI.Controllers
             return View(etBL.ListarET());
         }
         [HttpPost]
-        public ActionResult RegistrarSubZona(string txtCoord, string ddlZona, string ddlET)
+        public ActionResult AsignarETaSubzona(string txtCoord, string ddlZona, string ddlET)
         {
-            SubzonaBE sz = new SubzonaBE()
+            SubzonaETBE sz = new SubzonaETBE()
             {
-                codsubzona = 99,//nuevo correlativo, insertar con una secuencia
-                codzona = Convert.ToInt32(ddlZona),
-                nomsubzona = "SZ - " + ddlZona,
-                coordenadas = txtCoord,
+                codet = Convert.ToInt32(ddlET),
+                codsubzona = Convert.ToInt32(ddlZona),            
                 fchregistro = DateTime.Now,
-                estsubzona = "ACT"
+                estsubzonaet = "0"
             };
             String mensaje = "";
             if (ddlZona != "0" && txtCoord.Length > 0)
             {
 
-                if (subzonaBL.RegistrarSubzona(sz))
+                if (subzonaBL.AsignarETaSubzona(sz))
                 {
 
-                    mensaje = GenerarScript("INSERTADO", 1, "Zona/AsignarSubzona");
+                    mensaje = GenerarScript("ASIGNADO", 1, "Zona/AsignarSubzona");
                 }
                 else
                 {
-                    mensaje = GenerarScript("NO INSERTADO", 0, "Zona/AsignarSubzona");
+                    mensaje = GenerarScript("NO ASIGNADO", 0, "Zona/AsignarSubzona");
                 }
             }
             else
@@ -141,8 +139,8 @@ namespace WU.UI.Controllers
                                 {
                                     codzona = txtCodzona,
                                     orden = id++,
-                                    lat = fila.Split(',')[0],
-                                    lon = fila.Split(',')[1]
+                                    lat = Convert.ToDouble(fila.Split(',')[0]),
+                                    lon = Convert.ToDouble(fila.Split(',')[1])
                                 });
                             }
                         }
@@ -205,8 +203,8 @@ namespace WU.UI.Controllers
                                 {
                                     codzona = txtCodzona,
                                     orden = id++,
-                                    lat = fila.Split(',')[0],
-                                    lon = fila.Split(',')[1]
+                                    lat = Convert.ToDouble(fila.Split(',')[0].Replace(".",",")),
+                                    lon = Convert.ToDouble(fila.Split(',')[1].Replace(".",","))
                                 });
                             }
                         }
@@ -227,7 +225,7 @@ namespace WU.UI.Controllers
                     }
                     else
                     {
-                        mensaje = GenerarScript(resultado, 0, "Zona/DetalleZona");
+                        mensaje = GenerarScript(resultado, 1, "Zona/DetalleZona");
                     }
                 }
                 else
@@ -260,6 +258,24 @@ namespace WU.UI.Controllers
         public ActionResult DibujarZonaJSON(String codzona)
         {
             return Json(zonaBL.DibujarZona(codzona), JsonRequestBehavior.AllowGet);
+        }
+
+        //Zonas asignadas
+        
+        public ActionResult ZonasAsignadas(string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
+        {
+            txtNombre = txtNombre == null ? "" : txtNombre;
+            txtFchIni = txtFchIni == null ? DateTime.Now.AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy") : txtFchIni;
+            txtFchFin = txtFchFin == null ? DateTime.Now.AddDays(1).ToString("dd/MM/yyyy") : txtFchFin;
+            ddlEstado = ddlEstado == null ? "0" : ddlEstado;
+            SubzonaETBE param = new SubzonaETBE()
+            {
+                //dsczona = txtNombre.Trim(),
+                fchinicio = txtFchIni,// Convert.ToDateTime(txtFchIni).ToString("yyyy-MM-dd"),
+                fchfin = txtFchFin, //Convert.ToDateTime(txtFchFin).ToString("yyyy-MM-dd"),
+                estsubzonaet = ddlEstado
+            };
+            return View(subzonaBL.SubzonasAsignadas(param));
         }
 
     }

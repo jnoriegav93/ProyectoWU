@@ -1,0 +1,130 @@
+﻿@model IEnumerable<WU.BE.SubzonaETBE>
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Zonas Asignadas";
+}
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#finicio').datetimepicker({ format: 'DD/MM/YYYY' });
+        $('#ffin').datetimepicker({ format: 'DD/MM/YYYY' });
+    });
+</script>
+
+<h3>Reporte de zonas asignadas</h3>
+
+@using (Html.BeginForm("ZonasAsignadas", "Zona", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Datos</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-sm-2 col-form-label">Fecha de inicio:</label>
+                        <div class="col-sm-2">
+                            <div class="input-group date" id="finicio">
+                                <input type="text" id="txtFchIni" name="txtFchIni" class="form-control ocl-8" value="@DateTime.Now.AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy")">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-2  col-xs-12">
+                            <input type="submit" value="Buscar" id="btnBuscar"
+                                   class="btn btn-primary btn-block esp-s" name="btnBuscar" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ffin" class="col-sm-2 col-form-label">Fecha de fin:</label>
+                        <div class="col-sm-2">
+                            <div class="input-group date" id="ffin">
+                                <input type="text" id="txtFchFin" name="txtFchFin" class="form-control ocl-8" value="@DateTime.Now.AddMonths(1).AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy")">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Tabla</h3>
+                </div>
+
+                <div class="panel-body">
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#tbZonas').DataTable({});
+                        });
+                    </script>
+                    <div class="col-sm-12">
+                        <table id="tbZonas" class="table table-bordered table-hover table-striped" style="overflow-y:scroll; max-height:400px">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Subzona</th>
+                                    <th>Apellidos</th>
+                                    <th>Nombres</th>
+                                    <th>Fch. Registro</th>
+                                    <th>Estado</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(zona => item.cod_subzona_et)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(zona => item.dscsubzona)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(zona => item.apeet)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(zona => item.nomet)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(zona => item.fchregistro)
+                                        </td>
+                                        <td>
+                                            @{
+                                                string tp = "";
+                                                string estado = "";
+                                                switch (item.estsubzonaet)
+                                                {
+                                                    case "0": tp = "success"; estado = "ACTIVO"; break;
+                                                    case "X": tp = "danger"; estado = "INACTIVO"; break;
+                                                    default: tp = "primary"; estado = "ACTIVO"; break;
+                                                }
+                                                <span class="label label-@tp">@estado</span>
+                                            }
+                                        </td>
+                                        <td> <!--
+                                            <a href="@Url.Action("DetalleZona", "Zona", new { zona = item.cod_subzona_et })"
+                                               class="btn btn-primary btn-sm" style="width: 32px">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </a>-->
+                                        </td>
+                                    </tr>
+                                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                                                }
