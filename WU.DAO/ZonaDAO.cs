@@ -239,7 +239,7 @@ namespace WU.DAO
             }
             catch (Exception ex)
             {
-                return "Error al intentar actualizar: " + ex.Message;
+                return "Error al intentar actualizar: " + ex.Message.Replace("'", "''");
             }
             finally
             {

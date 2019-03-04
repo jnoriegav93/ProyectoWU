@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ETController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InfoIAController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ZonaController.cs" />
     <Compile Include="Global.asax.cs">
@@ -283,6 +284,7 @@
     <Content Include="Views\Zona\DetalleZona.cshtml" />
     <Content Include="Views\Zona\NuevaZona.cshtml" />
     <Content Include="Views\Zona\ZonasAsignadas.cshtml" />
+    <Content Include="Views\InfoIA\CargarInfoIA.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

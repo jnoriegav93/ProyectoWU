@@ -176,6 +176,49 @@
         })
     });
 
+    
+
+    function dibujarMapa(coords,mapa) {
+        var array = [];
+        var coord = coords.split(";");
+        coord.forEach(function (fila) {
+            if (fila != null && fila != "" && !isNaN(parseFloat(fila.split(",")[0]))) {
+                array.push([parseFloat(fila.split(",")[0]), parseFloat(fila.split(",")[1])]);
+            }
+        });
+        if (array.length > 0) {
+            var polygon = new ol.geom.Polygon([array]);
+            var feature = new ol.Feature(polygon.transform('EPSG:4326', 'EPSG:3857'));
+            var vectorSource = new ol.source.Vector();
+            vectorSource.addFeature(feature);
+            var vectorLayer = new ol.layer.Vector({
+                source: vectorSource
+            });
+            mapa.addLayer(vectorLayer);
+            console.log("Se dibujó el area: " + array);
+            centrarMapa(mapa, array);
+        }
+    }
+
+    function centrarMapa(mapa, array) {
+        var lat = [];
+        var lon = [];
+        for (var i = 0 ; i < array.length; i++) {
+            if(!isNaN(array[i][0])) lat.push(array[i][0]);
+            if(!isNaN(array[i][1])) lon.push(array[i][1]);
+        }
+        var avglat = lat.reduce((a, b) => a + b, 0) / lat.length;
+        var avglon = lon.reduce((a, b) => a + b, 0) / lon.length;
+
+        // pan from the current center
+        var pan = ol.animation.pan({
+            source: mapa.getView().getCenter()
+        });
+        mapa.beforeRender(pan);
+        // when we set the new location, the map will pan smoothly to it
+        map.getView().setCenter(ol.proj.transform([avglat, avglon], 'EPSG:4326', 'EPSG:3857'));
+    }
+
 
     $(document).ready(function () {
         $('#ddlZona').change(function () {
@@ -190,31 +233,10 @@
                             myArray.push([parseFloat(data.lat), parseFloat(data.lon)]);
                         });
                         $('#txtCoord').val(res);
+                        dibujarMapa(res, map);
                         res = "";
                     });
             }
-
-
-            var array = [];
-            var coord = document.getElementById("txtCoord").value.split(";");
-            coord.forEach(function (fila) {
-                if (fila != null || fila != "") {
-                    array.push([parseFloat(fila.split(",")[0]), parseFloat(fila.split(",")[1])]);
-                }
-            });
-
-
-            if (array.length > 0) {
-                var polygony = new ol.geom.Polygon([array]);
-                var featurey = new ol.Feature(polygony.transform('EPSG:4326', 'EPSG:3857'));
-                var vectorSourcey = new ol.source.Vector();
-                vectorSourcey.addFeature(featurey);
-                var vectorLayery = new ol.layer.Vector({
-                    source: vectorSourcey
-                });
-                map.addLayer(vectorLayery);
-            }
-
         });
 
     });

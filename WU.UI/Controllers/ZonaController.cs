@@ -176,6 +176,10 @@ namespace WU.UI.Controllers
 
         public ActionResult ActualizarZona(string txtCodzona, string txtDsczona, string txtCodubigeo, string ddlEstzona, string txtCoord)
         {
+            /*           
+             https://jsfiddle.net/3L140cg3/16/
+             https://stackoverflow.com/questions/10013274/google-maps-user-editable-polygon-with-fixed-number-of-points
+             */
             String mensaje = "";
             if (txtCodubigeo != null && txtDsczona != null && txtCoord != null)
             {
