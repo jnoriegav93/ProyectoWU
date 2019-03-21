@@ -259,15 +259,36 @@
 
 
 
+        /*
+       //MOSTRAR MARCADORES DEL POLÍGONO
+       var lonlatarray = myArray;
 
-        var vectorSource = new ol.source.Vector({
-            features: markers
-        });
-        var markerVectorLayer = new ol.layer.Vector({
-            source: vectorSource
-        });
-        map.addLayer(markerVectorLayer);
+       var markers = [];
+       var i;
+       for (i = 0; i < lonlatarray.length; i++) {
 
+           markers.push(new ol.Feature({
+               geometry: new ol.geom.Point(
+                 ol.proj.fromLonLat(lonlatarray[i])
+             //  ol.proj.fromLonLat([16.332253, 48.503684])
+                 )
+           }));
+
+       }
+
+       var vectorSource = new ol.source.Vector({
+           features: markers
+       });
+       var markerVectorLayer = new ol.layer.Vector({
+           source: vectorSource
+       });
+       map.addLayer(markerVectorLayer);
+       */
+
+
+
+
+        /*
 
         map.on('singleclick', function (e) {
             var iconFeature = new ol.Feature({
@@ -285,6 +306,38 @@
             this.mapRaster.addInteraction(modify);
 
         });
+        */
+        //
+
+
+        // Create a select interaction and add it to the map:
+        selectInteraction = new ol.interaction.Select();
+        map.addInteraction(selectInteraction);
+
+        modifyInteraction = new ol.interaction.Modify({ features: selectInteraction.getFeatures() });
+        console.log("Inicio");
+
+        modifyInteraction.on('modifystart', function (evt) {
+            console.log("Start");
+        });
+        // set listener on "modifyend":
+        modifyInteraction.on('change', function (evt) {
+            console.log("Modificado");
+            // get features:
+            var collection = evt.features;
+            // There's only one feature, so get the first and only one:
+            var featureClone = collection.item(0).clone();
+            // transform cloned feature to WGS84:
+            featureClone.getGeometry().transform('EPSG:3857', 'EPSG:4326');
+            // get GeoJSON of feature:
+            var geojson = formatGeoJSON.writeFeature(featureClone);
+            // save or do whatever...       
+            console.log(geojson);
+        });
+
+
+        map.addInteraction(modifyInteraction);
+
 
     }
 
