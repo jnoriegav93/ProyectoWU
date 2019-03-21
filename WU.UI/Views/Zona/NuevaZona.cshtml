@@ -7,10 +7,6 @@
 
 
 <script type="text/javascript">
-    $(function () {
-        $('#finicio_001').datetimepicker({ format: 'DD/MM/YYYY' });
-        $('#ffin_001').datetimepicker({ format: 'DD/MM/YYYY' });
-    });
 
     $(document).ready(function () {
         $('#ddlDepartamento').change(function () {
@@ -48,9 +44,7 @@
                         });
                     });
             }
-        });
-
-        
+        });        
 
         $('#ddlDistrito').change(function () {
             $("#txtCodubigeo").val($("#ddlDepartamento").val() + $("#ddlProvincia").val() + $("#ddlDistrito").val());

@@ -24,7 +24,64 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#ddlEstzona option[value='@modelo.estzona']").prop('selected', true);
+
+        $('#ddlDepartamento').change(function () {
+            $("#txtCodubigeo").val("");
+            var selectedValue = $(this).val();
+            if (selectedValue != null && selectedValue != '') {
+                $.getJSON('@Url.Action("/listarProvincias")', { ddlDepartamento: selectedValue },
+                    function (jsondata) {
+                    var dllSecond = $('#ddlProvincia');
+                    dllSecond.empty();
+                    $.each(jsondata, function (index, data) {
+                        dllSecond.append($('<option/>', {
+                            value: data.codubigeo,
+                            text: data.provincia
+                        }));
+                    });
+                });
+            }
+        });
+
+        $('#ddlProvincia').change(function () {
+            $("#txtCodubigeo").val("");
+            var selectedDep = $("#ddlDepartamento").val();
+            var selectedPro = $("#ddlProvincia").val();
+            if (selectedPro != null && selectedPro != '') {
+                $.getJSON('@Url.Action("/listarDistritos")', { ddlDepartamento: selectedDep, ddlProvincia: selectedPro },
+                    function (jsondata) {
+                        var dllSecond = $('#ddlDistrito');
+                        dllSecond.empty();
+                        $.each(jsondata, function (index, data) {
+                            dllSecond.append($('<option/>', {
+                                value: data.codubigeo,
+                                text: data.distrito
+                            }));
+                        });
+                    });
+            }
+        });
+
+
+
+
+        /*$("#ddlDepartamento").val("15");
+        $("#ddlDepartamento").change();
+        $("#ddlProvincia").val("01");
+        $("#ddlProvincia").change();
+        $('#ddlDistrito').val("36");
+        $('#ddlDistrito').change();*/
+
+
     });
+
+
+
+    $('#ddlDistrito').change(function () {
+        $("#txtCodubigeo").val($("#ddlDepartamento").val() + $("#ddlProvincia").val() + $("#ddlDistrito").val());
+    });
+
+
 </script>
 
 @using (Html.BeginForm("ActualizarZona", "Zona", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -68,6 +125,31 @@
                             <label for="" class="col-md-2 esp-s">Ubigeo:</label>
                             <div class="col-md-10">
                                 <input type="text" class="form-control" value="@modelo.dscubigeo">
+
+
+                                        <!--<div class="col-md-10 esp-s">
+                                            <div class="input-group col-md-12 col-xs-12" style="padding:0;">
+                                                @{
+                                                    var modeloDep = Model.ubigeoBL.listarDepartamentos();
+                                                    int cantDep = modeloDep.Count();
+                                                }
+                                                <select class="form-control" id="ddlDepartamento" name="ddlDepartamento" style="width: 34%">
+                                                    @for (int i = 0; i < cantDep; i++)
+                                                    {
+                                                        string Cid = modeloDep.ElementAt(i).codubigeo;
+                                                        string nom = modeloDep.ElementAt(i).departamento;
+                                                        <option id="@Cid" value="@Cid" label="@nom"></option>
+                                                    }
+                                                </select>
+                                                <select class="form-control" id="ddlProvincia" name="ddlProvincia" style="width: 33%">
+                                                    <option id="00" value="00">-PROVINCIA-</option>
+                                                </select>
+                                                <select class="form-control" id="ddlDistrito" name="ddlDistrito" style="width: 33%">
+                                                    <option id="00" value="00">-DISTRITO-</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
+
                             </div>
                         </div>
                     </div>
