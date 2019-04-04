@@ -12,62 +12,26 @@ namespace WU.UI.Controllers
     {
         public ZonaBL zonaBL = new ZonaBL();
         public SubzonaBL subzonaBL = new SubzonaBL();
+        public LocalBL localBL = new LocalBL();
         public ETBL etBL = new ETBL();
         public UbigeoBL ubigeoBL = new UbigeoBL();
-        public List<ZonaBE> lstZonas = new List<ZonaBE>();
 
-
-        // GET: Zonas
-        public ActionResult AsignarSubzona()
+        public class claseLlenarMapa
         {
-            var model = new ZonaController();
-            return View(model);
-
+            public List<ZonaBE> lstZonas { get; set; }
+            public List<List<SubzonaBE>> lstSubzonas { get; set; }
+            public List<SubzonaBE> lstSubzonaDDL { get; set; }
+            public List<LocalBE> lstLocales { get; set; }
         }
-        public ActionResult CargarZonas()
-        {
-            return View(zonaBL.CargarZonas());
-        }
+        
         public ActionResult ListarET()
         {
             return View(etBL.ListarET());
         }
-        [HttpPost]
-        public ActionResult AsignarETaSubzona(string txtCoord, string ddlZona, string ddlET)
-        {
-            SubzonaETBE sz = new SubzonaETBE()
-            {
-                codet = Convert.ToInt32(ddlET),
-                codsubzona = Convert.ToInt32(ddlZona),            
-                fchregistro = DateTime.Now,
-                estsubzonaet = "0"
-            };
-            String mensaje = "";
-            if (ddlZona != "0" && txtCoord.Length > 0)
-            {
-
-                if (subzonaBL.AsignarETaSubzona(sz))
-                {
-
-                    mensaje = GenerarScript("ASIGNADO", 1, "Zona/AsignarSubzona");
-                }
-                else
-                {
-                    mensaje = GenerarScript("NO ASIGNADO", 0, "Zona/AsignarSubzona");
-                }
-            }
-            else
-            {
-                mensaje = GenerarScript("Debe completar todos los campos", 0, "Zona/AsignarSubzona");
-            }
-            return Content(mensaje);
-        }
-
         public String GenerarScript(String script, int redir, String ubicacion)
         {
             return "<script language='javascript' type='text/javascript'>alert('" + script + "');" + (redir == 1 ? " window.location.href='/" + ubicacion + "';</script>" : "");
         }
-
         public ActionResult MantenimientoZonas(string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
         {
             txtNombre = txtNombre == null ? "" : txtNombre;
@@ -83,7 +47,6 @@ namespace WU.UI.Controllers
             };
             return View(zonaBL.ListarZonas(param));
         }
-
         public ActionResult DetalleZona()
         {
             return View(new ZonaController());
@@ -92,23 +55,18 @@ namespace WU.UI.Controllers
         {
             return View(zonaBL.CargarDetalleZona(codzona));
         }
-
         public ActionResult DibujarZona(String codzona)
         {
             return View(zonaBL.DibujarZona(codzona));
         }
-
         public ActionResult NuevaZona()
         {
             return View(new ZonaController());
         }
-
         public ActionResult ObtenerCodzona()
         {
-
             return View(zonaBL.ObtenerCodzona());
         }
-
         public ActionResult RegistrarZona(string txtCodzona, string ddlDepartamento, string ddlProvincia, string ddlDistrito,
                                           string txtDsczona, string txtFchregistro, string ddlEstzona, string txtCoord)
         {
@@ -170,10 +128,6 @@ namespace WU.UI.Controllers
             }
             return Content(mensaje);
         }
-
-
-
-
         public ActionResult ActualizarZona(string txtCodzona, string txtDsczona, string txtCodubigeo, string ddlEstzona, string txtCoord)
         {
             /*           
@@ -207,8 +161,8 @@ namespace WU.UI.Controllers
                                 {
                                     codzona = txtCodzona,
                                     orden = id++,
-                                    lat = Convert.ToDouble(fila.Split(',')[0].Replace(".",",")),
-                                    lon = Convert.ToDouble(fila.Split(',')[1].Replace(".",","))
+                                    lat = Convert.ToDouble(fila.Split(',')[0].Replace(".", ",")),
+                                    lon = Convert.ToDouble(fila.Split(',')[1].Replace(".", ","))
                                 });
                             }
                         }
@@ -239,11 +193,6 @@ namespace WU.UI.Controllers
             }
             return Content(mensaje);
         }
-
-
-
-
-
         public ActionResult listarDepartamentos()
         {
             return View(ubigeoBL.listarDepartamentos());
@@ -257,30 +206,45 @@ namespace WU.UI.Controllers
         {
             return Json(ubigeoBL.listarDistritos(ddlDepartamento, ddlProvincia), JsonRequestBehavior.AllowGet);
         }
-
-
         public ActionResult DibujarZonaJSON(String codzona)
         {
             return Json(zonaBL.DibujarZona(codzona), JsonRequestBehavior.AllowGet);
         }
-
-        //Zonas asignadas
-        
-        public ActionResult ZonasAsignadas(string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
+        public ActionResult AsignarSubzona()
         {
-            txtNombre = txtNombre == null ? "" : txtNombre;
-            txtFchIni = txtFchIni == null ? DateTime.Now.AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy") : txtFchIni;
-            txtFchFin = txtFchFin == null ? DateTime.Now.AddDays(1).ToString("dd/MM/yyyy") : txtFchFin;
-            ddlEstado = ddlEstado == null ? "0" : ddlEstado;
-            SubzonaETBE param = new SubzonaETBE()
-            {
-                //dsczona = txtNombre.Trim(),
-                fchinicio = txtFchIni,// Convert.ToDateTime(txtFchIni).ToString("yyyy-MM-dd"),
-                fchfin = txtFchFin, //Convert.ToDateTime(txtFchFin).ToString("yyyy-MM-dd"),
-                estsubzonaet = ddlEstado
-            };
-            return View(subzonaBL.SubzonasAsignadas(param));
+            var model = new ZonaController();
+            return View(model);
+
         }
 
+        public ActionResult BuscarZona(string ddlZona, string cbMoneyTransfer, string cbPagoServicios)
+        {
+            ddlZona = ddlZona == null ? "0" : ddlZona;
+            cbMoneyTransfer = cbMoneyTransfer == null ? "0" : cbMoneyTransfer == "false" ? "0" : "1";
+            cbPagoServicios = cbPagoServicios == null ? "0" : cbPagoServicios == "false" ? "0" : "1";
+            ZonaBE param = new ZonaBE()
+            {
+                codzona = ddlZona,
+                moneytransfer = cbMoneyTransfer,
+                pagoservicios = cbPagoServicios
+            };
+            claseLlenarMapa clase = new claseLlenarMapa()
+            {
+                lstZonas = zonaBL.DibujarZona(param.codzona),
+                lstSubzonas = subzonaBL.DibujarSubzona(param.codzona),
+                lstSubzonaDDL = subzonaBL.CargarSubzonas(param.codzona),
+                lstLocales = localBL.CargarLocales(param)
+            };
+            return Json(clase, JsonRequestBehavior.AllowGet);
+        }        
+
+        public ActionResult ETAsignado(String codsubzona)
+        {
+            return Json(etBL.ETAsignado(codsubzona), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ActualizarETAsignado(String codzona, String codsubzona, String dscsubzona, String codet, String fecini, String fecfin)
+        {
+            return Json(etBL.ActualizarETAsignado(codzona,codsubzona, dscsubzona,codet, fecini, fecfin), JsonRequestBehavior.AllowGet);
+        }
     }
 }

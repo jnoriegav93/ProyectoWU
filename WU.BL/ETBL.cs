@@ -15,5 +15,14 @@ namespace WU.BL
         {
             return dao.ListarET();
         }
+
+        public ETBE ETAsignado(String codsubzona)
+        {
+            return dao.ETAsignado(codsubzona);
+        }
+        public String ActualizarETAsignado(String codzona,String codsubzona, String dscsubzona, String codet, String fecini, String fecfin)
+        {
+            return dao.ActualizarETAsignado(codzona,codsubzona, dscsubzona, codet, fecini, fecfin);
+        }
     }
 }

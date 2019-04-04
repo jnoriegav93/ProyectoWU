@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ETBE.cs" />
+    <Compile Include="LocalBE.cs" />
     <Compile Include="SubzonaBE.cs" />
     <Compile Include="SubzonaETBE.cs" />
     <Compile Include="UbigeoBE.cs" />

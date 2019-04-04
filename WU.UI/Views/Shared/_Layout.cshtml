@@ -21,8 +21,8 @@
     @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
     @Scripts.Render("~/bundles/bootstrap")
 
-        @Scripts.Render("~/Scripts/ol.js")
-        @Scripts.Render("~/Scripts/mapa.js")
+    @Scripts.Render("~/Scripts/ol.js")
+    @Scripts.Render("~/Scripts/mapa.js")
 
     @Styles.Render("~/Content/ol.css")
     @RenderSection("scripts", required: false)
@@ -58,36 +58,10 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zonas<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li style="display:none">@Html.ActionLink("1.Buscar", "BuscarZona", "Zona")</li>
-                            <li>@Html.ActionLink("4.Asignar Subzona", "AsignarSubzona", "Zona")</li>
-                            <li>@Html.ActionLink("2.Mantenimiento", "MantenimientoZonas", "Zona")</li>
+                            <li>@Html.ActionLink("Mantenimiento de Zonas", "MantenimientoZonas", "Zona")</li>
                             <li role="separator" class="divider"></li>
-                            <li>@Html.ActionLink("Zonas Asignadas", "ZonasAsignadas", "Zona")</li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" style="display:none">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Prospecto<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Registrar</a></li>
-                            <li><a href="#">Consultar</a></li>
-                            <li><a href="#">Aprobar</a></li>
-                            <li><a href="#">Mantenimiento</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transacciones<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("3. Cargar IA", "CargarInfoIA", "InfoIA")</li>
-                            <li style="display:none"><a href="#">Procesar</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" style="display:none">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Zonas<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="http://localhost:6445/WZonas/wfBuscarZona.aspx">Buscar</a></li>
-                            <li><a href="http://localhost:6445/WZonas/wfMantenimientoZona.aspx">Mantenimiento</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Reporte</a></li>
+                            <li>@Html.ActionLink("Asignar Subzona", "AsignarSubzona", "Zona")</li>
+                            <li>@Html.ActionLink("Subzonas Asignadas", "SubzonasAsignadas", "Zona")</li>
                         </ul>
                     </li>
                 </ul>

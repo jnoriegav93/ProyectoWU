@@ -217,6 +217,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoIAController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SubzonaController.cs" />
     <Compile Include="Controllers\ZonaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -300,8 +301,7 @@
     <Content Include="Views\Zona\MantenimientoZonas.cshtml" />
     <Content Include="Views\Zona\DetalleZona.cshtml" />
     <Content Include="Views\Zona\NuevaZona.cshtml" />
-    <Content Include="Views\Zona\ZonasAsignadas.cshtml" />
-    <Content Include="Views\InfoIA\CargarInfoIA.cshtml" />
+    <Content Include="Views\Zona\SubzonasAsignadas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

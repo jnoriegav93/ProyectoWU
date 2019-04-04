@@ -19,6 +19,9 @@ namespace WU.BE
         public string fchfin { get; set; } // Filtro de búsqueda
         public string dscubigeo { get; set; } // Descripción del ubigeo
 
+        public string moneytransfer { get; set; }
+        public string pagoservicios { get; set; }
+
         //detalle
         public int orden { get; set; }
         public double lat { get; set; }

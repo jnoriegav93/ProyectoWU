@@ -15,5 +15,7 @@ namespace WU.BE
         public string apeet { get; set; }
         public string estet { get; set; }
         public string fchregistro { get; set; }
+        public string fchinicio { get; set; }
+        public string fchfin { get; set; }
     }
 }

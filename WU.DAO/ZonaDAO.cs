@@ -13,7 +13,6 @@ namespace WU.DAO
     public class ZonaDAO
     {
         Conexion c = new Conexion();
-        SqlConnection con = new SqlConnection();
         public List<ZonaBE> CargarZonas()
         {
             List<ZonaBE> lstZona = new List<ZonaBE>();
@@ -199,6 +198,7 @@ namespace WU.DAO
             try
             {
                 con.Open();
+
                 foreach (ZonaBE be in lst)
                 {
                     SqlCommand cmd = new SqlCommand("sp_tb_zona_det_ins", con);
@@ -209,6 +209,7 @@ namespace WU.DAO
                     cmd.Parameters.AddWithValue("@lon", be.lon);
                     cmd.ExecuteNonQuery();
                 }
+
 
             }
             catch (Exception ex)

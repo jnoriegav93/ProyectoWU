@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WU.BE.SubzonaETBE>
 @{
     Layout = "../Shared/_Layout.cshtml";
-    ViewBag.Title = "Zonas Asignadas";
+    ViewBag.Title = "Subzonas Asignadas";
 }
 
 
@@ -14,7 +14,7 @@
 
 <h3>Reporte de zonas asignadas</h3>
 
-@using (Html.BeginForm("ZonasAsignadas", "Zona", FormMethod.Post))
+@using (Html.BeginForm("SubzonasAsignadas", "Subzona", FormMethod.Post))
 {
     <div class="row">
         <div class="col-md-12">
@@ -64,11 +64,11 @@
                 <div class="panel-body">
                     <script type="text/javascript">
                         $(document).ready(function () {
-                            $('#tbZonas').DataTable({});
+                            $('#tbSubzonas').DataTable({});
                         });
                     </script>
                     <div class="col-sm-12">
-                        <table id="tbZonas" class="table table-bordered table-hover table-striped" style="overflow-y:scroll; max-height:400px">
+                        <table id="tbSubzonas" class="table table-bordered table-hover table-striped" style="overflow-y:scroll; max-height:400px">
                             <thead>
                                 <tr>
                                     <th>N°</th>

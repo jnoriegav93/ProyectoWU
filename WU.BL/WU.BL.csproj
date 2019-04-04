@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ETBL.cs" />
+    <Compile Include="LocalBL.cs" />
     <Compile Include="Parametros.cs" />
     <Compile Include="SubzonaBL.cs" />
     <Compile Include="UbigeoBL.cs" />

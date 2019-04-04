@@ -16,7 +16,8 @@
         height: 500px;
     }
 </style>
-<h3>WU_CUS001 Asignar Sub Zona a ET</h3>
+<h3>WU_CUS001 Asignar Subzona a ET</h3>
+
 <div class="row">
     <div class="col-md-8">
         <div class="panel panel-default">
@@ -24,45 +25,40 @@
                 <h3 class="panel-title">Datos</h3>
             </div>
             <div class="panel-body">
-                <div class="form-group row">
-                    <label for="finicio" class="col-sm-3 col-form-label">Fecha de inicio:</label>
+                <div class="row" style="margin-bottom: 15px;">
+                    <label for="ddlZonas" class="col-sm-3 col-form-label">Zonas:</label>
                     <div class="col-sm-5">
-                        <div class="input-group date" id="finicio">
-                            <input type="text" id="txtFchIni" name="txtFchIni" class="form-control ocl-8" value="@DateTime.Now.AddDays(1-DateTime.Now.Day).ToString("dd/MM/yyyy")">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
+                        @{
+                            var modeloZ = Model.zonaBL.CargarZonas();
+                            <select id="ddlZona" name="ddlZona" class="form-control">
+                                @for (int i = 0; i < modeloZ.Count(); i++)
+                                {
+                                    string Cid = modeloZ.ElementAt(i).codzona;
+                                    string nom = modeloZ.ElementAt(i).dsczona;
+                                    <option id="@Cid" value="@Cid">@nom</option>
+                                }
+                            </select>
+                        }
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="ffin" class="col-sm-3 col-form-label">Fecha de fin:</label>
-                    <div class="col-sm-5">
-                        <div class="input-group date" id="ffin">
-                            <input type="text" id="txtFchFin" name="txtFchFin" class="form-control ocl-8" value="@DateTime.Now.AddMonths(1).AddDays(1-DateTime.Now.Day).ToString("dd/MM/yyyy")">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="form-group row">
                     <div class="col-sm-3 col-xs-6">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="">Money Transfer
+                                @Html.CheckBox("cbMoneyTransfer", false)Money Transfer
                             </label>
                         </div>
                     </div>
                     <div class="col-sm-3 col-xs-6">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="">Pago de servicios
+                                @Html.CheckBox("cbPagoServicios", false)Pago de servicios
                             </label>
                         </div>
                     </div>
                     <div class="col-sm-2  col-xs-12">
-                        <a href="#" class="btn btn-primary btn-primary btn-block">Buscar</a>
+                        <button id="btnBuscar" name="btnBuscar" class="btn btn-block btn-success" onclick="buscarZona();">Buscar</button>
                     </div>
                 </div>
             </div>
@@ -81,81 +77,93 @@
             </div>
         </div>
     </div>
-    <!-- form  -->
-    @using (Html.BeginForm("AsignarETaSubzona", "Zona", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div class="col-md-4">
-            <div class="panel panel-default row">  
-                <div class="panel-heading">
-                    <h3 class="panel-title">Subzona</h3>
-                </div>
-                <div class="panel-body esp-m">
-                    <div class="form-group">
-                        <div class="row" style="margin-bottom: 15px;">
-                            <label for="ddlZonas" class="col-sm-3 col-form-label">Zonas:</label>
-                            <div class="col-sm-9"> 
-                                @{
-                                    var modelo = Model.zonaBL.CargarZonas();
-                                    int cant = modelo.Count();
-                                    <select id="ddlZona" name="ddlZona" class="form-control">
-                                        @for (int i = 0; i < cant; i++)
-                                        {
-                                            string Cid = modelo.ElementAt(i).codzona;
-                                            string nom = modelo.ElementAt(i).dsczona;
-                                            <option id="@Cid" value="@Cid">@nom</option>
-                                        }
-                                    </select>
-                                }
-                            </div>
+    <div class="col-md-4">
+        <div class="panel panel-default row">
+            <div class="panel-heading">
+                <h3 class="panel-title">Subzonas</h3>
+            </div>
+            <div class="panel-body esp-m">
+                <div class="form-group">
+                    <div class="row" style="margin-bottom: 15px;">
+                        <label for="ddlZonas" class="col-sm-3 col-form-label">Asignadas:</label>
+                        <div class="col-sm-9">
+                            <select id="ddlSubzona" name="ddlSubzona" class="form-control">
+                                <option>-VACÍO-</option>
+                            </select>
                         </div>
-                        <div class="row">
-                            <label for="ddlZonas" class="col-sm-12 col-form-label">% de captación: 80%</label>
+                    </div>
+                    <div class="row" style="margin-top: 15px;">
+                        <label for="ddlZonas" class="col-sm-3 col-form-label">Nueva:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="txtSubzona" name="txtSubzona" class="form-control ocl-8" placeholder="Nombre de subzona">
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel panel-default row">
-                <div class="panel-heading">
-                    <h3 class="panel-title">ET</h3>
-                </div>
-                <div class="panel-body esp-m">
-                    <div class="form-group">
-                        <div class="row ">
-                            <div class="col-sm-12" style="margin-bottom: 15px; width:100%">
-                                @{
-                                    var modeloET = Model.etBL.ListarET();
-                                    int cantET = modeloET.Count();
-                                    <select name="ddlET" class="form-control">
-                                        @for (int i = 0; i < cantET; i++)
-                                        {
-                                            int Cid = modeloET.ElementAt(i).codet;
-                                            string nom = modeloET.ElementAt(i).nomet + " " +
-                                                        modeloET.ElementAt(i).apeet;
-                                            <option id="@Cid" value="@Cid">@nom</option>
-                                        }
-                                    </select>
-                                }
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <a href="#" class="btn btn-block btn-primary">Buscar</a>
-                            </div>
-                            <div class="col-xs-6">
-                                <a href="#" class="btn btn-block btn-danger">Eliminar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5" style="display:none"></textarea>
-                <input type="submit" value="Asignar" id="btnAsignar" name="btnAsignar" class="btn btn-block btn-primary" />
             </div>
         </div>
+        <div class="panel panel-default row">
+            <div class="panel-heading">
+                <h3 class="panel-title">ET</h3>
+            </div>
+            <div class="panel-body esp-m">
+                <div class="form-group">
+                    <div class="row ">
+                        <div class="col-sm-12" style="margin-bottom: 15px; width:100%">
+                            @{
+                                var modeloET = Model.etBL.ListarET();
+                                int cantET = modeloET.Count();
+                                <select name="ddlET" id="ddlET" class="form-control">
+                                    @for (int i = 0; i < cantET; i++)
+                                    {
+                                        int Cid = modeloET.ElementAt(i).codet;
+                                        string nom = modeloET.ElementAt(i).nomet + " " +
+                                                    modeloET.ElementAt(i).apeet;
+                                        <option id="@Cid" value="@Cid">@nom</option>
                                     }
-    <!-- fin form  -->
+                                </select>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="finicio" class="col-sm-4 col-form-label">Fecha inicio:</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date" id="finicio">
+                            <input type="text" id="txtFchIni" name="txtFchIni" class="form-control ocl-8" value="@DateTime.Now.AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy")">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="ffin" class="col-sm-4 col-form-label">Fecha fin:</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date" id="ffin">
+                            <input type="text" id="txtFchFin" name="txtFchFin" class="form-control ocl-8" value="@DateTime.Now.AddMonths(1).AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy")">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <button id="btnAsignar" name="btnAsignar" class="btn btn-block btn-primary" onclick="ActualizarETAsignado();">Asignar ET</button>
+            </div>
+            <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5" style="display:nonex"></textarea>
+
+
+        </div>
+    </div>
 </div>
+
+
+
+
 <script type="text/javascript">
     var source = new ol.source.Vector();
     var puntoLima = ol.proj.fromLonLat([-77.044, -12.062]);
@@ -165,6 +173,12 @@
         layers: [
         new ol.layer.Tile({
             source: new ol.source.OSM()
+            /*source: new ol.source.XYZ({
+            attributions: [
+              new ol.Attribution({  html: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community' })],
+            url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+            })*/
+
         }),
         new ol.layer.Vector({
             source: source
@@ -176,17 +190,9 @@
         })
     });
 
-    
-
-    function dibujarMapa(coords,mapa) {
-        var array = [];
-        var coord = coords.split(";");
-        coord.forEach(function (fila) {
-            if (fila != null && fila != "" && !isNaN(parseFloat(fila.split(",")[0]))) {
-                array.push([parseFloat(fila.split(",")[0]), parseFloat(fila.split(",")[1])]);
-            }
-        });
+    function cargarMapa(mapa, array) {
         if (array.length > 0) {
+
             var polygon = new ol.geom.Polygon([array]);
             var feature = new ol.Feature(polygon.transform('EPSG:4326', 'EPSG:3857'));
             var vectorSource = new ol.source.Vector();
@@ -195,178 +201,258 @@
                 source: vectorSource
             });
             mapa.addLayer(vectorLayer);
-            console.log("Se dibujó el area: " + array);
-            centrarMapa(mapa, array);
+            //console.log("Se dibujó el area: " + array);
         }
     }
 
-    function centrarMapa(mapa, array) {
+    function centrarMapa(mapa, array, zoom) {
         var lat = [];
         var lon = [];
         for (var i = 0 ; i < array.length; i++) {
-            if(!isNaN(array[i][0])) lat.push(array[i][0]);
-            if(!isNaN(array[i][1])) lon.push(array[i][1]);
+            if (!isNaN(array[i][0])) lat.push(array[i][0]);
+            if (!isNaN(array[i][1])) lon.push(array[i][1]);
         }
         var avglat = lat.reduce((a, b) => a + b, 0) / lat.length;
         var avglon = lon.reduce((a, b) => a + b, 0) / lon.length;
 
-        // pan from the current center
         var pan = ol.animation.pan({
             source: mapa.getView().getCenter()
         });
+        mapa.getView().setZoom(zoom);
         mapa.beforeRender(pan);
-        // when we set the new location, the map will pan smoothly to it
-        map.getView().setCenter(ol.proj.transform([avglat, avglon], 'EPSG:4326', 'EPSG:3857'));
+        mapa.getView().setCenter(ol.proj.transform([avglat, avglon], 'EPSG:4326', 'EPSG:3857'));
+    }
+
+    function pintarMarcadores(mapa, array) {
+
+        var iconFeatures = [];
+        array.forEach(function (marcador) {
+
+            var iconFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform([marcador.lon, marcador.lat], 'EPSG:4326',
+                'EPSG:3857')),
+                name: marcador.nomlocal,
+                population: marcador.calificacion,
+                rainfall: marcador.calificacion
+            });
+            iconFeatures.push(iconFeature);
+
+        });
+
+        var vectorSource = new ol.source.Vector({
+            features: iconFeatures //add an array of features
+        });
+
+        var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon(({
+                anchor: [0.5, 46],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                opacity: 1,
+                //src: 'https://openlayers.org/en/v3.20.1/examples/data/icon.png'
+                color: '#8959A8',
+                src: 'https://openlayers.org/en/v3.20.1/examples/data/dot.png'
+            }))
+        });
+
+        var markerLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: iconStyle
+        });
+
+        mapa.addLayer(markerLayer);
+    }
+
+    function mapaCalor(mapa, array) {
+
+        var dat = new ol.source.Vector();
+        // created for owl range of data
+
+        array.forEach(function (marcador) {
+            dat = new ol.source.Vector();
+            var pointFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform([marcador.lon, marcador.lat], 'EPSG:4326', 'EPSG:3857')),
+                weight: 5// e.g. temperature
+            });
+            dat.addFeature(pointFeature);
+
+            heatMapLayer = new ol.layer.Heatmap({
+                source: dat,
+                radius: 40
+               , blur: 60 - (marcador.calificacion * 10)
+            });
+            mapa.addLayer(heatMapLayer);
+        });
+    }
+
+    function limpiarMapa(mapa) {
+        var layerArray, len, layer;
+        layerArray = map.getLayers().getArray();
+        len = layerArray.length;
+        while (len > 2) { //************
+            layer = layerArray[len - 1];
+            mapa.removeLayer(layer);
+            len = layerArray.length;
+        }
+    }
+
+    function crearZonas(mapa) {
+        var draw = new ol.interaction.Draw({
+            type: 'Polygon',
+            source: source,
+            style: new ol.style.Style({
+                image:
+                //Start of the star style
+                new ol.style.RegularShape({
+                    fill: new ol.style.Fill({
+                        color: 'red'
+                    }),
+                    points: 4,
+                    radius1: 15,
+                    radius2: 1,
+                }),
+                stroke: new ol.style.Stroke({
+                    color: 'blue',
+                    width: 3
+                })
+            })
+        });
+        mapa.addInteraction(draw);
+
+
+        //Agregar las coordenadas creadas en un campo
+        source.on('addfeature', function (evt) {
+            var feature = evt.feature;
+            var coords = feature.getGeometry().getCoordinates();
+            var coo = "";
+            coords[0].forEach(function (element) {
+                element = ol.proj.transform(element, 'EPSG:3857', 'EPSG:4326');  //14 decimales , 18 caracteres
+                coo += element + ";";
+            });
+            document.getElementById("txtCoord").value = coo;
+        });
     }
 
 
-    $(document).ready(function () {
-        $('#ddlZona').change(function () {
-            var selectedValue = $(this).val();
-            var myArray = [];
-            if (selectedValue != null && selectedValue != '') {
-                $.getJSON('@Url.Action("/DibujarZonaJSON")', { codzona: selectedValue },
-                    function (jsondata) {
-                        var res = "";
-                        $.each(jsondata, function (index, data) {
-                            res += data.lat + "," + data.lon + ";";
-                            myArray.push([parseFloat(data.lat), parseFloat(data.lon)]);
-                        });
-                        $('#txtCoord').val(res);
-                        dibujarMapa(res, map);
-                        res = "";
+    function buscarZona() {
+        $.ajax({
+            url: '/Zona/BuscarZona',
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                ddlZona: document.getElementById("ddlZona").value,
+                cbMoneyTransfer: document.getElementById("cbMoneyTransfer").checked,
+                cbPagoServicios: document.getElementById("cbPagoServicios").checked
+            },
+            success: function (result) {
+                limpiarMapa(map);
+                //Habilitar la creación de subzonas
+                crearZonas(map);
+                //Zonas
+                var arrayZona = [];
+                result.lstZonas.forEach(function (dato) {
+                    arrayZona.push([dato.lat, dato.lon]);
+                });
+                cargarMapa(map, arrayZona);
+                centrarMapa(map, arrayZona, 14);
+
+                //Subzonas
+                var arrSubzona = [];
+                result.lstSubzonas.forEach(function (subzona) {
+                    subzona.forEach(function (dato) {
+                        arrSubzona.push([dato.lat, dato.lon]);
                     });
+                    cargarMapa(map, arrSubzona);
+                    arrSubzona = [];
+                });
+                $('#ddlSubzona').empty();
+                result.lstSubzonaDDL.forEach(function (subzona) {
+                    //cargar ddl
+                    $('#ddlSubzona').append('<option value="' + subzona.codsubzona + '">' + subzona.dscsubzona + '</option>');
+                });
+                //Locales (marcadores)
+                mapaCalor(map, result.lstLocales);
+                //pintarMarcadores(map, result.lstLocales);c
+
+                $('#ddlSubzona').change(function () {
+                    var codzona = $("#ddlSubzona").val();
+                    var seleccionada = [];
+                    var x;
+                    var y;
+                    result.lstSubzonas.forEach(function (subzona) {
+                        x = subzona;
+                        subzona.forEach(function (dato) {
+                            y = dato.codsubzona;
+                            if (dato.codsubzona == codzona) {
+                                seleccionada.push([dato.lat, dato.lon]);
+                            }
+                        });
+                    });
+                    if (seleccionada.length > 0) {
+                        centrarMapa(map, seleccionada, 16);
+                    }
+
+
+                    //ET asignado
+                    $.ajax({
+                        url: '/Zona/ETAsignado',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            codsubzona: document.getElementById("ddlSubzona").value
+                        },
+                        success: function (result) {
+                            $('#ddlET').val(result.codet);
+                            result.fchinicio = result.fchinicio == null ? "" : result.fchinicio;
+                            result.fchfin = result.fchfin == null ? "" : result.fchfin;
+                            $('#txtFchIni').val(result.fchinicio == "" ? "@DateTime.Now.AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy")" : result.fchinicio);
+                            $('#txtFchFin').val(result.fchfin == "" ? "@DateTime.Now.AddMonths(1).AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy")" : result.fchfin);
+                        },
+                        complete: function (result) {
+                        }
+                    });
+                });
+            },
+            complete: function (result) {
             }
         });
 
-    });
+    }
 
 
-    /*
-    var draw = new ol.interaction.Draw({
-        type: 'Polygon',
-        source: source,
-        style: new ol.style.Style({
-            image:
-            //Start of the star style
-            new ol.style.RegularShape({
-                fill: new ol.style.Fill({
-                    color: 'red'
-                }),
-                points: 4,
-                radius1: 15,
-                radius2: 1,
-            }),
-            stroke: new ol.style.Stroke({
-                color: 'blue',
-                width: 2
-            })
-        })
-    });
-    map.addInteraction(draw);*/
+    function ActualizarETAsignado() {
 
-    /*
-    source.on('addfeature', function (evt) {
-        var feature = evt.feature;
-        var coords = feature.getGeometry().getCoordinates();
-        var coo = "";
-        coords[0].forEach(function (element) {
-            element = ol.proj.transform(element, 'EPSG:3857', 'EPSG:4326');  //14 decimales , 18 caracteres
-            coo += element + ";";
+        var codz = document.getElementById("ddlZona").value;
+        var codsz = document.getElementById("ddlSubzona").value;
+        var dscsz = document.getElementById("txtSubzona").value;
+        var codet = document.getElementById("ddlET").value;
+        var fini = document.getElementById("txtFchIni").value;
+        var ffin = document.getElementById("txtFchFin").value;
+        $.ajax({
+            url: '/Zona/ActualizarETAsignado',
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                codzona: codz,
+                codsubzona: codsz,
+                dscsubzona: dscsz,
+                codet: codet,
+                fecini: fini,
+                fecfin: ffin
+            },
+            success: function (result) {
+                if (result != "OK") {
+                    alert(result);
+                } else {
+                    alert("Se asignó el et " + codet + " a la subzona " + codsz);
+                }
+            },
+            complete: function (result) {
+            }
         });
-        document.getElementById("txtCoord").value = coo;
-    });
-    var arrZona = [
-            [
-                [-77.044, -12.067], [-77.039, -12.062], [-77.034, -12.062], [-77.029, -12.067], [-77.029, -12.072], [-77.029, -12.077],
-                [-77.034, -12.082], [-77.039, -12.082], [-77.044, -12.077], [-77.044, -12.072], [-77.044, -12.067]
-            ],
-            [
-                [-77.06694260857539, -12.057537968485335],
-                [-77.05793038628536, -12.056016603888480],
-                [-77.05862776062922, -12.058692101389013],
-                [-77.05927149079280, -12.061052812313676],
-                [-77.05996886513667, -12.063203664173514],
-                [-77.06308022759394, -12.062574148341952],
-                [-77.06431404374080, -12.062311849642555],
-                [-77.06619159005122, -12.061944631032333],
-                [-77.06651345513299, -12.061105272320418],
-                [-77.06726447365718, -12.059426547014667],
-                [-77.06715718529658, -12.058482259412287],
-                [-77.06694260857539, -12.057537968485335]
-            ],
-            [
-                [-77.08126041378857, -12.079092632739659],
-                [-77.08067032780531, -12.078515610837740],
-                [-77.06763479199293, -12.083184206913103],
-                [-77.06522080387953, -12.084128407455850],
-                [-77.06468436207655, -12.084967694030581],
-                [-77.06457707371595, -12.085806977973093],
-                [-77.06361147847059, -12.086488894238059],
-                [-77.07204970803134, -12.097042638165902],
-                [-77.07660946335666, -12.095416591442756],
-                [-77.07639488663547, -12.094839604744450],
-                [-77.07733365979068, -12.094524884202372],
-                [-77.08468291249149, -12.090669527501746],
-                [-77.08438786949985, -12.090013849063865],
-                [-77.08393189396732, -12.089410623481513],
-                [-77.08342227425449, -12.088204168235976],
-                [-77.08258474111368, -12.086467243457676],
-                [-77.08263838529398, -12.086204968155599],
-                [-77.08312118291666, -12.086073830408140],
-                [-77.08263838529398, -12.084500172425962],
-                [-77.08199620898941, -12.080729433302565],
-                [-77.08167434390764, -12.079418026108002],
-                [-77.08126041378857, -12.079092632739659]
-            ],
-            [
-                [-77.02558026919849, -12.113058939090479],
-                [-77.01093540797717, -12.112272190692010],
-                [-77.00056675427099, -12.111642790303975],
-                [-77.00142506115576, -12.104142321510892],
-                [-77.00340989582683, -12.090714383009754],
-                [-77.00378540508892, -12.088458842816593],
-                [-77.01408508770610, -12.089822660090320],
-                [-77.02127340786602, -12.090924199735213],
-                [-77.02288273327495, -12.093127265414950],
-                [-77.02486756794598, -12.097533342323189],
-                [-77.02631596081407, -12.100418234291467],
-                [-77.02706697933824, -12.103880063546470],
-                [-77.02685240261705, -12.106030571254763],
-                [-77.02620867245346, -12.107709004266212],
-                [-77.02583316319140, -12.110226634006153],
-                [-77.02558026919849, -12.113058939090479]
-            ],
-            [
-                [-77.02338310269869, -12.091813752069328],
-                [-77.03389736203708, -12.093072644778417],
-                [-77.05192180661714, -12.094960972730036],
-                [-77.05213638333835, -12.102304343526200],
-                [-77.05406757382906, -12.107549484834152],
-                [-77.04891773252048, -12.112794523139172],
-                [-77.04462619809665, -12.112794523139172],
-                [-77.04269500760593, -12.115731699582696],
-                [-77.03926178006687, -12.113633719706513],
-                [-77.02617260007419, -12.113214121752591],
-                [-77.02853294400728, -12.103982799948895],
-                [-77.02445598630466, -12.094541345448790],
-                [-77.02338310269869, -12.091813752069328]
-            ]
-    ]
+    }
 
 
-    //
 
-    arrZona.forEach(function (zona) {
-        var polygonx = new ol.geom.Polygon([zona]);
-        var featurex = new ol.Feature(polygonx.transform('EPSG:4326', 'EPSG:3857'));
-        var vectorSourcex = new ol.source.Vector();
-        vectorSourcex.addFeature(featurex);
-        var vectorLayerx = new ol.layer.Vector({
-            source: vectorSourcex
-        });
-        map.addLayer(vectorLayerx);
-    });
-    */
 
 </script>
