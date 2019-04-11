@@ -14,7 +14,7 @@ namespace WU.DAO
         Conexion c = new Conexion();
         public List<LocalBE> CargarLocales(ZonaBE param)
         {
-            List<LocalBE> lst = new List<LocalBE>();
+            List<LocalBE> lst = new List<LocalBE>();  
             try
             {
                 SqlConnection con = c.AbrirConexion();

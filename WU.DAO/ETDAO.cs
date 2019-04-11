@@ -78,7 +78,7 @@ namespace WU.DAO
         }
 
 
-        public String ActualizarETAsignado(String codzona,String codsubzona, String dscsubzona, String codet, String finicio, String ffin)
+        public String ActualizarETAsignado(String codsubzona, String codet, String finicio, String ffin)
         {
             SqlConnection con = c.AbrirConexion();
             try
@@ -86,9 +86,7 @@ namespace WU.DAO
                 con.Open();
                 SqlCommand cmd = new SqlCommand("sp_tb_subzona_et_upd", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@codzona", ((object)codzona) ?? '0');
                 cmd.Parameters.AddWithValue("@codsubzona", ((object)codsubzona) ?? '0');
-                cmd.Parameters.AddWithValue("@dscsubzona", ((object)dscsubzona) ?? "");
                 cmd.Parameters.AddWithValue("@codet", ((object)codet) ?? '0');
                 cmd.Parameters.AddWithValue("@fchinicio", ((object)finicio) ?? "");
                 cmd.Parameters.AddWithValue("@fchfin", ((object)ffin) ?? "");

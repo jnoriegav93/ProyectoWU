@@ -154,7 +154,7 @@
             <div class="col-sm-6">
                 <button id="btnAsignar" name="btnAsignar" class="btn btn-block btn-primary" onclick="ActualizarETAsignado();">Asignar ET</button>
             </div>
-            <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5" style="display:nonex"></textarea>
+            <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5" style="display:none"></textarea>
 
 
         </div>
@@ -335,6 +335,11 @@
 
 
     function buscarZona() {
+
+        document.getElementById("txtSubzona").value = "";
+        document.getElementById("txtCoord").value = "";
+        document.getElementById("ddlET").value = "0";
+
         $.ajax({
             url: '/Zona/BuscarZona',
             type: "POST",
@@ -417,6 +422,38 @@
             }
         });
 
+        //
+
+
+        $.ajax({
+            url: '/Zona/PruebaIA',
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                mes: "1",
+                ubigeo: "150105",
+                rubro: "INTERNET",
+                bn: "SI",
+                competencia: "4",
+                concurrencia: "MEDIO",
+                meta: "100",
+                ia_wu: "3"
+
+                /*mes : "6",
+                ubigeo : "150102",
+                rubro: "CC",
+                bn: "SI",
+                competencia: "5",
+                concurrencia: "BAJO",
+                meta: "0",
+                ia_wu: "0"*/
+
+            },
+            success: function (result) {
+                console.log(result);
+            }
+        });
+
     }
 
 
@@ -428,28 +465,63 @@
         var codet = document.getElementById("ddlET").value;
         var fini = document.getElementById("txtFchIni").value;
         var ffin = document.getElementById("txtFchFin").value;
-        $.ajax({
-            url: '/Zona/ActualizarETAsignado',
-            type: "POST",
-            dataType: "JSON",
-            data: {
-                codzona: codz,
-                codsubzona: codsz,
-                dscsubzona: dscsz,
-                codet: codet,
-                fecini: fini,
-                fecfin: ffin
-            },
-            success: function (result) {
-                if (result != "OK") {
-                    alert(result);
-                } else {
-                    alert("Se asignó el et " + codet + " a la subzona " + codsz);
-                }
-            },
-            complete: function (result) {
+        var coord = document.getElementById("txtCoord").value;
+        var registra = true;
+
+        if (codet == "0") {
+            alert("Por favor seleccione el ET a asignar");
+        }
+        else {
+            if (codsz == "0" && dscsz.length > 3 && coord.length > 10) {
+                //Nueva subzona
+                $.ajax({
+                    url: '/Subzona/RegistrarSubzona',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        txtCodzona: codz,
+                        txtDscsubzona: dscsz,
+                        txtCoord: coord
+                    },
+                    success: function (result) {
+                        alert(result);
+                    }
+                });
             }
-        });
+            else {
+                if (codsz == "0") {
+                    alert("No se encontraron coordenadas para registrar");
+                    registra = false;
+                }
+                else {
+                    registra = true;
+                }
+            }
+            //Asignar ET a subzona
+            if (registra) {
+                $.ajax({
+                    url: '/Zona/ActualizarETAsignado',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        codsubzona: codsz,
+                        codet: codet,
+                        fecini: fini,
+                        fecfin: ffin
+                    },
+                    success: function (result) {
+                        if (result != "OK") {
+                            alert(result);
+                        } else {
+                            alert("Se asignó el et a la subzona correctamente.");
+                            buscarZona();
+                        }
+                    },
+                    complete: function (result) {
+                    }
+                });
+            }
+        }
     }
 
 

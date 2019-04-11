@@ -175,7 +175,7 @@ namespace WU.DAO
             {
                 SqlConnection con = c.AbrirConexion();
                 con.Open();
-                SqlCommand cmd = new SqlCommand("select max(codzona)+1 from tb_zona ", con);
+                SqlCommand cmd = new SqlCommand("select IDENT_CURRENT('tb_zona')+1 ", con);
                 cmd.CommandType = CommandType.Text;
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())

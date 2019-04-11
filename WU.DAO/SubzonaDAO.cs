@@ -162,10 +162,7 @@ namespace WU.DAO
                 SqlCommand cmd = new SqlCommand("sp_tb_subzona_ins", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@codzona", be.codzona);
-                cmd.Parameters.AddWithValue("@nomsubzona", be.dscsubzona);
-                cmd.Parameters.AddWithValue("@coordenadas", be.coordenadas);
-                cmd.Parameters.AddWithValue("@fchregistro", be.fchregistro);
-                cmd.Parameters.AddWithValue("@estsubzona", be.estsubzona);
+                cmd.Parameters.AddWithValue("@dscsubzona", be.dscsubzona);
                 cmd.ExecuteNonQuery();
 
             }
@@ -188,7 +185,7 @@ namespace WU.DAO
             {
                 SqlConnection con = c.AbrirConexion();
                 con.Open();
-                SqlCommand cmd = new SqlCommand("select max(codsubzona)+1 from tb_subzona ", con);
+                SqlCommand cmd = new SqlCommand("select IDENT_CURRENT('tb_subzona')+1 ", con);
                 cmd.CommandType = CommandType.Text;
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())

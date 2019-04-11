@@ -24,105 +24,28 @@ namespace WU.UI.Controllers
             return View(model);
 
         }
-        public ActionResult CargarSubzonas()
-        {
-            return View(zonaBL.CargarZonas());
-        }
-        public ActionResult ListarET()
-        {
-            return View(etBL.ListarET());
-        }
-        [HttpPost]
-        public ActionResult AsignarETaSubzona(string txtCoord, string ddlZona, string ddlET)
-        {
-            SubzonaETBE sz = new SubzonaETBE()
-            {
-                codet = Convert.ToInt32(ddlET),
-                codsubzona = Convert.ToInt32(ddlZona),
-                fchregistro = DateTime.Now,
-                estsubzonaet = "0"
-            };
-            String mensaje = "";
-            if (ddlZona != "0" && txtCoord.Length > 0)
-            {
 
-                if (subzonaBL.AsignarETaSubzona(sz))
-                {
-
-                    mensaje = GenerarScript("ASIGNADO", 1, "Subzona/AsignarSubzona");
-                }
-                else
-                {
-                    mensaje = GenerarScript("NO ASIGNADO", 0, "Subzona/AsignarSubzona");
-                }
-            }
-            else
-            {
-                mensaje = GenerarScript("Debe completar todos los campos", 0, "Subzona/AsignarSubzona");
-            }
-            return Content(mensaje);
+        public String GenerarScript(String script)
+        {
+            return "<script language='javascript' type='text/javascript'>alert('" + script + "');</script>";
         }
 
-        public String GenerarScript(String script, int redir, String ubicacion)
-        {
-            return "<script language='javascript' type='text/javascript'>alert('" + script + "');" + (redir == 1 ? " window.location.href='/" + ubicacion + "';</script>" : "");
-        }
-
-        public ActionResult MantenimientoSubzonas(string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
-        {
-            txtNombre = txtNombre == null ? "" : txtNombre;
-            txtFchIni = txtFchIni == null ? DateTime.Now.AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy") : txtFchIni;
-            txtFchFin = txtFchFin == null ? DateTime.Now.AddDays(1).ToString("dd/MM/yyyy") : txtFchFin;
-            ddlEstado = ddlEstado == null ? "0" : ddlEstado;
-            SubzonaBE param = new SubzonaBE()
-            {
-                dscsubzona = txtNombre.Trim(),
-                fchinicio = txtFchIni,// Convert.ToDateTime(txtFchIni).ToString("yyyy-MM-dd"),
-                fchfin = txtFchFin, //Convert.ToDateTime(txtFchFin).ToString("yyyy-MM-dd"),
-                estsubzona = ddlEstado
-            };
-            return View(subzonaBL.ListarSubzonas(param));
-        }
-
-        public ActionResult DetalleSubzona()
-        {
-            return View(new SubzonaController());
-        }
-        public ActionResult CargarDetalleZona(String codsubzona)
-        {
-            return View(subzonaBL.CargarDetalleSubzona(codsubzona));
-        }
-
-        public ActionResult DibujarSubzona(String codsubzona)
-        {
-            return View(subzonaBL.DibujarSubzona(codsubzona));
-        }
-
-        public ActionResult NuevaZona()
-        {
-            return View(new SubzonaController());
-        }
-
-        public ActionResult ObtenerCodsubzona()
-        {
-            return View(subzonaBL.ObtenerCodsubzona());
-        }
-
-        public ActionResult RegistrarSubzona(string txtCodsubzona, string txtDscsubzona, string txtCodzona, string txtFchregistro, string ddlEstsubzona, string txtCoord)
+        public ActionResult RegistrarSubzona(string txtDscsubzona, string txtCodzona, string txtCoord)
         {
             String mensaje = "";
-            if (txtDscsubzona != null && txtFchregistro != null)
+            if (!String.IsNullOrEmpty(txtDscsubzona.Trim()) && !String.IsNullOrEmpty(txtCodzona.Trim()) && !String.IsNullOrEmpty(txtCoord.Trim()))
             {
                 SubzonaBE be = new SubzonaBE()
                 {
                     dscsubzona = txtDscsubzona,
-                    codzona = txtCodzona,
-                    fchregistro = Convert.ToDateTime(txtFchregistro),
-                    estsubzona = "0"
+                    codzona = txtCodzona
                 };
                 String resultado = subzonaBL.RegistrarSubzona(be);
                 if (resultado == "OK")
                 {
+                    //Obtener el codsubzona generado para insertarlo en la tabla de coordenadas
+                    String txtCodsubzona = (Convert.ToInt32(subzonaBL.ObtenerCodsubzona())-1).ToString();
+
                     //Grabar el detalle
                     List<SubzonaBE> lst = new List<SubzonaBE>();
                     string[] coord = txtCoord.Split(';');
@@ -145,26 +68,24 @@ namespace WU.UI.Controllers
                         String res = subzonaBL.RegistrarDetSubzona(lst);
                         if (res == "OK")
                         {
-                            mensaje = GenerarScript("Se ha registrado correctamente.", 1, "Subzona/MantenimientoSubzonas");
+                            mensaje = "Se registró correctamente la subzona.";
                         }
                         else
                         {
-                            mensaje = GenerarScript(res, 0, "Subzona/NuevaSubzona");
+                            mensaje = "Error al registrar: no se encontraron las coordenadas.";
                         }
                     }
 
                 }
                 else
                 {
-                    mensaje = GenerarScript(resultado, 0, "Subzona/NuevaSubzona");
+                    mensaje = "Error en los datos de la subzona";
                 }
             }
-            return Content(mensaje);
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
         }
 
-
-
-
+        
         public ActionResult ActualizarSubzona(string txtCodSubzona, string txtCodzona, string txtDscSubzona, string ddlEstsubzona, string txtCoord)
         {
             /*           
@@ -208,24 +129,24 @@ namespace WU.UI.Controllers
                             String res = "OK";// zonaBL.RegistrarDetZona(lst);
                             if (res == "OK")
                             {
-                                mensaje = GenerarScript("Se ha actualizado correctamente.", 1, "Subzona/MantenimientoSubzonas");
+                                mensaje = "Se ha actualizado correctamente.";
                             }
                             else
                             {
-                                mensaje = GenerarScript(res, 0, "Subzona/DetalleSubzona");
+                                mensaje = res;
                             }
                         }
 
-                        mensaje = GenerarScript("Se ha actualizado correctamente.", 1, "Subzona/MantenimientoSubzonas");
+                        mensaje = "Se ha actualizado correctamente.";
                     }
                     else
                     {
-                        mensaje = GenerarScript(resultado, 1, "Subzona/DetalleSubzona");
+                        mensaje = resultado;
                     }
                 }
                 else
                 {
-                    mensaje = GenerarScript("Debe completar todos los campos", 0, "Subzona/DetalleSubzona");
+                    mensaje = "Debe completar todos los campos";
                 }
             }
             return Content(mensaje);

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WU.BL;
 using WU.BE;
+using RestSharp;
 
 namespace WU.UI.Controllers
 {
@@ -23,7 +24,7 @@ namespace WU.UI.Controllers
             public List<SubzonaBE> lstSubzonaDDL { get; set; }
             public List<LocalBE> lstLocales { get; set; }
         }
-        
+
         public ActionResult ListarET()
         {
             return View(etBL.ListarET());
@@ -236,15 +237,80 @@ namespace WU.UI.Controllers
                 lstLocales = localBL.CargarLocales(param)
             };
             return Json(clase, JsonRequestBehavior.AllowGet);
-        }        
+        }
 
         public ActionResult ETAsignado(String codsubzona)
         {
             return Json(etBL.ETAsignado(codsubzona), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult ActualizarETAsignado(String codzona, String codsubzona, String dscsubzona, String codet, String fecini, String fecfin)
+        public ActionResult ActualizarETAsignado(String codsubzona, String codet, String fecini, String fecfin)
         {
-            return Json(etBL.ActualizarETAsignado(codzona,codsubzona, dscsubzona,codet, fecini, fecfin), JsonRequestBehavior.AllowGet);
+            if (codsubzona == "0")
+            {
+                codsubzona = (Convert.ToInt32(subzonaBL.ObtenerCodsubzona()) - 1).ToString();
+            }
+            return Json(etBL.ActualizarETAsignado(codsubzona, codet, fecini, fecfin), JsonRequestBehavior.AllowGet);
+        }
+
+        bool exec = false;
+
+        public ActionResult PruebaIA(String mes,
+            String ubigeo,
+            String rubro,
+            String bn,
+            String competencia,
+            String concurrencia,
+            String meta,
+            String ia_wu)
+        {
+
+            var client = new RestClient("https://ussouthcentral.services.azureml.net/workspaces/2f89f5999a2e4136b65076490a24c365/services/ed597ee40c1b47ad9b085aefb501fb88/execute?api-version=2.0&details=true");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Postman-Token", "e4c71b46-5744-4cac-804c-a069f632dc05");
+            request.AddHeader("cache-control", "no-cache");
+            request.AddHeader("Authorization", "Bearer oukokAOaGik6TfRjKhs6ci68IjFm1/vfjxPuuOxc89R0qHcEbwJXZmC6nyW3m1F0RzmH4rjtYSU1aggSuHcOlg==");
+            request.AddHeader("Content-Type", "application/json");
+            //request.AddParameter("undefined", "{\r\n  \"Inputs\": {\r\n    \"input1\": {\r\n      \"ColumnNames\": [\r\n        \"MES\",\r\n        \"UBIGEO\",\r\n        \"RUBRO\",\r\n        \"BN\",\r\n        \"COMPETENCIA\",\r\n        \"CONCURRENCIA\",\r\n        \"META\",\r\n        \"IA_WU\"\r\n      ],\r\n      \"Values\": [\r\n        [\r\n          \"4\",\r\n          \"150101\",\r\n          \"value\",\r\n          \"value\",\r\n          \"0\",\r\n          \"value\",\r\n          \"0\",\r\n          \"0\"\r\n        ],\r\n        [\r\n          \"0\",\r\n          \"0\",\r\n          \"value\",\r\n          \"value\",\r\n          \"0\",\r\n          \"value\",\r\n          \"0\",\r\n          \"0\"\r\n        ]\r\n      ]\r\n    }\r\n  },\r\n  \"GlobalParameters\": {}\r\n}", ParameterType.RequestBody);
+
+            request.AddParameter("undefined", "{\r\n" +
+                                                "  \"Inputs\": {\r\n" +
+                                                "    \"input1\": {\r\n" +
+                                                "      \"ColumnNames\": [\r\n" +
+                                                "        \"MES\",\r\n" +
+                                                "        \"UBIGEO\",\r\n" +
+                                                "        \"RUBRO\",\r\n" +
+                                                "        \"BN\",\r\n" +
+                                                "        \"COMPETENCIA\",\r\n" +
+                                                "        \"CONCURRENCIA\",\r\n" +
+                                                "        \"META\",\r\n" +
+                                                "        \"IA_WU\"\r\n" +
+                                                "      ],\r\n" +
+                                                "      \"Values\": [\r\n" +
+                                                "        [\r\n" +
+                                                "          \"" + mes + "\",\r\n" +
+                                                "          \"" + ubigeo + "\",\r\n" +
+                                                "          \"" + rubro + "\",\r\n" +
+                                                "          \"" + bn + "\",\r\n" +
+                                                "          \"" + competencia + "\",\r\n" +
+                                                "          \"" + concurrencia + "\",\r\n" +
+                                                "          \"" + meta + "\",\r\n" +
+                                                "          \"" + ia_wu + "\"\r\n" +
+                                                "        ]\r\n" +
+                                                "      ]\r\n" +
+                                                "    }\r\n" +
+                                                "  },\r\n" +
+                                                "  \"GlobalParameters\": {}\r\n" +
+                                                "}", ParameterType.RequestBody);
+
+
+            IRestResponse response = null;
+            if (!exec)
+            {
+                response = client.Execute(request);
+                exec = true;
+            }
+            return Json(response.Content, JsonRequestBehavior.AllowGet);
+
         }
     }
 }
