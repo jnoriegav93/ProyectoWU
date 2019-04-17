@@ -335,11 +335,9 @@
 
 
     function buscarZona() {
-
         document.getElementById("txtSubzona").value = "";
         document.getElementById("txtCoord").value = "";
         document.getElementById("ddlET").value = "0";
-
         $.ajax({
             url: '/Zona/BuscarZona',
             type: "POST",
@@ -355,7 +353,7 @@
                 crearZonas(map);
                 //Zonas
                 var arrayZona = [];
-                result.lstZonas.forEach(function (dato) {
+                result.lstZona.forEach(function (dato) {
                     arrayZona.push([dato.lat, dato.lon]);
                 });
                 cargarMapa(map, arrayZona);

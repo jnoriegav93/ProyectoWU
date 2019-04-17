@@ -173,7 +173,7 @@ namespace WU.UI.Controllers
 
         public ActionResult DibujarSubzonaJSON(String codsubzona)
         {
-            return Json(subzonaBL.DibujarSubzona(codsubzona), JsonRequestBehavior.AllowGet);
+            return Json(subzonaBL.DibujarSubzonas(codsubzona), JsonRequestBehavior.AllowGet);
         }
 
         //Zonas asignadas

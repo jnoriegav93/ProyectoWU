@@ -19,7 +19,9 @@ namespace WU.UI.Controllers
 
         public class claseLlenarMapa
         {
-            public List<ZonaBE> lstZonas { get; set; }
+            public List<ZonaBE> lstZona { get; set; }
+            public List<List<ZonaBE>> lstZonas { get; set; }
+            public List<ZonaBE> lstZonaDDL { get; set; }
             public List<List<SubzonaBE>> lstSubzonas { get; set; }
             public List<SubzonaBE> lstSubzonaDDL { get; set; }
             public List<LocalBE> lstLocales { get; set; }
@@ -28,10 +30,6 @@ namespace WU.UI.Controllers
         public ActionResult ListarET()
         {
             return View(etBL.ListarET());
-        }
-        public String GenerarScript(String script, int redir, String ubicacion)
-        {
-            return "<script language='javascript' type='text/javascript'>alert('" + script + "');" + (redir == 1 ? " window.location.href='/" + ubicacion + "';</script>" : "");
         }
         public ActionResult MantenimientoZonas(string txtFchIni, string txtFchFin, string txtNombre, string ddlEstado)
         {
@@ -108,23 +106,23 @@ namespace WU.UI.Controllers
                             String res = zonaBL.RegistrarDetZona(lst);
                             if (res == "OK")
                             {
-                                mensaje = GenerarScript("Se ha registrado correctamente.", 1, "Zona/MantenimientoZonas");
+                                mensaje = "Se ha registrado correctamente.";
                             }
                             else
                             {
-                                mensaje = GenerarScript(res, 0, "Zona/NuevaZona");
+                                mensaje = res;
                             }
                         }
 
                     }
                     else
                     {
-                        mensaje = GenerarScript(resultado, 0, "Zona/NuevaZona");
+                        mensaje = resultado;
                     }
                 }
                 else
                 {
-                    mensaje = GenerarScript("Debe completar todos los campos", 0, "Zona/NuevaZona");
+                    mensaje = "Debe completar todos los campos";
                 }
             }
             return Content(mensaje);
@@ -172,24 +170,24 @@ namespace WU.UI.Controllers
                             String res = "OK";// zonaBL.RegistrarDetZona(lst);
                             if (res == "OK")
                             {
-                                mensaje = GenerarScript("Se ha actualizado correctamente.", 1, "Zona/MantenimientoZonas");
+                                mensaje = "Se ha actualizado correctamente.";
                             }
                             else
                             {
-                                mensaje = GenerarScript(res, 0, "Zona/DetalleZona");
+                                mensaje = res;
                             }
                         }
 
-                        mensaje = GenerarScript("Se ha actualizado correctamente.", 1, "Zona/MantenimientoZonas");
+                        mensaje = "Se ha actualizado correctamente.";
                     }
                     else
                     {
-                        mensaje = GenerarScript(resultado, 1, "Zona/DetalleZona");
+                        mensaje = resultado;
                     }
                 }
                 else
                 {
-                    mensaje = GenerarScript("Debe completar todos los campos", 0, "Zona/DetalleZona");
+                    mensaje = "Debe completar todos los campos";
                 }
             }
             return Content(mensaje);
@@ -231,8 +229,8 @@ namespace WU.UI.Controllers
             };
             claseLlenarMapa clase = new claseLlenarMapa()
             {
-                lstZonas = zonaBL.DibujarZona(param.codzona),
-                lstSubzonas = subzonaBL.DibujarSubzona(param.codzona),
+                lstZona = zonaBL.DibujarZona(param.codzona),
+                lstSubzonas = subzonaBL.DibujarSubzonas(param.codzona),
                 lstSubzonaDDL = subzonaBL.CargarSubzonas(param.codzona),
                 lstLocales = localBL.CargarLocales(param)
             };
@@ -310,7 +308,28 @@ namespace WU.UI.Controllers
                 exec = true;
             }
             return Json(response.Content, JsonRequestBehavior.AllowGet);
+        }
 
+        //
+
+        public ActionResult MantenimientoZonasTest()
+        {
+            return View(new ZonaController());
+        }
+
+        public ActionResult CargarZonas()
+        {
+            claseLlenarMapa c = new claseLlenarMapa()
+            {
+                lstZonas = zonaBL.DibujarZonas(),
+                lstZonaDDL = zonaBL.CargarZonas(),
+            };
+            return Json(c, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CargarDetZona(String codzona)
+        {
+            return Json(zonaBL.CargarDetalleZona(codzona), JsonRequestBehavior.AllowGet);
         }
     }
 }

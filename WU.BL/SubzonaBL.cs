@@ -27,7 +27,7 @@ namespace WU.BL
         {
             return subzona.CargarDetalleSubzona(codsubzona);
         }
-        public List<List<SubzonaBE>> DibujarSubzona(String codzona)
+        public List<List<SubzonaBE>> DibujarSubzonas(String codzona)
         {
             return subzona.DibujarSubzonas(codzona);
         }

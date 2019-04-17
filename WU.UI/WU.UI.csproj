@@ -336,6 +336,7 @@
     <Content Include="Views\Zona\DetalleZona.cshtml" />
     <Content Include="Views\Zona\NuevaZona.cshtml" />
     <Content Include="Views\Zona\SubzonasAsignadas.cshtml" />
+    <Content Include="Views\Zona\MantenimientoZonasTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

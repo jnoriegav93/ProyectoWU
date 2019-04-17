@@ -29,6 +29,11 @@ namespace WU.BL
         {
             return zona.DibujarZona(codzona);
         }
+
+        public List<List<ZonaBE>> DibujarZonas()
+        {
+            return zona.DibujarZonas();
+        }
         public String RegistrarZona(ZonaBE be)
         {
             return zona.RegistrarZona(be);
@@ -47,8 +52,5 @@ namespace WU.BL
         {
             return zona.ActualizarZona(be);
         }
-
-
-
     }
 }

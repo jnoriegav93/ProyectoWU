@@ -141,6 +141,44 @@ namespace WU.DAO
             return lst;
         }
 
+
+        public List<List<ZonaBE>> DibujarZonas()
+        {
+            List<ZonaBE> lst = new List<ZonaBE>();
+            List<List<ZonaBE>> lstres = new List<List<ZonaBE>>();
+            try
+            {
+                SqlConnection con = c.AbrirConexion();
+                con.Open();
+                SqlCommand cmd = new SqlCommand("sp_tb_zona_dib", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@codzona", "%");
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    ZonaBE z = new ZonaBE();
+                    z.codzona = dr[3].ToString();
+                    z.orden = Convert.ToInt32(dr[0]);
+                    z.lat = Convert.ToDouble(dr[1].ToString().Replace(",", "."));
+                    z.lon = Convert.ToDouble(dr[2].ToString().Replace(",", "."));
+                    lst.Add(z);
+                }
+                lstres = lst
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Value.codzona)
+                .Select(x => x.Select(v => v.Value).ToList())
+                .ToList();
+
+                con.Close();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return lstres;
+        }
+
         public String RegistrarZona(ZonaBE be)
         {
             SqlConnection con = c.AbrirConexion();
@@ -163,6 +201,7 @@ namespace WU.DAO
             finally
             {
                 con.Close();
+
             }
             return "OK";
         }
