@@ -13,6 +13,6 @@ Javascript, JSON
 
 Librerías adicionales:
 
-Bootstrap 3 (datetimepicker, datatables),
+Bootstrap 3 (librería completa, datetimepicker, datatables),
 JQuery, 
 OpenLayers
