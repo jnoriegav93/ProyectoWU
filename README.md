@@ -8,6 +8,7 @@ La capa de la vista está desarrollada bajo MVC.
 El proyecto contempla la visualización de Mapas, gráficos de áreas, marcadores y mapa de calor.
 
 
+# Tecnologías
 
 IDE: Visual Studio 2015
 
@@ -21,7 +22,7 @@ Javascript, JSON
 
 
 
-Librerías adicionales:
+# Librerías adicionales:
 
 Bootstrap 3 (librería completa, datetimepicker, datatables),
 
