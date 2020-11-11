@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+    var imgPath = "https://www.westernunion.com/etc/designs/westernunion/stylesheet/images/logo-wu.png";
+}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1>Bienvenidos</h1>
+        <p class="lead">
+            Este es un proyecto desarrollado para mostrar
+            las zonas y subzonas creadas por los supervisores, con la finalidad de
+            implementar nuevas agencias para Western Union
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Actualización de Zonas</h2>
+        <p>Crea y gestiona las zonas base para la evaluación de los nuevos agentes WU.</p>
+        <p><a class="btn btn-success" href="@Url.Action("MantenimientoZonas", "Zona")">Ingresar &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Asignar Subzonas</h2>
+        <p>Con las zonas creadas, genera subzonas y asígnales un Especialista Técnico para la evaluación del sector.</p>
+        <p><a class="btn btn-success" href="@Url.Action("AsignarSubzona", "Zona")">Ingresar &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Zonas asignadas</h2>
+        <p>Revisa las zonas asignadas, con subzonas y agentes generados.</p>
+        <p><a class="btn btn-success" href="@Url.Action("SubzonasAsignadas", "Zona")">Ingresar &raquo;</a></p>
+    </div>
+</div>
+
+<hr />
+<p>@ViewBag.Message</p>   

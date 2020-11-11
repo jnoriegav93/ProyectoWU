@@ -1,0 +1,368 @@
+﻿@model WU.UI.Controllers.ZonaController
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Zonas asignadas";
+}
+<script type="text/javascript">
+    $(function () {
+        $('#finicio').datetimepicker({ format: 'DD/MM/YYYY' });
+        $('#ffin').datetimepicker({ format: 'DD/MM/YYYY' });
+    });
+
+</script>
+<style type="text/css">
+    #map {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Datos</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-sm-3 col-form-label esp-s">F. Inicio:</label>
+                        <div class="col-sm-6">
+                            <div class="input-group date" id="finicio">
+                                <input type="text" id="txtFchIni" name="txtFchIni" class="form-control ocl-8" value="@DateTime.Now.AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy")">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="ffin" class="col-sm-3 col-form-label  esp-s">F. Fin:</label>
+                        <div class="col-sm-6">
+                            <div class="input-group date" id="ffin">
+                                <input type="text" id="txtFchFin" name="txtFchFin" class="form-control ocl-8" value="@DateTime.Now.AddMonths(1).AddDays(1 - DateTime.Now.Day).ToString("dd/MM/yyyy")">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <button id="btnBuscar" name="btnBuscar" class="btn btn-block btn-primary" onclick="buscarSZAsignadas();">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Lista</h3>
+                </div>
+                <div class="panel-body" style="/*height:280px;max-height:280px;*/">
+                    <div class="table-responsive" >
+                        <table id="tablaSZAsignadas" class="table table-bordered table-hover table-striped" style="overflow-x:scroll; overflow-y:scroll;">
+                            <thead>
+                                <tr>
+                                    <th>Subzona</th>
+                                    <th>ET</th>
+                                    <th>F. Inicio</th>
+                                    <th>F. Fin</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Mapa</h3>
+            </div>
+            <div class="panel-body" style="padding: 0">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script type="text/javascript">
+    var source = new ol.source.Vector();
+    var puntoLima = ol.proj.fromLonLat([-77.044, -12.062]);
+
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+            /*source: new ol.source.XYZ({
+            attributions: [
+              new ol.Attribution({  html: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community' })],
+            url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+            })*/
+
+        }),
+        new ol.layer.Vector({
+            source: source
+        })],
+        view: new ol.View({
+            center: puntoLima,
+            zoom: 15,
+            projection: 'EPSG:3857'
+        })
+    });
+
+    function cargarMapa(mapa, array) {
+        if (array.length > 0) {
+
+            var polygon = new ol.geom.Polygon([array]);
+            var feature = new ol.Feature(polygon.transform('EPSG:4326', 'EPSG:3857'));
+            var vectorSource = new ol.source.Vector();
+            vectorSource.addFeature(feature);
+            var vectorLayer = new ol.layer.Vector({
+                source: vectorSource
+            });
+            mapa.addLayer(vectorLayer);
+            //console.log("Se dibujó el area: " + array);
+        }
+    }
+
+    function centrarMapa(mapa, array, zoom) {
+        var lat = [];
+        var lon = [];
+        for (var i = 0 ; i < array.length; i++) {
+            if (!isNaN(array[i][0])) lat.push(array[i][0]);
+            if (!isNaN(array[i][1])) lon.push(array[i][1]);
+        }
+        var avglat = lat.reduce((a, b) => a + b, 0) / lat.length;
+        var avglon = lon.reduce((a, b) => a + b, 0) / lon.length;
+
+        var pan = ol.animation.pan({
+            source: mapa.getView().getCenter()
+        });
+        mapa.getView().setZoom(zoom);
+        mapa.beforeRender(pan);
+        mapa.getView().setCenter(ol.proj.transform([avglat, avglon], 'EPSG:4326', 'EPSG:3857'));
+    }
+
+    function pintarMarcadores(mapa, array) {
+
+        var iconFeatures = [];
+        array.forEach(function (marcador) {
+
+            var iconFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform([marcador.lon, marcador.lat], 'EPSG:4326',
+                'EPSG:3857')),
+                name: marcador.nomlocal,
+                population: marcador.calificacion,
+                rainfall: marcador.calificacion
+            });
+            iconFeatures.push(iconFeature);
+
+        });
+
+        var vectorSource = new ol.source.Vector({
+            features: iconFeatures //add an array of features
+        });
+
+        var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon(({
+                anchor: [0.5, 46],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                opacity: 1,
+                //src: 'https://openlayers.org/en/v3.20.1/examples/data/icon.png'
+                color: '#8959A8',
+                src: 'https://openlayers.org/en/v3.20.1/examples/data/dot.png'
+            }))
+        });
+
+        var markerLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: iconStyle
+        });
+
+        mapa.addLayer(markerLayer);
+    }
+
+    function mapaCalor(mapa, array) {
+
+        var dat = new ol.source.Vector();
+        // created for owl range of data
+
+        array.forEach(function (marcador) {
+            dat = new ol.source.Vector();
+            var pointFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform([marcador.lon, marcador.lat], 'EPSG:4326', 'EPSG:3857')),
+                weight: 5// e.g. temperature
+            });
+            dat.addFeature(pointFeature);
+
+            heatMapLayer = new ol.layer.Heatmap({
+                source: dat,
+                radius: 40
+               , blur: 60 - (marcador.calificacion * 10)
+            });
+            mapa.addLayer(heatMapLayer);
+        });
+    }
+
+    function limpiarMapa(mapa) {
+        var layerArray, len, layer;
+        layerArray = map.getLayers().getArray();
+        len = layerArray.length;
+        while (len > 2) { //************
+            layer = layerArray[len - 1];
+            mapa.removeLayer(layer);
+            len = layerArray.length;
+        }
+    }
+
+    function crearZonas(mapa) {
+        var draw = new ol.interaction.Draw({
+            type: 'Polygon',
+            source: source,
+            style: new ol.style.Style({
+                image:
+                //Start of the star style
+                new ol.style.RegularShape({
+                    fill: new ol.style.Fill({
+                        color: 'red'
+                    }),
+                    points: 4,
+                    radius1: 15,
+                    radius2: 1,
+                }),
+                stroke: new ol.style.Stroke({
+                    color: 'blue',
+                    width: 3
+                })
+            })
+        });
+        mapa.addInteraction(draw);
+
+
+        //Agregar las coordenadas creadas en un campo
+        source.on('addfeature', function (evt) {
+            var feature = evt.feature;
+            var coords = feature.getGeometry().getCoordinates();
+            var coo = "";
+            coords[0].forEach(function (element) {
+                element = ol.proj.transform(element, 'EPSG:3857', 'EPSG:4326');  //14 decimales , 18 caracteres
+                coo += element + ";";
+            });
+            document.getElementById("txtCoord").value = coo;
+        });
+    }
+
+
+    //
+    function buscarSZAsignadas() {
+        
+        $.ajax({
+            url: '/Zona/BuscarSZAsignadas',
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                fchIni: document.getElementById("txtFchIni").value,
+                fchFin: document.getElementById("txtFchFin").value
+            },
+            success: function (result) {
+                //Zonas
+                console.log(result);
+
+                $('#tablaSZAsignadas').DataTable({
+                    "destroy": true,
+                    "data": result,
+                    "columns": [
+                        { "data": "dscsubzona" },
+                        { "data": "nomet" },
+                        { "data": "fchinicio" },
+                        { "data": "fchfin" },
+                        { "data": "codsubzona" }
+                    ],
+                    "columnDefs": [
+                       {
+                           //"targets": [ 4 ],
+                           //"visible": false
+                       }],
+                    "searching": false,
+                    "info": false,         // Will show "1 to n of n entries" Text at bottom
+                    "lengthChange": false, // Will Disabled Record number per page
+                    "pageLength": 3,
+                    "ordering": true
+                });
+
+            },
+            complete: function (result) {
+            }
+        });
+        //
+        $.ajax({
+            url: '/Zona/DibujarSubzonasAsignadas',
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                fchIni: document.getElementById("txtFchIni").value,
+                fchFin: document.getElementById("txtFchFin").value
+            },
+            success: function (result) {
+                limpiarMapa(map);
+                console.log(result);
+                //Subzonas
+                var arrSubzona = [];
+                result.forEach(function (subzona) {
+                    subzona.forEach(function (dato) {
+                        arrSubzona.push([dato.lat, dato.lon]);
+                    });
+                    cargarMapa(map, arrSubzona);
+                    arrSubzona = [];
+                });
+               
+                var table = $('#tablaSZAsignadas').DataTable();
+                $('#tablaSZAsignadas tbody').on('click', 'tr', function () {
+                    var data = this.cells[4].innerHTML;// table.row(this).data();
+                    //
+                    var seleccionada = [];
+                    var x;
+                    var y;
+                    if (data.length > 0) {
+                        console.log('You clicked on ' + data.codsubzona + '\'s row');
+                        result.forEach(function (subzona) {
+                            x = subzona;
+                            subzona.forEach(function (dato) {
+                                y = dato.codsubzona;
+                                if (dato.codsubzona == data) {
+                                    seleccionada.push([dato.lat, dato.lon]);
+                                }
+                            });
+                        });
+                        if (seleccionada.length > 0) {
+                            centrarMapa(map, seleccionada, 14);
+                        }
+                    }
+                    //
+                });
+
+            },
+            complete: function (result) {
+            }
+        });
+        //
+    }
+
+
+</script>

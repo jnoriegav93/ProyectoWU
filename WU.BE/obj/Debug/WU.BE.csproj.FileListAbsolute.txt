@@ -1,0 +1,5 @@
+E:\Desarrollo\VisualStudio\ProyectoWU\WU.BE\bin\Debug\WU.BE.dll
+E:\Desarrollo\VisualStudio\ProyectoWU\WU.BE\bin\Debug\WU.BE.pdb
+E:\Desarrollo\VisualStudio\ProyectoWU\WU.BE\obj\Debug\WU.BE.csprojResolveAssemblyReference.cache
+E:\Desarrollo\VisualStudio\ProyectoWU\WU.BE\obj\Debug\WU.BE.dll
+E:\Desarrollo\VisualStudio\ProyectoWU\WU.BE\obj\Debug\WU.BE.pdb

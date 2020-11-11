@@ -1,0 +1,722 @@
+﻿@model WU.UI.Controllers.ZonaController
+@{
+    Layout = "../Shared/_Layout.cshtml";
+    ViewBag.Title = "Mantenimiento de zonas";
+}
+<!DOCTYPE html>
+<style type="text/css">
+    #map {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Detalle</h3>
+        </div>
+        <div class="panel-body esp-s" style="">
+            <div class="row">
+                <div class="col-md-9 col-sm-12">
+                    <div class="form-group row">
+                        <label for="ddlZonas" class="col-sm-2 col-form-label">Zonas:</label>
+                        <div class="col-sm-10">
+                            @{
+                                var modeloZ = Model.zonaBL.CargarZonas();
+                                <select id="ddlZona" name="ddlZona" class="form-control">
+                                    @for (int i = 0; i < modeloZ.Count(); i++)
+                                    {
+                                        string Cid = modeloZ.ElementAt(i).codzona;
+                                        string nom = modeloZ.ElementAt(i).dsczona;
+                                        <option id="@Cid" value="@Cid">@nom</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-2">
+                    <div class="form-group row">
+                        <label for="" class="col-md-6 esp-s">Código:</label>
+                        <div class="col-md-6">
+                            <input type="text" id="txtCodzona" name="txtCodzona" class="form-control" disabled="disabled" >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-10">
+                    <div class="form-group row">
+                        <label for="" class="col-md-2 col-sm-6esp-s">Nombre:</label>
+                        <div class="col-md-10">
+                            <input type="text" id="txtDsczona" name="txtDsczona" class="form-control col-sm-6" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-2">
+                    <div class="form-group row">
+                        <label for="" class="col-md-6 coc-form-label esp-s">Cod. Ubigeo:</label>
+                        <div class="col-md-6">
+                            <input type="text" id="txtCodubigeo" name="txtCodubigeo" class="form-control ocl-8" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-10">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-md-2 coc-form-label esp-s">Ubigeo:</label>
+                        <div class="col-md-10 esp-s">
+                            <div class="input-group col-md-12 col-xs-12" style="padding:0;">
+                                @{
+                                    var modeloDep = Model.ubigeoBL.listarDepartamentos();
+                                    int cantDep = modeloDep.Count();
+                                }
+                                <select class="form-control" id="ddlDepartamento" name="ddlDepartamento" style="width: 34%"  disabled="disabled" >
+                                    @for (int i = 0; i < cantDep; i++)
+                                    {
+                                        string Cid = modeloDep.ElementAt(i).codubigeo;
+                                        string nom = modeloDep.ElementAt(i).departamento;
+                                        <option id="@Cid" value="@Cid">@nom</option>
+                                    }
+                                </select>
+                                <select class="form-control" id="ddlProvincia" name="ddlProvincia" style="width: 33%" >
+                                    <option id="00" value="00">-PROVINCIA-</option>
+                                </select>
+                                <select class="form-control" id="ddlDistrito" name="ddlDistrito" style="width: 33%" >
+                                    <option id="00" value="00">-DISTRITO-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-2">
+                    <div class="form-group row">
+                        <label for="" class="col-md-6 col-sm-6 esp-s">Estado:</label>
+                        <div class="col-md-6">
+                            <select id="ddlEstzona" name="ddlEstzona" class="form-control" >
+                                <option id="1" value="0">ACTIVO</option>
+                                <option id="X" value="X">INACTIVO</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-3">
+                    <div class="form-group row">
+                        <label for="finicio" class="col-md-4 esp-s">Fecha:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="txtFchRegistro" name="txtFchRegistro" disabled="disabled" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="display:none">
+                <textarea id="txtCoord" name="txtCoord" class="form-control col-md-12" rows="3" cols="5"></textarea>
+            </div>
+        </div>
+    </div>
+    <!-- fin panel -->
+</div>
+<div class="row">
+    <div class="col-xs-3" style="margin-bottom: 15px;">
+        <button id="btnNuevaZona" name="btnNuevaZona" class="btn btn-block btn-success" onclick="nuevaZona();">
+            <span class="glyphicon glyphicon-plus"></span> Nueva zona
+        </button>
+    </div>
+    <div class="col-xs-3" style="margin-bottom: 15px;">
+        <button id="btnEditarZona" name="btnEditarZona" class="btn btn-block btn-primary" onclick="editarZona();" disabled="disabled">
+            <span class="glyphicon glyphicon-pencil"></span> Editar zona
+        </button>
+    </div>
+    <div class="col-xs-3" style="margin-bottom: 15px;">
+        <button id="btnCancelar" name="btnCancelar" class="btn btn-block btn-primary" onclick="cancelar();" disabled="disabled">
+            <span class="glyphicon glyphicon-log-out"></span> Cancelar
+        </button>
+    </div>
+    <div class="col-xs-3" style="margin-bottom: 15px;">
+        <button id="btnActualizarZona" name="btnActualizarZona" class="btn btn-block btn-primary" onclick="actualizarZona();" disabled="disabled">
+            <span class="glyphicon glyphicon-save"></span> Actualizar
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Mapa</h3>
+        </div>
+        <div class="panel-body" style="padding: 0">
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#ddlDepartamento').change(function () {
+            //$("#txtCodubigeo").val("");
+            var selectedValue = $(this).val();
+            if (selectedValue != null && selectedValue != '') {
+                $.getJSON('@Url.Action("/listarProvincias")', { ddlDepartamento: selectedValue },
+                    function (jsondata) {
+                        var dllSecond = $('#ddlProvincia');
+                        dllSecond.empty();
+                        $.each(jsondata, function (index, data) {
+                            dllSecond.append($('<option/>', {
+                                value: data.codubigeo,
+                                text: data.provincia
+                            }));
+                        });
+                        //seleccionado
+                        var cod = $("#txtCodubigeo").val();
+                        if ($("#txtCodubigeo").val().length = 6 && cod.substring(2, 4) != "00") {
+                            $("#ddlProvincia option[value='" + cod.substring(2, 4) + "']").prop('selected', true);
+                            $("#ddlProvincia").change();
+                        }
+                    });
+            }
+        });
+
+        $('#ddlProvincia').change(function () {
+            //$("#txtCodubigeo").val("");
+            var selectedDep = $("#ddlDepartamento").val();
+            var selectedPro = $("#ddlProvincia").val();
+            if (selectedPro != null && selectedPro != '') {
+                $.getJSON('@Url.Action("/listarDistritos")', { ddlDepartamento: selectedDep, ddlProvincia: selectedPro },
+                    function (jsondata) {
+                        var dllSecond = $('#ddlDistrito');
+                        dllSecond.empty();
+                        $.each(jsondata, function (index, data) {
+                            dllSecond.append($('<option/>', {
+                                value: data.codubigeo,
+                                text: data.distrito
+                            }));
+                        });
+
+                        //seleccionado
+                        var cod = $("#txtCodubigeo").val();
+                        if ($("#txtCodubigeo").val().length = 6 && cod.substring(4, 6) != "00") {
+                            $("#ddlDistrito option[value='" + cod.substring(4, 6) + "']").prop('selected', true);
+                            $("#ddlDistrito").change();
+                        }
+                    });
+            }
+        });
+    });
+
+    $('#ddlDistrito').change(function () {
+        if ($("#ddlDepartamento").val() + $("#ddlProvincia").val() + $("#ddlDistrito").val() == "000000" || $("#ddlDistrito").val() == "00") {
+            $("#txtCodubigeo").val("");
+        }
+        else if ($("#ddlDistrito").val() != "00") {
+            $("#txtCodubigeo").val($("#ddlDepartamento").val() + $("#ddlProvincia").val() + $("#ddlDistrito").val()); 
+            //Ajax centrar mapa
+            $.ajax({
+                url: '/Zona/centrarUbigeo',
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    codubigeo:  $("#txtCodubigeo").val()
+                },
+                success: function (result) {
+                    //console.log(result);
+                    if ($("#ddlZona").val() == 0 && result != null && result.lat != 0 && result.lon != 0 && result.zoom != 0 ) {
+                        var coo = [];
+                        coo.push();
+                        coo[0] = [result.lon, result.lat];
+                        centrarMapa(map, coo, result.zoom);
+                    }
+
+                },
+                complete: function (result) {
+                }
+            });
+
+            //
+            }
+    });
+
+
+    var source = new ol.source.Vector();
+    var puntoLima = ol.proj.fromLonLat([-77.044, -12.062]);
+
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+            /*source: new ol.source.XYZ({
+            attributions: [
+              new ol.Attribution({  html: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community' })],
+            url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+            })*/
+
+        }),
+        new ol.layer.Vector({
+            source: source
+        })],
+        view: new ol.View({
+            center: puntoLima,
+            zoom: 12,
+            projection: 'EPSG:3857'
+        })
+    });
+
+    cargarZonas();
+
+    cancelar();
+    //
+    Number.prototype.pad = function (size) {
+        var s = String(this);
+        while (s.length < (size || 2)) { s = "0" + s; }
+        return s;
+    }
+    //
+
+    function cargarMapa(mapa, array) {
+        if (array.length > 0) {
+
+            var polygon = new ol.geom.Polygon([array]);
+            var feature = new ol.Feature(polygon.transform('EPSG:4326', 'EPSG:3857'));
+            var vectorSource = new ol.source.Vector();
+            vectorSource.addFeature(feature);
+            var vectorLayer = new ol.layer.Vector({
+                source: vectorSource
+            });
+            mapa.addLayer(vectorLayer);
+        }
+    }
+
+    function centrarMapa(mapa, array, zoom) {
+        //console.log(array);
+        var lat = [];
+        var lon = [];
+        for (var i = 0 ; i < array.length; i++) {
+            if (!isNaN(array[i][0])) lat.push(array[i][0]);
+            if (!isNaN(array[i][1])) lon.push(array[i][1]);
+        }
+        var avglat = lat.reduce((a, b) => a + b, 0) / lat.length;
+        var avglon = lon.reduce((a, b) => a + b, 0) / lon.length;
+
+        var pan = ol.animation.pan({
+            source: mapa.getView().getCenter()
+        });
+        mapa.getView().setZoom(zoom);
+        mapa.beforeRender(pan);
+        mapa.getView().setCenter(ol.proj.transform([avglat, avglon], 'EPSG:4326', 'EPSG:3857'));
+    }
+
+    function pintarMarcadores(mapa, array) {
+
+        var iconFeatures = [];
+        array.forEach(function (marcador) {
+
+            var iconFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform([marcador.lon, marcador.lat], 'EPSG:4326',
+                'EPSG:3857')),
+                name: marcador.nomlocal,
+                population: marcador.calificacion,
+                rainfall: marcador.calificacion
+            });
+            iconFeatures.push(iconFeature);
+
+        });
+
+        var vectorSource = new ol.source.Vector({
+            features: iconFeatures //add an array of features
+        });
+
+        var iconStyle = new ol.style.Style({
+            image: new ol.style.Icon(({
+                anchor: [0.5, 46],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                opacity: 1,
+                //src: 'https://openlayers.org/en/v3.20.1/examples/data/icon.png'
+                color: '#8959A8',
+                src: 'https://openlayers.org/en/v3.20.1/examples/data/dot.png'
+            }))
+        });
+
+        var markerLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: iconStyle
+        });
+
+        mapa.addLayer(markerLayer);
+    }
+
+    function mapaCalor(mapa, array) {
+
+        var dat = new ol.source.Vector();
+        // created for owl range of data
+
+        array.forEach(function (marcador) {
+            dat = new ol.source.Vector();
+            var pointFeature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.transform([marcador.lon, marcador.lat], 'EPSG:4326', 'EPSG:3857')),
+                weight: 5// e.g. temperature
+            });
+            dat.addFeature(pointFeature);
+
+            heatMapLayer = new ol.layer.Heatmap({
+                source: dat,
+                radius: 40
+               , blur: 60 - (marcador.calificacion * 10)
+            });
+            mapa.addLayer(heatMapLayer);
+        });
+    }
+
+    function limpiarMapa(mapa) {
+        var layerArray, len, layer;
+        layerArray = map.getLayers().getArray();
+        len = layerArray.length;
+        while (len > 2) { //************
+            layer = layerArray[len - 1];
+            mapa.removeLayer(layer);
+            len = layerArray.length;
+        }
+    }
+
+    function creacionDeZonas(mapa) {
+        var draw = new ol.interaction.Draw({
+            type: 'Polygon',
+            source: source,
+            style: new ol.style.Style({
+                image:
+                //Start of the star style
+                new ol.style.RegularShape({
+                    fill: new ol.style.Fill({
+                        color: 'red'
+                    }),
+                    points: 4,
+                    radius1: 15,
+                    radius2: 1,
+                }),
+                stroke: new ol.style.Stroke({
+                    color: 'blue',
+                    width: 3
+                })
+            })
+        });
+        mapa.addInteraction(draw);
+
+
+        //Agregar las coordenadas creadas en un campo
+        source.on('addfeature', function (evt) {
+            var feature = evt.feature;
+            var coords = feature.getGeometry().getCoordinates();
+            var coo = "";
+            coords[0].forEach(function (element) {
+                element = ol.proj.transform(element, 'EPSG:3857', 'EPSG:4326');  //14 decimales , 18 caracteres
+                coo += element + ";";
+            });
+            document.getElementById("txtCoord").value = coo;
+            //Una vez obtenidas las coordenadas, se inhabilita la creación
+            map.removeInteraction(draw);
+        });
+    }
+
+    function cargarZonas() {
+        inhabilitarCampos(false);
+        $.ajax({
+            url: '/Zona/CargarZonas',
+            type: "POST",
+            dataType: "JSON",
+            success: function (result) {
+                limpiarMapa(map);
+                //Zonas
+                var arrZonas = [];
+                result.lstZonas.forEach(function (zona) {
+                    zona.forEach(function (dato) {
+                        arrZonas.push([dato.lat, dato.lon]);
+                    });
+                    cargarMapa(map, arrZonas);
+                    arrZonas = [];
+                });
+
+
+                $('#ddlZona').empty();
+                result.lstZonaDDL.forEach(function (zona) {
+                    //cargar ddl
+                    $('#ddlZona').append('<option value="' + zona.codzona + '">' + zona.dsczona + '</option>');
+                });
+                $('#ddlZona').change(function () {
+                    if ($('#btnActualizarZona').hasClass('btn-success')) {
+                        $('#btnActualizarZona').removeClass('btn-success').addClass('btn-primary');
+                    }
+                    $('#btnCancelar').attr("disabled", true);
+
+                    
+                    $('#btnEditarZona').attr("disabled", $("#ddlZona").val() == 0 ? true : false);
+                    //$('#btnActualizarZona').attr("disabled", $("#ddlZona").val() == 0 ? false : true);
+                    $('#btnActualizarZona').attr("disabled", true);
+                    
+
+                    document.getElementById("btnActualizarZona").innerHTML = "<span class='glyphicon glyphicon-save'></span> Actualizar";
+                    $('#btnNuevaZona').attr("disabled", false);
+                    inhabilitarCampos(true);
+
+                    var codzona = $("#ddlZona").val();
+                    var seleccionada = [];
+                    var x;
+                    var y;
+                    result.lstZonas.forEach(function (zona) {
+                        x = codzona;
+                        zona.forEach(function (dato) {
+                            y = dato.codzona;
+                            if (dato.codzona == codzona) {
+                                seleccionada.push([dato.lat, dato.lon]);
+                            }
+                        });
+                    });
+                    if (seleccionada.length > 0) {
+                        centrarMapa(map, seleccionada, 14);
+                    }
+                    //Mostrar el detalle
+                    $.ajax({
+                        url: '/Zona/CargarDetZona',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            codzona: codzona
+                        },
+                        success: function (result) {
+                            var fchmil = new Date(parseInt(result.fchregistro.replace("/Date(", "").replace(")/", "")));
+                            if (result.codzona == null) {
+                                fchmil = new Date();
+                            }
+                            var hora = (fchmil.getHours() - (fchmil.getHours() > 12 ? 12 : (fchmil.getHours() == 0 ? -12 : 0))).pad(2)
+                                        + ":" + fchmil.getMinutes().pad(2) + (fchmil.getHours() >= 12 ? " p. m." : " a. m.")
+
+                            var fchregistro = fchmil.getDate().pad(2) + "/" + (fchmil.getMonth() + 1).pad(2) + "/" +
+                                            fchmil.getFullYear().pad(4) + " " + hora;
+                                                    
+                            $("#txtCodzona").val(result.codzona);
+                            $("#txtDsczona").val(result.dsczona);
+                            $("#txtFchRegistro").val(fchregistro);
+                            $("#ddlEstzona").val(result.estzona);
+                            $("#txtCodubigeo").val(result.codubigeo);
+                            $("#ddlDepartamento option[value='" + (result.codubigeo != null ? result.codubigeo.substring(0, 2): "00") + "']").prop('selected', true);
+                            $("#ddlDepartamento").change();
+
+                        },
+                        complete: function (result) {
+                    }
+                    });
+                });
+            }
+        });
+    }
+    
+    function editarZona() {
+        inhabilitarCampos(false);
+        $('#btnCancelar').attr("disabled", false);
+        $('#btnEditarZona').attr("disabled", true);
+        $('#btnNuevaZona').attr("disabled", true);
+        $('#btnActualizarZona').attr("disabled", false);
+        $("#ddlZona").attr("disabled", true);
+        creacionDeZonas(map);
+    }
+
+    function nuevaZona() {
+        limpiarCampos();
+        var  fchmil = new Date();
+   
+        var hora = (fchmil.getHours() - (fchmil.getHours() > 12 ? 12 : (fchmil.getHours() == 0 ? -12 : 0))).pad(2)
+                    + ":" + fchmil.getMinutes().pad(2) + (fchmil.getHours() >= 12 ? " p. m." : " a. m.")
+
+        var fchregistro = fchmil.getDate().pad(2) + "/" + (fchmil.getMonth() + 1).pad(2) + "/" +
+                        fchmil.getFullYear().pad(4) + " " + hora;
+
+        $("#txtFchRegistro").val(fchregistro);
+
+
+        $('#btnNuevaZona').attr("disabled", true);
+        $('#btnCancelar').attr("disabled", false);
+        $('#btnActualizarZona').attr("disabled", false);  
+        $('#ddlZona').attr("disabled", true);
+        //$('#ddlZona').change();
+        if ($('#btnActualizarZona').hasClass('btn-primary')) {
+            $('#btnActualizarZona').removeClass('btn-primary').addClass('btn-success');
+        }
+        document.getElementById("btnActualizarZona").innerHTML = "<span class='glyphicon glyphicon-save'></span> Guardar";       
+        //limpiarMapa(map);
+        cargarZonas();
+        creacionDeZonas(map);
+    }
+    function actualizarZona() {
+        var mensaje = "";
+        mensaje += $("#txtDsczona").val() == "" ? "\n- Ingrese el nombre de la zona." : "";
+        mensaje += $("#ddlDepartamento").val() == "00" ? "\n- Seleccione un departamento." : "";
+        mensaje += $("#ddlProvincia").val() == "00" ? "\n- Seleccione una provincia." : "";
+        mensaje += $("#ddlDistrito").val() == "00" ? "\n- Seleccione un distrito." : "";
+        mensaje += $("#txtFchRegistro").val() == "" ? "\n- No se ha generado una fecha de registro." : "";
+
+        mensaje += $("#txtCoord").val() == "" &&
+            $('#btnActualizarZona').hasClass('btn-success') ? "\n- No se ha dibujado ninguna zona." : "";
+
+        if (mensaje == "") {
+
+            if ($('#btnActualizarZona').hasClass('btn-success')) //Guardar
+            {
+                    $('#txtFchregistro').attr("disabled", false);
+                    $.ajax({
+                        url: '/Zona/RegistrarZona',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            txtCodzona: document.getElementById("ddlZona").value,
+                            ddlDepartamento: document.getElementById("ddlDepartamento").value,
+                            ddlProvincia: document.getElementById("ddlProvincia").value,
+                            ddlDistrito: document.getElementById("ddlDistrito").value,
+                            txtDsczona: document.getElementById("txtDsczona").value,
+                            txtFchregistro: document.getElementById("txtFchRegistro").value,
+                            ddlEstzona: document.getElementById("ddlEstzona").value,
+                            txtCoord: document.getElementById("txtCoord").value
+                        },
+                        success: function (result) {
+                            var cod = result;
+                            alert('Se registró correctamente');
+                            limpiarCampos();
+                            inhabilitarCampos(true);
+                            cargarZonas();
+                            cancelar();
+                        },
+                        error: function (result) {
+                            alert('Error: ' + result.toString());
+                        }
+                    });
+                    $('#txtFchregistro').attr("disabled", true);
+                    $('#btnNuevaZona').attr("disabled", true);
+                    $('#btnCancelar').attr("disabled", false);
+                    $('#ddlZona').attr("disabled", false);                
+            } else//Actualizar
+            {
+
+
+                $('#txtCodubigeo').attr("disabled", false);
+
+                $.ajax({
+                    url: '/Zona/ActualizarZona',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        txtCodzona: document.getElementById("ddlZona").value,
+                        txtDsczona: document.getElementById("txtDsczona").value,
+                        txtCodubigeo: document.getElementById("txtCodubigeo").value,
+                        ddlEstzona: document.getElementById("ddlEstzona").value,
+                        txtCoord: document.getElementById("txtCoord").value
+                    },
+                    success: function (result) {
+                        var cod = result;
+                        if (result == "Error") {
+                            alert('Error al actualizar la zona');
+                        }
+                        else {
+                            alert('Se actualizó correctamente');
+                            location.reload();
+                        }
+                        cancelar();
+                    },
+                    error: function (result) {
+                        alert('Error: ' + result.toString());
+                    }
+                });
+
+                $('#txtCodubigeo').attr("disabled", true);
+                $('#btnActualizarZona').attr("disabled", true);
+                cargarZonas();
+            }
+        }
+        else {
+            alert("Error en la información:" + mensaje);
+        }
+    }
+
+    function cancelar() {
+        $('#btnNuevaZona').attr("disabled", false);
+        $('#btnCancelar').attr("disabled", true);
+        $('#ddlZona').attr("disabled", false);
+        $('#ddlZona').change();
+        //limpiarCampos();
+        inhabilitarCampos(true);
+    }
+    function inhabilitarCampos(bool) {
+        $("#txtDsczona").attr("disabled", bool);
+        $("#ddlEstzona").attr("disabled", bool);
+        $("#ddlDepartamento").attr("disabled", bool);
+        $("#ddlProvincia").attr("disabled", bool);
+        $("#ddlDistrito").attr("disabled", bool);
+    }
+
+
+    function limpiarCampos() {
+        $("#txtCodzona").val('');
+        $("#txtDsczona").val('');
+        $("#txtCodubigeo").val('');
+        $("#txtFchRegistro").val('');
+        $("#txtCoord").val('');
+        $("#ddlEstzona option[value='0']").prop('selected', true);
+        $("#ddlEstzona").change();
+        $("#ddlDepartamento option[value='00']").prop('selected', true);
+        $("#ddlDepartamento").change();
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+Procedimientos asignar subzona
+
+zonabl.cargarzonas()
+zonaBL.BuscarZona()
+zonaBL.ETAsignado
+zonaBL.PruebaIA
+subzonaBL.RegistrarSubzona
+zonaBL.ActualizarETAsignado
+etBL.ListarET()
+
+Procedimientos mantenimiento de zonas
+listarzonas
+
+
+Procedimientos detallezona
+cargardetallezona
+listardepartamentos
+listarprovincias
+listardistritos
+actualizarzona
+dibujarzona
+registrarzona
+RegistrarDetZona
+-->

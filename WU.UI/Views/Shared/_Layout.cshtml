@@ -1,0 +1,68 @@
+﻿@{
+    var imgPath = "https://www.westernunion.com/etc/designs/westernunion/stylesheet/images/logo-wu.png";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ProyectoWU</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap-datetimepicker.css")
+    @Styles.Render("~/Content/dataTables.bootstrap.min.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/moment.min.js")
+    @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
+    @Scripts.Render("~/Scripts/jquery.dataTables.min.js")
+    @Scripts.Render("~/Scripts/dataTables.bootstrap.min.js")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.Render("~/Scripts/ol.js")
+
+    @Styles.Render("~/Content/ol.css")
+
+    @Scripts.Render("~/Scripts/mapa.js")
+    @RenderSection("scripts", required: false)
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand" style="padding:5px">
+                    <img src="@imgPath" style="max-height: 40px;" />
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                            <li><a href="@Url.Action("Index", "Home")">Inicio<span class="sr-only">(current)</span></a></li>
+                   
+                            <li>@Html.ActionLink("Actualización de Zonas", "MantenimientoZonas", "Zona")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Asignar Sub Zonas", "AsignarSubzona", "Zona")</li>
+                            <li>@Html.ActionLink("Zonas Asignadas", "SubzonasAsignadas", "Zona")</li>
+                        
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="full-container body-content" style="margin:90px 50px 0px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2019 - Proyecto WU - JNV</p>
+        </footer>
+    </div>
+
+</body>
+</html>
